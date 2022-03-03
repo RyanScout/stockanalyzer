@@ -5,7 +5,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import moment from "moment";
 
-export default function TradeBlasterModifyView({
+export default function HistoricalAnalysisView({
   itemState,
   appPrefs,
   inputChange,
@@ -23,7 +23,7 @@ export default function TradeBlasterModifyView({
   return (
     <div className="container">
       <div className="row">
-        <div>Backtest</div>
+        <div>Historical Analysis</div>
       </div>
       <div className="row">
         <div>
@@ -59,7 +59,6 @@ export default function TradeBlasterModifyView({
               if (x.innerHTML === "SWING TRADING") {
                 x.innerHTML = "DAY TRADING";
                 document.getElementById("trade-button").classList.add("active");
-
                 alert("VERY VOLATILE BE CAUTIOUS");
               } else {
                 x.innerHTML = "SWING TRADING";
@@ -77,12 +76,17 @@ export default function TradeBlasterModifyView({
         <div className="col-sm">
           <input
             type="submit"
-            name="BackTestButton"
-            id="BackTestButton"
+            name="HistoricalAnalysisButton"
+            id="HistoricalAnalysisButton"
             className="form-control btn-primary"
-            value="BackTest"
-            //SECURITY RISK FIX IT
-            onClick={() => onOption(document.getElementById("trade-button").innerHTML)}
+            value="Historically Analyze"
+            onClick={() => {
+              var x = document.getElementById("trade-button");
+              if(x.innerHTML == "SWING TRADING")
+              onOption("HISTORICALLY_ANALYZE_SWING_TRADE")
+              else
+              onOption("HISTORICALLY_ANALYZE_DAY_TRADE")
+            }}
           />
         </div>
         <div className="col-sm">

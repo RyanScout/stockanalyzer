@@ -16,8 +16,8 @@ export function list() {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
+    params.requestParams.service = "LIST";
     params.requestParams.action = "LIST";
-    params.requestParams.service = "TRADEBLASTER";
     params.URI = "/api/public/callService";
 
     const uri = getHost() + params.URI;
@@ -61,95 +61,32 @@ export function cancelItem() {
   };
 }
 
-export function historicalDetail(item) {
-  return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_HISTORICALDETAIL" , action: item});
-  };
-}
-
 export function modifyItem(item) {
   return function (dispatch) {
-    let params = {};
-    params.requestParams = {};
-    params.requestParams.action = "ITEM";
-    params.requestParams.service = "TRADEBLASTER";
-    params.requestParams.ITEMID = item.id;
-    params.URI = "/api/public/callService";
-
-    const uri = getHost() + params.URI;
-    let headers = new Headers();
-    headers.set("Content-type", "application/json");
-    if (params.auth != null) {
-      headers.set("Authorization", "Basic " + params.auth);
-    }
-    fetch(uri, {
-      method: "POST",
-      credentials: "same-origin",
-      headers: headers,
-      body: JSON.stringify({ params: params.requestParams }),
-    })
-      .then(function (response) {
-        if (response.status >= 400) {
-          let responseMsg = { status: "ERROR", protocalError: response.status };
-        } else {
-          return response.json();
-        }
-      })
-      .then((responseJson) => {
-        dispatch({ type: "TRADEBLASTER_MODIFY_ITEM", responseJson });
-        if (info != null) {
-          dispatch({ type: "SHOW_STATUS", info: info });
-        }
-      })
-      .catch(function (error) {});
+    dispatch({ type: "TRADEBLASTER_MODIFY_ITEM" , action: item});
   };
 }
 
-export function backTest(item) {
+export function historicalAnalysisView(item) {
   return function (dispatch) {
-    let params = {};
-    params.requestParams = {};
-    params.requestParams.action = "ITEM";
-    params.requestParams.service = "TRADEBLASTER";
-    params.requestParams.ITEMID = item.id;
-    params.URI = "/api/public/callService";
-
-    const uri = getHost() + params.URI;
-    let headers = new Headers();
-    headers.set("Content-type", "application/json");
-    if (params.auth != null) {
-      headers.set("Authorization", "Basic " + params.auth);
-    }
-    fetch(uri, {
-      method: "POST",
-      credentials: "same-origin",
-      headers: headers,
-      body: JSON.stringify({ params: params.requestParams }),
-    })
-      .then(function (response) {
-        if (response.status >= 400) {
-          let responseMsg = { status: "ERROR", protocalError: response.status };
-        } else {
-          return response.json();
-        }
-      })
-      .then((responseJson) => {
-        dispatch({ type: "TRADEBLASTER_BACKTEST", responseJson });
-        if (info != null) {
-          dispatch({ type: "SHOW_STATUS", info: info });
-        }
-      })
-      .catch(function (error) {});
+    dispatch({ type: "TRADEBLASTER_HISTORICAL_ANALYSIS_VIEW" , action: item});
   };
 }
+
+export function historicalDetailView(item) {
+  return function (dispatch) {
+    dispatch({ type: "TRADEBLASTER_HISTORICAL_DETAIL_VIEW" , action: item});
+  };
+}
+
 
 
 export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
+    params.requestParams.service = item.itemType;
     params.requestParams.action = "DELETE";
-    params.requestParams.service = "TRADEBLASTER";
     params.requestParams.ITEMID = item.id;
 
     params.URI = "/api/public/callService";
@@ -174,7 +111,7 @@ export function deleteItem(item) {
         }
       })
       .then((responseJson) => {
-        dispatch({type: "TRADEBLASTER_ITEM_LIST", responseJson});
+        dispatch(list());
         if (info != null) {
           dispatch({ type: "SHOW_STATUS", info: info });
         }
@@ -183,51 +120,13 @@ export function deleteItem(item) {
   };
 }
 
-export function deleteBacktest(item) {
-  return function (dispatch) {
-    let params = {};
-    params.requestParams = {};
-    params.requestParams.action = "DELETE_BACKTEST";
-    params.requestParams.service = "TRADEBLASTER";
-    params.requestParams.ITEMID = item.id;
-
-    params.URI = "/api/public/callService";
-
-    const uri = getHost() + params.URI;
-    let headers = new Headers();
-    headers.set("Content-type", "application/json");
-    if (params.auth != null) {
-      headers.set("Authorization", "Basic " + params.auth);
-    }
-    fetch(uri, {
-      method: "POST",
-      credentials: "same-origin",
-      headers: headers,
-      body: JSON.stringify({ params: params.requestParams }),
-    })
-      .then(function (response) {
-        if (response.status >= 400) {
-          let responseMsg = { status: "ERROR", protocalError: response.status };
-        } else {
-          return response.json();
-        }
-      })
-      .then((responseJson) => {
-        dispatch({type: "TRADEBLASTER_BACKTEST_LIST", responseJson});
-        if (info != null) {
-          dispatch({ type: "SHOW_STATUS", info: info });
-        }
-      })
-      .catch(function (error) {});
-  };
-}
 
 export function saveItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
     params.requestParams.action = "SAVE";
-    params.requestParams.service = "TRADEBLASTER";
+    params.requestParams.service = "TRADE";
     params.requestParams.ITEM = item;
 
     params.URI = "/api/public/callService";
@@ -269,12 +168,12 @@ export function saveItem(item) {
       .catch(function (error) {});
   };
 }
-export function swingTradeBacktest(item) {
+export function historicallyAnalyzeSwingTrade(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.action = "SWING_TRADE_BACKTEST";
-    params.requestParams.service = "BACKTEST"
+    params.requestParams.action = "HISTORICALLY_ANALYZE_SWING_TRADE";
+    params.requestParams.service = "HISTORICALLY_ANALYZE"
     params.requestParams.ITEM = item;
 
     params.URI = "/api/public/callService";
@@ -304,12 +203,12 @@ export function swingTradeBacktest(item) {
       .catch(function (error) {});
   };
 }
-export function dayTradeBacktest(item) {
+export function historicallyAnalyzeDayTrade(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.action = "DAY_TRADE_BACKTEST";
-    params.requestParams.service = "BACKTEST"
+    params.requestParams.action = "HISTORICALLY_ANALYZE_DAY_TRADE";
+    params.requestParams.service = "HISTORICALLY_ANALYZE"
     params.requestParams.ITEM = item;
 
     params.URI = "/api/public/callService";

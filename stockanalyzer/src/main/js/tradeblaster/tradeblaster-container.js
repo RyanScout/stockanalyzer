@@ -4,11 +4,10 @@
 "use-strict";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 import * as tradeBlasterActions from "./tradeblaster-actions";
 import TradeBlasterView from "../tradeblaster/view/tradeblaster-view";
 import TradeBlasterModifyView from "../tradeblaster/view/tradeblaster-modify-view";
-import TradeBlasterBacktestView from "../tradeblaster/view/tradeblaster-backtest-view";
+import HistoricalAnalysisView from "./view/tradeblaster-historicalAnalysis-view";
 import HistoricalDetailView from "./view/tradeblaster-historicalDetail-view";
 
 function TradeBlasterContainer() {
@@ -30,10 +29,6 @@ function TradeBlasterContainer() {
         dispatch(tradeBlasterActions.deleteItem(item));
         return true;
       }
-      case "DELETE_BACKTEST":{
-        dispatch(tradeBlasterActions.deleteBacktest(item));
-        return true;
-      }
       case "ADD": {
         onAdd();
         return true;
@@ -42,20 +37,20 @@ function TradeBlasterContainer() {
         onSave();
         return true;
       }
-      case "DAY TRADING": {
-        dayTradeBacktest();
+      case "HISTORICALLY_ANALYZE_DAY_TRADE": {
+        historicallyAnalyzeDayTrade();
         return true;
       }
-      case "SWING TRADING":{
-        swingTradeBacktest();
+      case "HISTORICALLY_ANALYZE_SWING_TRADE":{
+        historicallyAnalyzeSwingTrade();
         return true;
       }
-      case "BACKTEST_VIEW": {
-        dispatch(tradeBlasterActions.backTest(item));
+      case "HISTORICAL_ANALYSIS_VIEW": {
+        dispatch(tradeBlasterActions.historicalAnalysisView(item));
         return true;
       }
       case "HISTORICAL_DETAIL_VIEW":{
-        dispatch(tradeBlasterActions.historicalDetail(item));
+        dispatch(tradeBlasterActions.historicalDetailView(item));
         return true
       }
       case "CANCEL": {
@@ -65,15 +60,15 @@ function TradeBlasterContainer() {
     }
   }
 
-  function dayTradeBacktest(){
+  function historicallyAnalyzeDayTrade(){
 	if (tradeBlasterState.item != null) {
-		dispatch(tradeBlasterActions.dayTradeBacktest(tradeBlasterState.item));
+		dispatch(tradeBlasterActions.historicallyAnalyzeDayTrade(tradeBlasterState.item));
 	  }
   }
 
-  function swingTradeBacktest(){
+  function historicallyAnalyzeSwingTrade(){
     if (tradeBlasterState.item != null) {
-      dispatch(tradeBlasterActions.swingTradeBacktest(tradeBlasterState.item));
+      dispatch(tradeBlasterActions.historicallyAnalyzeSwingTrade(tradeBlasterState.item));
       } 
   }
 
@@ -112,8 +107,8 @@ function TradeBlasterContainer() {
     tradeBlasterState != null &&
     tradeBlasterState.view != "MODIFY" &&
     tradeBlasterState.view != "ADD" &&
-    tradeBlasterState.view != "BACKTEST" &&
-    tradeBlasterState.view != "HISTORICALDETAIL"
+    tradeBlasterState.view != "HISTORICAL_ANALYSIS" &&
+    tradeBlasterState.view != "HISTORICAL_DETAIL"
   ) {
     return (
       <TradeBlasterView
@@ -136,10 +131,10 @@ function TradeBlasterContainer() {
     );
   } else if (
     tradeBlasterState != null &&
-    tradeBlasterState.view == "BACKTEST"
+    tradeBlasterState.view == "HISTORICAL_ANALYSIS"
   ) {
     return (
-      <TradeBlasterBacktestView
+      <HistoricalAnalysisView
         itemState={tradeBlasterState}
         appPrefs={appPrefs}
         inputChange={inputChange}
@@ -148,7 +143,7 @@ function TradeBlasterContainer() {
     );
   } else if(
     tradeBlasterState !=null &&
-    tradeBlasterState.view == "HISTORICALDETAIL"
+    tradeBlasterState.view == "HISTORICAL_DETAIL"
   ){
     return (
       <HistoricalDetailView

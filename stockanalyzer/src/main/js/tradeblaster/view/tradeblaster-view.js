@@ -13,23 +13,24 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
   if (
     itemState != null &&
     itemState.items != null &&
-    itemState.items.length > 0
+    itemState.items.trades != null &&
+    itemState.items.trades.length > 0
   ) {
-    for (let i = 0; i < itemState.items.length; i++) {
+    for (let i = 0; i < itemState.items.trades.length; i++) {
       let cells = [];
       let status = "Not Running";
-      cells.push(<td key="NAME">{itemState.items[i].name}</td>);
-      cells.push(<td key="STOCK">{itemState.items[i].stock}</td>);
-      cells.push(<td key="BUYAMOUNT">{itemState.items[i].buyAmount}</td>);
-      cells.push(<td key="SELLAMOUNT">{itemState.items[i].sellAmount}</td>);
-      cells.push(<td key="ALGORITHUM">{itemState.items[i].algorithum}</td>);
-      cells.push(<td key="PROFITLIMIT">{itemState.items[i].profitLimit}</td>);
+      cells.push(<td key="NAME">{itemState.items.trades[i].name}</td>);
+      cells.push(<td key="STOCK">{itemState.items.trades[i].stock}</td>);
+      cells.push(<td key="BUYAMOUNT">{itemState.items.trades[i].buyAmount}</td>);
+      cells.push(<td key="SELLAMOUNT">{itemState.items.trades[i].sellAmount}</td>);
+      cells.push(<td key="ALGORITHUM">{itemState.items.trades[i].algorithum}</td>);
+      cells.push(<td key="PROFITLIMIT">{itemState.items.trades[i].profitLimit}</td>);
       cells.push(
         <td key="TRAILINGSTOPPERCENT">
-          {itemState.items[i].trailingStopPercent}
+          {itemState.items.trades[i].trailingStopPercent}
         </td>
       );
-      if (itemState.items[i].runStatus == "Yes") {
+      if (itemState.items.trades[i].runStatus == "Yes") {
         status = "Running";
       }
       cells.push(<td key="STATUS">{status}</td>);
@@ -38,17 +39,17 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
           <i
             className="fa fa-edit fa-1"
             title="Modify"
-            onClick={() => onOption("MODIFY", itemState.items[i])}
+            onClick={() => onOption("MODIFY", itemState.items.trades[i])}
           ></i>{" "}
           <i
             className="fa fa-clipboard fa-1"
-            title="Backtest"
-            onClick={() => onOption("BACKTEST_VIEW", itemState.items[i])}
+            title="Historical_Analysis"
+            onClick={() => onOption("HISTORICAL_ANALYSIS_VIEW", itemState.items.trades[i])}
           ></i>{" "}
           <i
             className="fa fa-trash fa-1"
             title="Delete"
-            onClick={() => onOption("DELETE", itemState.items[i])}
+            onClick={() => onOption("DELETE", itemState.items.trades[i])}
           ></i>
         </td>
       );
@@ -67,40 +68,41 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
   // fill latest tradestable
   if (
     itemState != null &&
-    itemState.backtests != null &&
-    itemState.backtests.length > 0
+    itemState.items != null &&
+    itemState.items.historicalAnalyses != null &&
+    itemState.items.historicalAnalyses.length > 0
   ) {
-    for (let i = 0; i < itemState.backtests.length; i++) {
+    for (let i = 0; i < itemState.items.historicalAnalyses.length; i++) {
       let cells = [];
-      cells.push(<td key="NAME">{itemState.backtests[i].name}</td>);
-      cells.push(<td key="STOCK">{itemState.backtests[i].stock}</td>);
-      cells.push(<td key="TYPE">{itemState.backtests[i].type}</td>);
-      cells.push(<td key="STARTDATE">{itemState.backtests[i].startDate}</td>);
-      cells.push(<td key="ENDDATE">{itemState.backtests[i].endDate}</td>);
-      cells.push(<td key="BUYAMOUNT">{itemState.backtests[i].buyAmount}</td>);
-      cells.push(<td key="SELLAMOUNT">{itemState.backtests[i].sellAmount}</td>);
-      cells.push(<td key="ALGORITHUM">{itemState.backtests[i].algorithum}</td>);
+      cells.push(<td key="NAME">{itemState.items.historicalAnalyses[i].name}</td>);
+      cells.push(<td key="STOCK">{itemState.items.historicalAnalyses[i].stock}</td>);
+      cells.push(<td key="TYPE">{itemState.items.historicalAnalyses[i].type}</td>);
+      cells.push(<td key="STARTDATE">{itemState.items.historicalAnalyses[i].startDate}</td>);
+      cells.push(<td key="ENDDATE">{itemState.items.historicalAnalyses[i].endDate}</td>);
+      cells.push(<td key="BUYAMOUNT">{itemState.items.historicalAnalyses[i].buyAmount}</td>);
+      cells.push(<td key="SELLAMOUNT">{itemState.items.historicalAnalyses[i].sellAmount}</td>);
+      cells.push(<td key="ALGORITHUM">{itemState.items.historicalAnalyses[i].algorithum}</td>);
       cells.push(
-        <td key="PROFITLIMIT">{itemState.backtests[i].profitLimit}</td>
+        <td key="PROFITLIMIT">{itemState.items.historicalAnalyses[i].profitLimit}</td>
       );
       cells.push(
         <td key="TRAILINGSTOPPERCENT">
-          {itemState.backtests[i].trailingStopPercent}
+          {itemState.items.historicalAnalyses[i].trailingStopPercent}
         </td>
       );
-      cells.push(<td key="MONEYSPENT">{itemState.backtests[i].moneySpent}</td>);
-      cells.push(<td key="TOTALVALUE">{itemState.backtests[i].totalValue}</td>);
+      cells.push(<td key="MONEYSPENT">{itemState.items.historicalAnalyses[i].moneySpent}</td>);
+      cells.push(<td key="TOTALVALUE">{itemState.items.historicalAnalyses[i].totalValue}</td>);
       cells.push(
         <td key="DELETE">
            <i
             className="fa fa-microchip fa-1"
             title="Modify"
-            onClick={() => onOption("HISTORICAL_DETAIL_VIEW", itemState.backtests[i])}
+            onClick={() => onOption("HISTORICAL_DETAIL_VIEW", itemState.items.historicalAnalyses[i])}
           ></i>{" "}
           <i
             className="fa fa-trash fa-1"
             title="Delete"
-            onClick={() => onOption("DELETE_BACKTEST", itemState.backtests[i])}
+            onClick={() => onOption("DELETE", itemState.items.historicalAnalyses[i])}
           ></i>
         </td>
       );

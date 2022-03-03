@@ -3,6 +3,7 @@ package org.toasthub.api;
 import org.toasthub.analysis.algorithm.AlgorithmCruncherSvc;
 import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.dashboard.DashboardSvc;
+import org.toasthub.stock.historicalanalysis.HistoricalAnalysisSvc;
 import org.toasthub.stock.order.PlaceOrderSvc;
 import org.toasthub.stock.trade.TradeSvc;
 import org.toasthub.utils.Request;
@@ -33,6 +34,9 @@ public class PublicWS {
 	TradeSvc tradeSvc;
 
 	@Autowired
+	HistoricalAnalysisSvc historicalAnalysisSvc;
+
+	@Autowired
 	AlgorithmCruncherSvc algorithmCruncherSvc;
 	
 	
@@ -40,14 +44,13 @@ public class PublicWS {
 	public Response service(@RequestBody Request request) {
 		String service = (String) request.getParams().get("service");
 		
-		
 		Response response = new Response();
 		
 		switch (service) {
 		case "PLACE_ORDER":
 			placeOrderSvc.process(request, response);
 			break;
-		case "HISTORICAL_ANALYSIS":
+		case "HISTORICALLY_ANALYZE":
 			historicalAnalyzingSvc.process(request, response);
 			break;
 		case "DASHBOARD":
@@ -59,7 +62,13 @@ public class PublicWS {
 		case "ALGORITHMCRUNCHER":
 			algorithmCruncherSvc.process(request, response);
 			break;
-		
+		case "HISTORICAL_ANALYSIS":
+			historicalAnalysisSvc.process(request, response);
+			break;
+		case "LIST":
+			historicalAnalysisSvc.process(request, response);
+			tradeSvc.process(request, response);
+			break;
 		default:
 			break;
 		}

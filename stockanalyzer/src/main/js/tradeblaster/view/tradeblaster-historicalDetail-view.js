@@ -12,16 +12,16 @@
    // fill latest tradestable
    if (
      itemState != null &&
-     itemState.backtest.historicalDetails != null &&
-     itemState.backtest.historicalDetails.length > 0
+     itemState.item.historicalDetails != null &&
+     itemState.item.historicalDetails.length > 0
    ) {
-     for (let i = 0; i < itemState.backtest.historicalDetails.length; i++) {
+     for (let i = 0; i < itemState.item.historicalDetails.length; i++) {
        let cells = [];
-       cells.push(<td key="BOUGHTATTIME">{itemState.backtest.historicalDetails[i].stringedBoughtAtTime}</td>);
-       cells.push(<td key="BOUGHTAT">{itemState.backtest.historicalDetails[i].boughtAt}</td>);
-       cells.push(<td key="SOLDATTIME">{itemState.backtest.historicalDetails[i].stringedSoldAtTime}</td>);
-       cells.push(<td key="SOLDAT">{itemState.backtest.historicalDetails[i].soldAt}</td>);
-       cells.push(<td key="HIGHPRICE">{itemState.backtest.historicalDetails[i].highPrice}</td>);
+       cells.push(<td key="BOUGHTATTIME">{itemState.item.historicalDetails[i].stringedBoughtAtTime}</td>);
+       cells.push(<td key="BOUGHTAT">{itemState.item.historicalDetails[i].boughtAt}</td>);
+       cells.push(<td key="SOLDATTIME">{itemState.item.historicalDetails[i].stringedSoldAtTime}</td>);
+       cells.push(<td key="SOLDAT">{itemState.item.historicalDetails[i].soldAt}</td>);
+       cells.push(<td key="HIGHPRICE">{itemState.item.historicalDetails[i].highPrice}</td>);
        automatedTradeTableRows1.push(<tr key={i}>{cells}</tr>);
      }
    } else {

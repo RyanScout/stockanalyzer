@@ -22,47 +22,23 @@
     	}
 		case 'TRADEBLASTER_LIST': {
 			if (action.responseJson != null && action.responseJson.params != null) {
-				let itemCount = {};
-  				if (action.responseJson.params.ITEMCOUNT != null) {
-    				itemCount = action.responseJson.params.ITEMCOUNT;
-  				}
-				let items = {};
-  				if (action.responseJson.params.ITEMS != null) {
-    				items = action.responseJson.params.ITEMS;
-  				}
-				let backtestCount = {};
-				if(action.responseJson.params.backtestCount != null){
-					backtestCount = action.responseJson.params.backtestCount;
-				}
-				let backtests= {};
-				if(action.responseJson.params.backtests != null){
-					backtests = action.responseJson.params.backtests;
-				}
-				return Object.assign({}, state, {
-					itemCount: itemCount,
-					items: items,
-					backtestCount: backtestCount,
-					backtests: backtests,
-					backtest: {},
-					item: {},
-					view: ""
-				});
-			
-			} else {
-        		return state;
-    		}
-		}
 
-		case 'TRADEBLASTER_ITEM_LIST': {
-			if (action.responseJson != null && action.responseJson.params != null) {
 				let itemCount = {};
-  				if (action.responseJson.params.ITEMCOUNT != null) {
-    				itemCount = action.responseJson.params.ITEMCOUNT;
+  				if (action.responseJson.params.TRADECOUNT != null) {
+    				itemCount.tradeCount = action.responseJson.params.TRADECOUNT;
   				}
+				if (action.responseJson.params.HISTORICAL_ANALYSIS_COUNT != null) {
+    				itemCount.historicalAnalysisCount = action.responseJson.params.HISTORICAL_ANALYSIS_COUNT;
+  				}
+
 				let items = {};
-  				if (action.responseJson.params.ITEMS != null) {
-    				items = action.responseJson.params.ITEMS;
+  				if (action.responseJson.params.TRADES != null) {
+    				items.trades = action.responseJson.params.TRADES;
   				}
+				if (action.responseJson.params.HISTORICAL_ANALYSES != null) {
+    				items.historicalAnalyses = action.responseJson.params.HISTORICAL_ANALYSES;
+  				}
+
 				return Object.assign({}, state, {
 					itemCount: itemCount,
 					items: items,
@@ -74,29 +50,6 @@
         		return state;
     		}
 		}
-
-		case 'TRADEBLASTER_BACKTEST_LIST': {
-			if (action.responseJson != null && action.responseJson.params != null) {
-				let backtestCount = {};
-				if(action.responseJson.params.backtestCount != null){
-					backtestCount = action.responseJson.params.backtestCount;
-				}
-				let backtests= {};
-				if(action.responseJson.params.backtests != null){
-					backtests = action.responseJson.params.backtests;
-				}
-				return Object.assign({}, state, {
-					backtestCount: backtestCount,
-					backtests: backtests,
-					backtest: {},
-					view: ""
-				});
-			
-			} else {
-        		return state;
-    		}
-		}
-
 
 		case 'TRADEBLASTER_ADD_ITEM': {
 			let clone = Object.assign({}, state);
@@ -110,18 +63,27 @@
 			clone.item = {};
 			return clone;
     	}
-		case 'TRADEBLASTER_HISTORICALDETAIL':{
-			let clone = Object.assign({}, state);
-			clone.view = "HISTORICALDETAIL";
-			clone.backtest = action.action;
-			return clone;
+		case 'TRADEBLASTER_HISTORICAL_DETAIL_VIEW':{
+			if (action != null) {
+				let item = {};
+  				if (action.action != null) {
+    				item = action.action;
+  				}
+				return Object.assign({}, state, {
+					item: item,
+					view: "HISTORICAL_DETAIL"
+				});
+			
+			} else {
+        		return state;
+    		}
 		}
 
 		case 'TRADEBLASTER_MODIFY_ITEM': {
-			if (action.responseJson != null && action.responseJson.params != null) {
+			if (action != null) {
 				let item = {};
-  				if (action.responseJson.params.item != null) {
-    				item = action.responseJson.params.item;
+  				if (action.action != null) {
+    				item = action.action;
   				}
 				return Object.assign({}, state, {
 					item: item,
@@ -132,21 +94,22 @@
         		return state;
     		}
     	}
-		case 'TRADEBLASTER_BACKTEST':{
-			if (action.responseJson != null && action.responseJson.params != null) {
+
+		case 'TRADEBLASTER_HISTORICAL_ANALYSIS_VIEW': {
+			if (action != null) {
 				let item = {};
-  				if (action.responseJson.params.item != null) {
-    				item = action.responseJson.params.item;
+  				if (action.action != null) {
+    				item = action.action;
   				}
 				return Object.assign({}, state, {
 					item: item,
-					view: "BACKTEST"
+					view: "HISTORICAL_ANALYSIS"
 				});
 			
 			} else {
         		return state;
     		}
-		}
+    	}
 		case 'TRADEBLASTER_SAVE_ITEM': {
 			if (action.responseJson != null && action.responseJson.params != null) {
 				let item = {};
