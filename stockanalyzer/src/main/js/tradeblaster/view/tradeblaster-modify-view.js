@@ -19,8 +19,8 @@ export default function TradeBlasterModifyView({
   let stock = "";
   let buyAmount = "";
   let sellAmount = "";
-  let algorithum = "";
-  let algorithum2 = "";
+  let algorithm = "";
+  let algorithm2 = "";
   let status = "No";
   let runStatus = "Not Running";
   let trailingStopPercent = "";
@@ -47,11 +47,11 @@ export default function TradeBlasterModifyView({
     if (itemState.item.calendar != null) {
       calendarValue = itemState.item.calendar;
     }
-    if (itemState.item.algorithum != null) {
-      algorithum = itemState.item.algorithum;
+    if (itemState.item.algorithm != null) {
+      algorithm = itemState.item.algorithm;
     }
-    if (itemState.item.algorithum2 != null) {
-      algorithum2 = itemState.item.algorithum2;
+    if (itemState.item.algorithm2 != null) {
+      algorithm2 = itemState.item.algorithm2;
     }
     if (itemState.item.status != null) {
       status = itemState.item.status;
@@ -87,24 +87,24 @@ export default function TradeBlasterModifyView({
     );
   }
 
-  let optionsAlgorithum = [
+  let optionsAlgorithm = [
     { label: "Bollinger bands", value: "touchesLBB" },
     { label: "Golden Cross", value: "goldenCross" },
     { label: "MACD/Signal Line", value: "signalLineCross" },
   ];
-  let selectOptionsAlgorithum = [];
-  for (let i = 0; i < optionsAlgorithum.length; i++) {
+  let selectOptionsAlgorithm = [];
+  for (let i = 0; i < optionsAlgorithm.length; i++) {
     let label = "";
     if (
-      optionsAlgorithum[i].label == null &&
-      optionsAlgorithum[i].defaultText != null
+      optionsAlgorithm[i].label == null &&
+      optionsAlgorithm[i].defaultText != null
     ) {
-      label = optionsAlgorithum[i].defaultText;
-    } else if (optionsAlgorithum[i].label != null) {
-      label = optionsAlgorithum[i].label;
+      label = optionsAlgorithm[i].defaultText;
+    } else if (optionsAlgorithm[i].label != null) {
+      label = optionsAlgorithm[i].label;
     }
-    selectOptionsAlgorithum.push(
-      <option key={i} value={optionsAlgorithum[i].value}>
+    selectOptionsAlgorithm.push(
+      <option key={i} value={optionsAlgorithm[i].value}>
         {label}
       </option>
     );
@@ -194,15 +194,15 @@ export default function TradeBlasterModifyView({
           />
         </div>
         <div>
-          <label htmlFor="Algorithum">Algorithum</label>
+          <label htmlFor="Algorithm">Algorithm</label>
           <select
-            id="algorithum"
-            name="algorithum"
-            value={algorithum}
+            id="algorithm"
+            name="algorithm"
+            value={algorithm}
             className="form-control"
             onChange={inputChange}
           >
-            {selectOptionsAlgorithum}
+            {selectOptionsAlgorithm}
           </select>
         </div>
         <div>
@@ -216,7 +216,7 @@ export default function TradeBlasterModifyView({
               {inputChange(e)};
             }}
           >
-            Add Another algorithum
+            Add Another algorithm
           </button>
           <div id="formdiv">
             <input
@@ -241,13 +241,13 @@ export default function TradeBlasterModifyView({
               AND
             </label>
             <select
-              id="algorithum2"
-              name="algorithum2"
-              value={algorithum2}
+              id="algorithm2"
+              name="algorithm2"
+              value={algorithm2}
               className="form-control"
               onChange={inputChange}
             >
-              {selectOptionsAlgorithum}
+              {selectOptionsAlgorithm}
             </select>
           </div>
         </div>

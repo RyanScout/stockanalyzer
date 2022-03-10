@@ -14,11 +14,11 @@ export default function HistoricalAnalysisView({
   const nav = useNavigate();
   const x = window.location.pathname;
 
-  let startDate = "";
-  let endDate = "";
+  let startTime = "";
+  let endTime = "";
   if (itemState.item != null) {
-    if (itemState.item.startDate != null) startDate = itemState.item.startDate;
-    if (itemState.item.endDate != null) endDate = itemState.item.endDate;
+    if (itemState.item.startTime != null) startTime = itemState.item.startTime;
+    if (itemState.item.endTime != null) endTime = itemState.item.endTime;
   }
   return (
     <div className="container">
@@ -32,11 +32,13 @@ export default function HistoricalAnalysisView({
             type="date"
             min="2021-01-01"
             max="2021-12-31"
-            id="startDate"
-            name="startDate"
-            className="startDate"
+            id="startTime"
+            name="startTime"
+            className="startTime"
             onChange={inputChange}
-            value={startDate}
+            value={
+              moment(new Date(startTime *1000)).format("YYYY-MM-DD")
+            }
           />
           <div id="End-Date">
             <label>End Date</label>
@@ -44,11 +46,13 @@ export default function HistoricalAnalysisView({
               type="date"
               min="2021-01-01"
               max="2021-12-31"
-              id="endDate"
-              name="endDate"
-              className="endDate"
+              id="endTime"
+              name="endTime"
+              className="endTime"
               onChange={inputChange}
-              value={endDate}
+              value={
+                moment(new Date(endTime *1000)).format("YYYY-MM-DD")
+              }
             />
           </div>
           <button

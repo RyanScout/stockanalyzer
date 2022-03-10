@@ -85,7 +85,7 @@ export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = item.itemType;
+    params.requestParams.service = item.identifier;
     params.requestParams.action = "DELETE";
     params.requestParams.ITEMID = item.id;
 

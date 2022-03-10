@@ -87,14 +87,14 @@ function TradeBlasterContainer() {
 
     if (event != null) {
       if (event.target != null) {
-        if (event.target.type === "Number") {
+        if (event.target.type === "Number") 
           val = parseInt(event.target.value, 0);
-        } else {
+        else if(event.target.type == "date")
+          val = parseInt(event.target.valueAsNumber/1000)
+        else 
           val = event.target.value;
-        }
-      } else {
+      } else 
         val = event;
-      }
       let field = event.target.id;
       if(event.target.id === "operand-button")
       field = "operand";
