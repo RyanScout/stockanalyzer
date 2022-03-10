@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 // Test branch and merge
+// Test 2 for Branching
 
 @RestController
 @RequestMapping("/api/public")
