@@ -85,7 +85,18 @@ export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = item.identifier;
+    
+    switch (item.identifier){
+      case "HistoricalAnalysis":
+        params.requestParams.service = "HISTORICAL_ANALYSIS";
+        break;
+      case "Trade":
+        params.requestParams.service = "TRADE";
+        break;
+      default:
+        console.log("item identifier does not match historical analysis or trade");
+    }
+
     params.requestParams.action = "DELETE";
     params.requestParams.ITEMID = item.id;
 

@@ -20,9 +20,10 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
       let cells = [];
       let status = "Not Running";
       cells.push(<td key="NAME">{itemState.items.trades[i].name}</td>);
+      cells.push(<td key="ORDERTYPE">{itemState.items.trades[i].orderType}</td>);
+      cells.push(<td key="FREQUENCY">{itemState.items.trades[i].frequency}</td>);
       cells.push(<td key="STOCK">{itemState.items.trades[i].stock}</td>);
-      cells.push(<td key="BUYAMOUNT">{itemState.items.trades[i].buyAmount}</td>);
-      cells.push(<td key="SELLAMOUNT">{itemState.items.trades[i].sellAmount}</td>);
+      cells.push(<td key="AMOUNT">{itemState.items.trades[i].amount}</td>);
       cells.push(<td key="ALGORITHUM">{itemState.items.trades[i].algorithm}</td>);
       cells.push(<td key="PROFITLIMIT">{itemState.items.trades[i].profitLimit}</td>);
       cells.push(
@@ -79,8 +80,7 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
       cells.push(<td key="TYPE">{itemState.items.historicalAnalyses[i].type}</td>);
       cells.push(<td key="STARTDATE">{itemState.items.historicalAnalyses[i].stringedStartTime}</td>);
       cells.push(<td key="ENDDATE">{itemState.items.historicalAnalyses[i].stringedEndTime}</td>);
-      cells.push(<td key="BUYAMOUNT">{itemState.items.historicalAnalyses[i].buyAmount}</td>);
-      cells.push(<td key="SELLAMOUNT">{itemState.items.historicalAnalyses[i].sellAmount}</td>);
+      cells.push(<td key="AMOUNT">{itemState.items.historicalAnalyses[i].amount}</td>);
       cells.push(<td key="ALGORITHUM">{itemState.items.historicalAnalyses[i].algorithm}</td>);
       cells.push(
         <td key="PROFITLIMIT">{itemState.items.historicalAnalyses[i].profitLimit}</td>
@@ -135,9 +135,10 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Order Type</th>
+              <th scope="col">Frequency</th>
               <th scope="col">Stock</th>
-              <th scope="col">Buy Amount</th>
-              <th scope="col">Sell Amount</th>
+              <th scope="col">Amount</th>
               <th scope="col">Algorithm</th>
               <th scope="col">Profit Limit</th>
               <th scope="col">Trailing Stop Percent</th>
@@ -156,8 +157,7 @@ export default function TradeBlasterView({ itemState, appPrefs, onOption }) {
               <th scope="col">Type</th>
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
-              <th scope="col">Buy Amount</th>
-              <th scope="col">Sell Amount</th>
+              <th scope="col">Amount</th>
               <th scope="col">Algorithm</th>
               <th scope="col">Profit Limit</th>
               <th scope="col">Trailing Stop Percent</th>

@@ -17,14 +17,14 @@ export default function TradeBlasterModifyView({
 
   let name = "";
   let stock = "";
-  let buyAmount = "";
-  let sellAmount = "";
+  let amount = "";
   let algorithm = "";
   let algorithm2 = "";
   let status = "No";
   let runStatus = "Not Running";
   let trailingStopPercent = "";
   let profitLimit = "";
+  let frequency = "null"
   if (itemState.item != null) {
     if (itemState.item.name != null) {
       name = itemState.item.name;
@@ -38,11 +38,8 @@ export default function TradeBlasterModifyView({
     if (itemState.item.profitLimit != null) {
       profitLimit = itemState.item.profitLimit;
     }
-    if (itemState.item.buyAmount != null) {
-      buyAmount = itemState.item.buyAmount;
-    }
-    if (itemState.item.sellAmount != null) {
-      sellAmount = itemState.item.sellAmount;
+    if (itemState.item.amount != null) {
+      amount = itemState.item.amount;
     }
     if (itemState.item.calendar != null) {
       calendarValue = itemState.item.calendar;
@@ -52,6 +49,9 @@ export default function TradeBlasterModifyView({
     }
     if (itemState.item.algorithm2 != null) {
       algorithm2 = itemState.item.algorithm2;
+    }
+    if (itemState.item.frequency != null) {
+      frequency = itemState.item.frequency;
     }
     if (itemState.item.status != null) {
       status = itemState.item.status;
@@ -88,6 +88,7 @@ export default function TradeBlasterModifyView({
   }
 
   let optionsAlgorithm = [
+    { label: "null", value: "" },
     { label: "Bollinger bands", value: "touchesLBB" },
     { label: "Golden Cross", value: "goldenCross" },
     { label: "MACD/Signal Line", value: "signalLineCross" },
@@ -105,6 +106,30 @@ export default function TradeBlasterModifyView({
     }
     selectOptionsAlgorithm.push(
       <option key={i} value={optionsAlgorithm[i].value}>
+        {label}
+      </option>
+    );
+  }
+
+  let optionsFrequency = [
+    { label: "null", value: "" },
+    { label: "1", value: "1" },
+    { label: "5", value: "5" },
+    { label: "unlimited", value: "unlimited" },
+  ];
+  let selectOptionsFrequency = [];
+  for (let i = 0; i < optionsFrequency.length; i++) {
+    let label = "";
+    if (
+      optionsFrequency[i].label == null &&
+      optionsFrequency[i].defaultText != null
+    ) {
+      label = optionsFrequency[i].defaultText;
+    } else if (optionsFrequency[i].label != null) {
+      label = optionsFrequency[i].label;
+    }
+    selectOptionsFrequency.push(
+      <option key={i} value={optionsFrequency[i].value}>
         {label}
       </option>
     );
@@ -134,6 +159,31 @@ export default function TradeBlasterModifyView({
           />
         </div>
         <div>
+          <label htmlFor="OrderType">Order Type</label>
+          <div>
+            Buy
+            <input
+              type="radio"
+              id="orderType"
+              name="orderType"
+              autoCapitalize="off"
+              onChange={inputChange}
+              value="buy"
+            />
+          </div>
+          <div>
+            Sell
+            <input
+              type="radio"
+              id="orderType"
+              name="orderType"
+              autoCapitalize="off"
+              onChange={inputChange}
+              value="sell"
+            />
+          </div>
+        </div>
+        <div>
           <label htmlFor="Stock">Stock</label>
           <input
             type="Text"
@@ -146,27 +196,15 @@ export default function TradeBlasterModifyView({
           />
         </div>
         <div>
-          <label htmlFor="BuyAmount">Buy Amount</label>
+          <label htmlFor="Amount">Amount</label>
           <input
             type="Text"
-            id="buyAmount"
-            name="buyAmount"
+            id="amount"
+            name="amount"
             className="form-control"
             autoCapitalize="off"
             onChange={inputChange}
-            value={buyAmount}
-          />
-        </div>
-        <div>
-          <label htmlFor="SellAmount">Sell Amount</label>
-          <input
-            type="Text"
-            id="sellAmount"
-            name="sellAmount"
-            className="form-control"
-            autoCapitalize="off"
-            onChange={inputChange}
-            value={sellAmount}
+            value={amount}
           />
         </div>
         <div>
@@ -182,7 +220,7 @@ export default function TradeBlasterModifyView({
           />
         </div>
         <div>
-          <label htmlFor="TrailingStopPercent">Trailng Stop Percent</label>
+          <label htmlFor="TrailingStopPercent">Trailing Stop Percent</label>
           <input
             type="Text"
             id="trailingStopPercent"
@@ -192,6 +230,18 @@ export default function TradeBlasterModifyView({
             onChange={inputChange}
             value={trailingStopPercent}
           />
+        </div>
+        <div>
+          <label htmlFor="Frequency">Frequency</label>
+          <select
+            id="frequency"
+            name="frequency"
+            value={frequency}
+            className="form-control"
+            onChange={inputChange}
+          >
+            {selectOptionsFrequency}
+          </select>
         </div>
         <div>
           <label htmlFor="Algorithm">Algorithm</label>
@@ -213,7 +263,9 @@ export default function TradeBlasterModifyView({
               e.preventDefault();
               document.getElementById("formdiv").classList.add("active");
               document.getElementById("operand-button").classList.add("active");
-              {inputChange(e)};
+              {
+                inputChange(e);
+              }
             }}
           >
             Add Another algorithm
@@ -229,15 +281,19 @@ export default function TradeBlasterModifyView({
                 if (x.innerHTML === "AND") {
                   x.innerHTML = "OR";
                   e.target.value = "OR";
-                  {inputChange(e)};
+                  {
+                    inputChange(e);
+                  }
                 } else {
                   e.target.value = "AND";
                   x.innerHTML = "AND";
-                  {inputChange(e)};
+                  {
+                    inputChange(e);
+                  }
                 }
               }}
             />
-            <label id="label" for="operand">
+            <label id="label" htmlFor="operand">
               AND
             </label>
             <select
