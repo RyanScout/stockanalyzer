@@ -3,7 +3,7 @@ export function backload() {
     let params = {};
     params.requestParams = {};
     params.requestParams.action = "BACKLOAD";
-    params.requestParams.service = "ALGORITHMCRUNCHER";
+    params.requestParams.service = "ALGORITHM_CRUNCHER";
 
     params.URI = "/api/public/callService";
 
@@ -42,4 +42,40 @@ export function backload() {
         }
       })
       .catch(function (error) {});
+    }
+    export function list() {
+      return function (dispatch) {
+        let params = {};
+        params.requestParams = {};
+        params.requestParams.service = "ALGORITHM_CRUNCHER";
+        params.requestParams.action = "LIST";
+        params.URI = "/api/public/callService";
+    
+        const uri = getHost() + params.URI;
+        let headers = new Headers();
+        headers.set("Content-type", "application/json");
+        if (params.auth != null) {
+          headers.set("Authorization", "Basic " + params.auth);
+        }
+        fetch(uri, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: headers,
+          body: JSON.stringify({ params: params.requestParams }),
+        })
+          .then(function (response) {
+            if (response.status >= 400) {
+              let responseMsg = { status: "ERROR", protocalError: response.status };
+            } else {
+              return response.json();
+            }
+          })
+          .then((responseJson) => {
+            dispatch({ type: "LIST", responseJson });
+            if (info != null) {
+              dispatch({ type: "SHOW_STATUS", info: info });
+            }
+          })
+          .catch(function (error) {});
+      };
     }

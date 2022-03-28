@@ -1,10 +1,10 @@
 /**
  * 
  */
- export default function tradeBlasterReducer(state = {}, action) {
+ export default function tradeReducer(state = {}, action) {
 	let myState = {};
 	switch(action.type) {
-		case 'TRADEBLASTER_INPUT_CHANGE': {
+		case 'TRADE_INPUT_CHANGE': {
 			if (action.params != null) {
 				let item = {};
 				if (state.item == null) {
@@ -20,25 +20,18 @@
         		return state;
     		}
     	}
-		case 'TRADEBLASTER_LIST': {
+		case 'TRADE_LIST': {
 			if (action.responseJson != null && action.responseJson.params != null) {
 
 				let itemCount = {};
   				if (action.responseJson.params.TRADECOUNT != null) {
-    				itemCount.tradeCount = action.responseJson.params.TRADECOUNT;
-  				}
-				if (action.responseJson.params.HISTORICAL_ANALYSIS_COUNT != null) {
-    				itemCount.historicalAnalysisCount = action.responseJson.params.HISTORICAL_ANALYSIS_COUNT;
+    				itemCount = action.responseJson.params.TRADECOUNT;
   				}
 
 				let items = {};
   				if (action.responseJson.params.TRADES != null) {
-    				items.trades = action.responseJson.params.TRADES;
+    				items = action.responseJson.params.TRADES;
   				}
-				if (action.responseJson.params.HISTORICAL_ANALYSES != null) {
-    				items.historicalAnalyses = action.responseJson.params.HISTORICAL_ANALYSES;
-  				}
-
 				return Object.assign({}, state, {
 					itemCount: itemCount,
 					items: items,
@@ -51,35 +44,20 @@
     		}
 		}
 
-		case 'TRADEBLASTER_ADD_ITEM': {
+		case 'TRADE_ADD_ITEM': {
 			let clone = Object.assign({}, state);
 			clone.view = "ADD";
 			clone.item = {};
 			return clone;
     	}
-		case 'TRADEBLASTER_CANCEL_ITEM': {
+		case 'TRADE_CANCEL_ITEM': {
 			let clone = Object.assign({}, state);
 			clone.view = "";
 			clone.item = {};
 			return clone;
     	}
-		case 'TRADEBLASTER_HISTORICAL_DETAIL_VIEW':{
-			if (action != null) {
-				let item = {};
-  				if (action.action != null) {
-    				item = action.action;
-  				}
-				return Object.assign({}, state, {
-					item: item,
-					view: "HISTORICAL_DETAIL"
-				});
-			
-			} else {
-        		return state;
-    		}
-		}
 
-		case 'TRADEBLASTER_MODIFY_ITEM': {
+		case 'TRADE_MODIFY_ITEM': {
 			if (action != null) {
 				let item = {};
   				if (action.action != null) {
@@ -95,7 +73,7 @@
     		}
     	}
 
-		case 'TRADEBLASTER_HISTORICAL_ANALYSIS_VIEW': {
+		case 'TRADE_HISTORICAL_ANALYSIS_VIEW': {
 			if (action != null) {
 				let item = {};
   				if (action.action != null) {
@@ -110,7 +88,7 @@
         		return state;
     		}
     	}
-		case 'TRADEBLASTER_SAVE_ITEM': {
+		case 'TRADE_SAVE_ITEM': {
 			if (action.responseJson != null && action.responseJson.params != null) {
 				let item = {};
   				if (action.responseJson.params.ITEM != null) {

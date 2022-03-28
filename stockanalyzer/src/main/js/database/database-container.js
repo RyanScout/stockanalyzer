@@ -1,12 +1,22 @@
-import React from "react";
+import React , {useEffect} from "react";
 import DatabaseView from "./view/database-view";
 import * as databaseActions from "./database-actions";
+import { useSelector , useDispatch} from "react-redux";
 
+
+function DatabaseContainer(){
+const databaseState = useSelector((state => state.database));
+const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(databaseActions.list());
+  }, []);
 
 function backload(){
     databaseActions.backload();
 };
 
-export default function DatabaseContainer() {
-  return <DatabaseView backload={backload} />;
+  return <DatabaseView backload={backload} itemState = {databaseState} />;
 }
+
+export default DatabaseContainer;

@@ -60,15 +60,11 @@ public class PublicWS {
 		case "TRADE":
 			tradeSvc.process(request, response);
 			break;
-		case "ALGORITHMCRUNCHER":
+		case "ALGORITHM_CRUNCHER":
 			algorithmCruncherSvc.process(request, response);
 			break;
 		case "HISTORICAL_ANALYSIS":
 			historicalAnalysisSvc.process(request, response);
-			break;
-		case "LIST":
-			historicalAnalysisSvc.process(request, response);
-			tradeSvc.process(request, response);
 			break;
 		default:
 			break;

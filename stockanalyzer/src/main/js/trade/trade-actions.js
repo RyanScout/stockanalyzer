@@ -8,7 +8,7 @@ export function inputChange(field, value) {
     let params = {};
     params.field = field;
     params.value = value;
-    dispatch({ type: "TRADEBLASTER_INPUT_CHANGE", params });
+    dispatch({ type: "TRADE_INPUT_CHANGE", params });
   };
 }
 
@@ -16,7 +16,7 @@ export function list() {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "LIST";
+    params.requestParams.service = "TRADE";
     params.requestParams.action = "LIST";
     params.URI = "/api/public/callService";
 
@@ -40,7 +40,7 @@ export function list() {
         }
       })
       .then((responseJson) => {
-        dispatch({ type: "TRADEBLASTER_LIST", responseJson });
+        dispatch({ type: "TRADE_LIST", responseJson });
         if (info != null) {
           dispatch({ type: "SHOW_STATUS", info: info });
         }
@@ -51,52 +51,33 @@ export function list() {
 
 export function addItem() {
   return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_ADD_ITEM" });
+    dispatch({ type: "TRADE_ADD_ITEM" });
   };
 }
 
 export function cancelItem() {
   return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_CANCEL_ITEM" });
+    dispatch({ type: "TRADE_CANCEL_ITEM" });
   };
 }
 
 export function modifyItem(item) {
   return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_MODIFY_ITEM" , action: item});
+    dispatch({ type: "TRADE_MODIFY_ITEM" , action: item});
   };
 }
 
 export function historicalAnalysisView(item) {
   return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_HISTORICAL_ANALYSIS_VIEW" , action: item});
+    dispatch({ type: "TRADE_HISTORICAL_ANALYSIS_VIEW" , action: item});
   };
 }
-
-export function historicalDetailView(item) {
-  return function (dispatch) {
-    dispatch({ type: "TRADEBLASTER_HISTORICAL_DETAIL_VIEW" , action: item});
-  };
-}
-
-
 
 export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    
-    switch (item.identifier){
-      case "HistoricalAnalysis":
-        params.requestParams.service = "HISTORICAL_ANALYSIS";
-        break;
-      case "Trade":
-        params.requestParams.service = "TRADE";
-        break;
-      default:
-        console.log("item identifier does not match historical analysis or trade");
-    }
-
+    params.requestParams.service = "TRADE"
     params.requestParams.action = "DELETE";
     params.requestParams.ITEMID = item.id;
 
