@@ -1,12 +1,12 @@
 
 	
-CREATE TABLE `sa_trade`
+CREATE TABLE `ta_trade`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`name` varchar(64),
 	`order_type` varchar(64),
 	`order_side` varchar(64),
-	`stock` varchar(64),
+	`symbol` varchar(64),
 	`currency_type` varchar(64),
 	`currency_amount` decimal(10,4),
 	`profit_limit_type` varchar(64),

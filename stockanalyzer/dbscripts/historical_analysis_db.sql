@@ -1,12 +1,12 @@
 
 	
-CREATE TABLE `sa_historical_analysis`
+CREATE TABLE `ta_historical_analysis`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`order_type`varchar(64),
 	`historical_analysis_type` varchar(64),
 	`name` varchar(64),
-	`stock` varchar(64),
+	`symbol` varchar(64),
     `start_time` varchar(64),
 	`end_time` varchar(64),
 	`amount` decimal(10,4),

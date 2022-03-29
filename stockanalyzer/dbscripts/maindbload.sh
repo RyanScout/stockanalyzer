@@ -63,25 +63,25 @@ load_base(){
 		echo "ERROR **** File historical_detail_db.sql is missing ***"   
 	fi
 
-	echo "Loading stock_day_db.sql to ${1}"     
-	if [ -f stock_day_db.sql ]; then
-   		mysql -h ${2} -u ${3} --password=${4} ${1} < stock_day_db.sql
+	echo "Loading asset_day_db.sql to ${1}"     
+	if [ -f asset_day_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < asset_day_db.sql
 	else
-		echo "ERROR **** File stock_day_db.sql is missing ***"   
+		echo "ERROR **** File asset_day_db.sql is missing ***"   
 	fi
 
-	echo "Loading stock_minute_db.sql to ${1}"     
-	if [ -f stock_minute_db.sql ]; then
-   		mysql -h ${2} -u ${3} --password=${4} ${1} < stock_minute_db.sql
+	echo "Loading asset_minute_db.sql to ${1}"     
+	if [ -f asset_minute_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < asset_minute_db.sql
 	else
-		echo "ERROR **** File stock_minute_db.sql is missing ***"   
+		echo "ERROR **** File asset_minute_db.sql is missing ***"   
 	fi
 	
 	echo "Done Loading db ${1}"
 }
 	
 all() {
-	load_base stockanalyzer_main localhost cyborg c7b8rg#P
+	load_base tradeanalyzer_main localhost cyborg c7b8rg#P
 }
 
 all
