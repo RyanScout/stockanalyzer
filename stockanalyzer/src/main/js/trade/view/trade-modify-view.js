@@ -17,7 +17,7 @@ export default function TradeModifyView({
   const x = window.location.pathname;
 
   let name = "";
-  let stock = "";
+  let symbol = "";
   let currencyAmount = "";
   let trailingStopType = "Trailing Stop Price";
   let profitLimitType = "Profit Limit Price";
@@ -35,8 +35,8 @@ export default function TradeModifyView({
     if (itemState.item.name != null) {
       name = itemState.item.name;
     }
-    if (itemState.item.stock != null) {
-      stock = itemState.item.stock;
+    if (itemState.item.symbol != null) {
+      symbol = itemState.item.symbol;
     }
     if (itemState.item.trailingStopAmount != null) {
       trailingStopAmount = itemState.item.trailingStopAmount;
@@ -287,15 +287,15 @@ export default function TradeModifyView({
           />
         </div>
         <div>
-          <label htmlFor="Stock">Stock</label>
+          <label htmlFor="Symbol">Symbol</label>
           <input
             type="Text"
-            id="stock"
-            name="stock"
+            id="symbol"
+            name="symbol"
             className="form-control"
             autoCapitalize="off"
             onChange={inputChange}
-            value={stock}
+            value={symbol}
           />
         </div>
         <div>
