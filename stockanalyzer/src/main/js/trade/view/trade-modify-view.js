@@ -27,6 +27,7 @@ export default function TradeModifyView({
   let trailingStopAmount = "";
   let profitLimitAmount = "";
   let frequency = "null";
+  let budget = "";
   let orderSide = "";
   let orderType = "null";
   let currencyType = "Dollars";
@@ -58,7 +59,9 @@ export default function TradeModifyView({
     if (itemState.item.status != null) {
       status = itemState.item.status;
     }
-
+    if (itemState.item.budget != null) {
+      budget = itemState.item.budget;
+    }
     if (itemState.item.orderType != null) {
       orderType = itemState.item.orderType;
     }
@@ -101,19 +104,14 @@ export default function TradeModifyView({
     }
   };
 
-
-  let dynamicallyShowOrderCondition = (value) =>{
-    if(orderSide == value || orderSide == "Bot")
-    return ""
-    else
-    return "invisible-element"
-  }
+  let dynamicallyShowOrderCondition = (value) => {
+    if (orderSide == value || orderSide == "Bot") return "";
+    else return "invisible-element";
+  };
 
   let dynamicallyShowElement = (value) => {
-    if(orderType.includes(value))
-        return ""
-    else
-        return "invisible-element";
+    if (orderType.includes(value)) return "";
+    else return "invisible-element";
   };
 
   let orderSideClassName = (value) => {
@@ -322,7 +320,7 @@ export default function TradeModifyView({
             value={currencyAmount}
           />
         </div>
-        <div className = {dynamicallyShowElement('Profit Limit')}>
+        <div className={dynamicallyShowElement("Profit Limit")}>
           <button
             onClick={inputChange}
             id="profitLimitType"
@@ -340,7 +338,7 @@ export default function TradeModifyView({
             value={profitLimitAmount}
           />
         </div>
-        <div className = {dynamicallyShowElement('Trailing Stop')}>
+        <div className={dynamicallyShowElement("Trailing Stop")}>
           <button
             onClick={inputChange}
             id="trailingStopType"
@@ -358,7 +356,12 @@ export default function TradeModifyView({
             value={trailingStopAmount}
           />
         </div>
-        <div>
+        <div
+          className={function(){
+            if (orderSide == "Buy" || orderSide == "Sell") return "";
+            else return "invisible-element";
+          }()}
+        >
           <label htmlFor="Frequency">Frequency</label>
           <select
             id="frequency"
@@ -370,7 +373,21 @@ export default function TradeModifyView({
             {selectOptionsFrequency}
           </select>
         </div>
-        <div className = {dynamicallyShowOrderCondition("Buy")}>
+        <div className={dynamicallyShowOrderCondition("Bot")}>
+          <label htmlFor="Budget">Budget</label>
+          <input
+            type="Number"
+            min="0"
+            step="1"
+            id="budget"
+            name="budget"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={inputChange}
+            value={budget}
+          />
+        </div>
+        <div className={dynamicallyShowOrderCondition("Buy")}>
           <label htmlFor="BuyCondition">Buy Condition</label>
           <select
             id="buyCondition"
@@ -383,7 +400,7 @@ export default function TradeModifyView({
           </select>
         </div>
 
-        <div className = {dynamicallyShowOrderCondition("Sell")}>
+        <div className={dynamicallyShowOrderCondition("Sell")}>
           <label htmlFor="SellCondition">Sell Condition</label>
           <select
             id="sellCondition"
