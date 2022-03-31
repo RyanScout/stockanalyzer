@@ -17,7 +17,7 @@ CREATE TABLE `ta_trade`
 	`sell_condition` varchar(128),
 	`frequency` varchar(64),
 	`frequency_executed` bigint(20),
-	`run_status` varchar(48) NOT NULL,
+	`status` varchar(48) NOT NULL,
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,

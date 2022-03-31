@@ -22,12 +22,8 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
       cells.push(<td key="ORDERSIDE">{itemState.items[i].orderSide}</td>);
       cells.push(<td key="FREQUENCY">{itemState.items[i].frequency}</td>);
       cells.push(<td key="BUYCONDITION">{itemState.items[i].buyCondition}</td>);
-      cells.push(<td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>)
-
-      if (itemState.items[i].runStatus == "Yes") {
-        status = "Running";
-      }
-      cells.push(<td key="STATUS">{status}</td>);
+      cells.push(<td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>);
+      cells.push(<td key="STATUS">{itemState.items[i].status}</td>)
       cells.push(
         <td key="MODIFY">
           <i

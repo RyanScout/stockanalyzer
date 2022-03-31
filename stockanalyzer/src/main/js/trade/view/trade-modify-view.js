@@ -23,8 +23,7 @@ export default function TradeModifyView({
   let profitLimitType = "Profit Limit Price";
   let buyCondition = "";
   let sellCondition = "";
-  let status = "No";
-  let runStatus = "Not Running";
+  let status = "Not Running";
   let trailingStopAmount = "";
   let profitLimitAmount = "";
   let frequency = "null";
@@ -58,11 +57,6 @@ export default function TradeModifyView({
     }
     if (itemState.item.status != null) {
       status = itemState.item.status;
-      if (itemState.item.status == "Yes") {
-        runStatus = "Running";
-      } else {
-        runStatus = "Not Running";
-      }
     }
 
     if (itemState.item.orderType != null) {
@@ -160,8 +154,8 @@ export default function TradeModifyView({
   let saveTxt = "Save";
 
   let optionsStatus = [
-    { label: "Yes", value: "Yes" },
-    { label: "No", label: "No" },
+    { label: "Running", value: "Running" },
+    { label: "Not Running", label: "Not Running" },
   ];
   let selectOptionsStatus = [];
   for (let i = 0; i < optionsStatus.length; i++) {
@@ -403,7 +397,7 @@ export default function TradeModifyView({
         </div>
 
         <div>
-          <label htmlFor="Status">Active</label>
+          <label htmlFor="Status">Status</label>
           <select
             id="status"
             name="status"
