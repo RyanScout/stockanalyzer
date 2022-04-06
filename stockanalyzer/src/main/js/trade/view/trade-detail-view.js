@@ -3,6 +3,7 @@
  */
  import React from "react";
  import { useNavigate, Link } from "react-router-dom";
+ import moment from "moment";
  
  export default function TradeDetailView({ itemState, appPrefs, onOption }) {
    const nav = useNavigate();
@@ -27,8 +28,8 @@
        let cells = [];
        cells.push(<td key="DOLLARAMOUNT">{itemState.item.tradeDetails[i].dollarAmount}</td>);
        cells.push(<td key="SHAREAMOUNT">{itemState.item.tradeDetails[i].shareAmount}</td>);
-       cells.push(<td key="PLACEDAT">{itemState.item.tradeDetails[i].placedAt}</td>);
-       cells.push(<td key="FILLEDAT">{itemState.item.tradeDetails[i].filledAt}</td>);
+       cells.push(<td key="PLACEDAT">{moment(new Date(itemState.item.tradeDetails[i].placedAt *1000)).format("YYYY-MM-DD, h:mm:ss")}</td>);
+       cells.push(<td key="FILLEDAT">{moment(new Date(itemState.item.tradeDetails[i].filledAt *1000)).format("YYYY-MM-DD, h:mm:ss")}</td>);
        cells.push(<td key="TOTALVALUE">{itemState.item.tradeDetails[i].totalValue}</td>);
        cells.push(<td key="AVAILABLEBUDGET">{itemState.item.tradeDetails[i].availableBudget}</td>);
        cells.push(<td key="SHARESHELD">{itemState.item.tradeDetails[i].sharesHeld}</td>);
