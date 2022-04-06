@@ -6,11 +6,12 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as tradeActions from "./trade-actions";
 import TradeView from "./view/trade-view";
+import TradeDetailView from "./view/trade-detail-view";
 import TradeModifyView from "./view/trade-modify-view";
 import HistoricalAnalysisView from "./view/trade-historical-analysis-view";
 
 function TradeContainer() {
-  const tradeState = useSelector((state => state.trade));
+  const tradeState = useSelector((state) => state.trade);
   const appPrefs = useSelector((state) => state.appPrefs);
   const dispatch = useDispatch();
 
@@ -40,12 +41,16 @@ function TradeContainer() {
         historicallyAnalyzeDayTrade();
         return true;
       }
-      case "HISTORICALLY_ANALYZE_SWING_TRADE":{
+      case "HISTORICALLY_ANALYZE_SWING_TRADE": {
         historicallyAnalyzeSwingTrade();
         return true;
       }
       case "HISTORICAL_ANALYSIS_VIEW": {
         dispatch(tradeActions.historicalAnalysisView(item));
+        return true;
+      }
+      case "TRADE_DETAIL_VIEW": {
+        dispatch(tradeActions.tradeDetailView(item));
         return true;
       }
       case "CANCEL": {
@@ -55,16 +60,16 @@ function TradeContainer() {
     }
   }
 
-  function historicallyAnalyzeDayTrade(){
-	if (tradeState.item != null) {
-		dispatch(tradeActions.historicallyAnalyzeDayTrade(tradeState.item));
-	  }
+  function historicallyAnalyzeDayTrade() {
+    if (tradeState.item != null) {
+      dispatch(tradeActions.historicallyAnalyzeDayTrade(tradeState.item));
+    }
   }
 
-  function historicallyAnalyzeSwingTrade(){
+  function historicallyAnalyzeSwingTrade() {
     if (tradeState.item != null) {
       dispatch(tradeActions.historicallyAnalyzeSwingTrade(tradeState.item));
-      } 
+    }
   }
 
   function onSave() {
@@ -82,27 +87,24 @@ function TradeContainer() {
 
     if (event != null) {
       if (event.target != null) {
-        if (event.target.type === "Number") 
+        if (event.target.type === "Number")
           val = parseInt(event.target.value, 0);
-        else if(event.target.type == "date")
-          val = parseInt(event.target.valueAsNumber/1000)
-        else 
-          val = event.target.value;
-      } else 
-        val = event;
+        else if (event.target.type == "date")
+          val = parseInt(event.target.valueAsNumber / 1000);
+        else val = event.target.value;
+      } else val = event;
       let field = event.target.id;
-      if(event.target.id === "operand-button")
-      field = "operand";
+      if (event.target.id === "operand-button") field = "operand";
       dispatch(tradeActions.inputChange(field, val));
     }
   }
 
-  
   if (
     tradeState != null &&
     tradeState.view != "MODIFY" &&
     tradeState.view != "ADD" &&
-    tradeState.view != "HISTORICAL_ANALYSIS" 
+    tradeState.view != "HISTORICAL_ANALYSIS" &&
+    tradeState.view != "TRADE_DETAIL"
   ) {
     return (
       <TradeView
@@ -123,10 +125,7 @@ function TradeContainer() {
         onOption={onOption}
       />
     );
-  } else if (
-    tradeState != null &&
-    tradeState.view == "HISTORICAL_ANALYSIS"
-  ) {
+  } else if (tradeState != null && tradeState.view == "HISTORICAL_ANALYSIS") {
     return (
       <HistoricalAnalysisView
         itemState={tradeState}
@@ -135,8 +134,16 @@ function TradeContainer() {
         onOption={onOption}
       />
     );
-  } 
-  else {
+  } else if (tradeState != null && tradeState.view == "TRADE_DETAIL") {
+    return (
+      <TradeDetailView
+        itemState={tradeState}
+        appPrefs={appPrefs}
+        inputChange={inputChange}
+        onOption={onOption}
+      />
+    );
+  } else {
     return <div> Loading... </div>;
   }
 }

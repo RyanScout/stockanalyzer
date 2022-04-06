@@ -31,6 +31,11 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             title="Modify"
             onClick={() => onOption("MODIFY", itemState.items[i])}
           ></i>{" "}
+           <i
+            className="fa fa-microchip fa-1"
+            title="Modify"
+            onClick={() => onOption("TRADE_DETAIL_VIEW", itemState.items[i])}
+          ></i>{" "}
           <i
             className="fa fa-clipboard fa-1"
             title="Historical_Analysis"

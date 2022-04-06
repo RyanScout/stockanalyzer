@@ -88,6 +88,22 @@
         		return state;
     		}
     	}
+		case 'TRADE_DETAIL_VIEW': {
+			if (action != null) {
+				let item = {};
+  				if (action.action != null) {
+    				item = action.action;
+  				}
+				return Object.assign({}, state, {
+					item: item,
+					view: "TRADE_DETAIL"
+				});
+			
+			} else {
+        		return state;
+    		}
+    	}
+
 		case 'TRADE_SAVE_ITEM': {
 			if (action.responseJson != null && action.responseJson.params != null) {
 				let item = {};

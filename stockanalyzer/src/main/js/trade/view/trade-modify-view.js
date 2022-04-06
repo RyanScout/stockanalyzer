@@ -31,6 +31,7 @@ export default function TradeModifyView({
   let orderSide = "";
   let orderType = "null";
   let currencyType = "Dollars";
+  let evaluationPeriod ="null"
   if (itemState.item != null) {
     if (itemState.item.name != null) {
       name = itemState.item.name;
@@ -79,6 +80,9 @@ export default function TradeModifyView({
     }
     if (itemState.item.trailingStopType != null) {
       trailingStopType = itemState.item.trailingStopType;
+    }
+    if(itemState.item.evaluationPeriod != null){
+      evaluationPeriod = itemState.item.evaluationPeriod;
     }
   }
 
@@ -175,9 +179,10 @@ export default function TradeModifyView({
 
   let optionsAlgorithm = [
     { label: "null", value: "" },
-    { label: "Bollinger bands", value: "touchesLBB" },
-    { label: "Golden Cross", value: "goldenCross" },
-    { label: "MACD/Signal Line", value: "signalLineCross" },
+    { label: "touchesLBB", value: "touchesLBB" },
+    { label: "touchesUBB", value: "touchsUBB"},
+    { label: "goldenCross", value: "goldenCross" },
+    { label: "signalLineCross", value: "signalLineCross" },
   ];
   let selectOptionsAlgorithm = [];
   for (let i = 0; i < optionsAlgorithm.length; i++) {
@@ -250,6 +255,29 @@ export default function TradeModifyView({
     );
   }
 
+  let optionsEvaluationPeriod = [
+    { label: "null", value: "null" },
+    { label: "Day", value: "Day" },
+    { label: "Minute", value: "Minute" }
+  ];
+  let selectOptionsEvaluationPeriod = [];
+  for (let i = 0; i < optionsEvaluationPeriod.length; i++) {
+    let label = "";
+    if (
+      optionsEvaluationPeriod[i].label == null &&
+      optionsEvaluationPeriod[i].defaultText != null
+    ) {
+      label = optionsEvaluationPeriod[i].defaultText;
+    } else if (optionsEvaluationPeriod[i].label != null) {
+      label = optionsEvaluationPeriod[i].label;
+    }
+    selectOptionsEvaluationPeriod.push(
+      <option key={i} value={optionsEvaluationPeriod[i].value}>
+        {label}
+      </option>
+    );
+  }
+
   let description = "Add Item";
   if (itemState.view == "MODIFY") {
     description = "Modify Item";
@@ -300,6 +328,18 @@ export default function TradeModifyView({
             onChange={inputChange}
           >
             {selectOptionsOrderType}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="EvaluationPeriod">Evaluation Period</label>
+          <select
+            id="evaluationPeriod"
+            name="evaluationPeriod"
+            value={evaluationPeriod}
+            className="form-control"
+            onChange={inputChange}
+          >
+            {selectOptionsEvaluationPeriod}
           </select>
         </div>
         <div>

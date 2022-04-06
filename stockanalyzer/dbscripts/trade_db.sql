@@ -6,6 +6,7 @@ CREATE TABLE `ta_trade`
 	`name` varchar(64),
 	`order_type` varchar(64),
 	`order_side` varchar(64),
+	`evaluation_period` varchar(64),
 	`symbol` varchar(64),
 	`currency_type` varchar(64),
 	`currency_amount` decimal(10,4),

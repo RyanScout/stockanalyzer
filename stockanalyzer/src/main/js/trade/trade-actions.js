@@ -73,6 +73,13 @@ export function historicalAnalysisView(item) {
   };
 }
 
+export function tradeDetailView(item) {
+  return function (dispatch) {
+    dispatch({ type: "TRADE_DETAIL_VIEW" , action: item});
+  };
+}
+
+
 export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
