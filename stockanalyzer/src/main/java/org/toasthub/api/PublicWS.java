@@ -1,6 +1,7 @@
 package org.toasthub.api;
 
 import org.toasthub.analysis.algorithm.AlgorithmCruncherSvc;
+import org.toasthub.stock.analysis.CurrentTestingSvc;
 import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.dashboard.DashboardSvc;
 import org.toasthub.stock.historicalanalysis.HistoricalAnalysisSvc;
@@ -39,6 +40,9 @@ public class PublicWS {
 
 	@Autowired
 	AlgorithmCruncherSvc algorithmCruncherSvc;
+
+	@Autowired 
+	CurrentTestingSvc currentTestingSvc;
 	
 	
 	@RequestMapping(value = "callService", method = RequestMethod.POST)
@@ -65,6 +69,9 @@ public class PublicWS {
 			break;
 		case "HISTORICAL_ANALYSIS":
 			historicalAnalysisSvc.process(request, response);
+			break;
+		case "CURRENT_ANALYSIS":
+			currentTestingSvc.process(request,response);
 			break;
 		default:
 			break;

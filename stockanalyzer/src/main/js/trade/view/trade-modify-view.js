@@ -429,28 +429,28 @@ export default function TradeModifyView({
         </div>
         <div className={dynamicallyShowOrderCondition("Buy")}>
           <label htmlFor="BuyCondition">Buy Condition</label>
-          <select
+          <input
+            type="Text"
             id="buyCondition"
             name="buyCondition"
-            value={buyCondition}
             className="form-control"
+            autoCapitalize="off"
             onChange={inputChange}
-          >
-            {selectOptionsAlgorithm}
-          </select>
+            value={buyCondition}
+          />
         </div>
 
         <div className={dynamicallyShowOrderCondition("Sell")}>
           <label htmlFor="SellCondition">Sell Condition</label>
-          <select
+          <input
+            type="Text"
             id="sellCondition"
             name="sellCondition"
-            value={sellCondition}
             className="form-control"
+            autoCapitalize="off"
             onChange={inputChange}
-          >
-            {selectOptionsAlgorithm}
-          </select>
+            value={sellCondition}
+          />
         </div>
 
         <div>

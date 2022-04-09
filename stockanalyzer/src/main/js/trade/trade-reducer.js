@@ -1,3 +1,5 @@
+import { bindActionCreators } from "redux";
+
 /**
  * 
  */
@@ -35,6 +37,25 @@
 				return Object.assign({}, state, {
 					itemCount: itemCount,
 					items: items,
+					item: {},
+					view: ""
+				});
+			
+			} else {
+        		return state;
+    		}
+		}
+
+		case 'TRADE_CACHE': {
+			if (action.responseJson != null && action.responseJson.params != null) {
+
+				let symbols = {}
+				if (action.responseJson.params.SYMBOLS != null) {
+					symbols = action.responseJson.params.SYMBOLS;
+				}
+				
+				return Object.assign({}, state, {
+					cache: symbols,
 					item: {},
 					view: ""
 				});
