@@ -29,6 +29,10 @@ function TradeContainer() {
         dispatch(tradeActions.deleteItem(item));
         return true;
       }
+      case "RESET":{
+        dispatch(tradeActions.resetItem(item));
+        return true;
+      }
       case "ADD": {
         onAdd();
         return true;

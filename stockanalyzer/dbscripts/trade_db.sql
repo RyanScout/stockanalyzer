@@ -21,6 +21,7 @@ CREATE TABLE `ta_trade`
 	`budget`decimal(10,4),
 	`available_budget`decimal(10,4),
 	`shares_held` decimal(10,4),
+	`total_value` decimal(10,4),
 	`recent_buy_order_id`varchar(64),
 	`recent_sell_order_id`varchar(64),
 	`status` varchar(48) NOT NULL,

@@ -17,13 +17,20 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
   ) {
     for (let i = 0; i < itemState.items.length; i++) {
       let cells = [];
-      let status = "Not Running";
       cells.push(<td key="NAME">{itemState.items[i].name}</td>);
       cells.push(<td key="ORDERSIDE">{itemState.items[i].orderSide}</td>);
       cells.push(<td key="FREQUENCY">{itemState.items[i].frequency}</td>);
       cells.push(<td key="BUYCONDITION">{itemState.items[i].buyCondition}</td>);
-      cells.push(<td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>);
-      cells.push(<td key="STATUS">{itemState.items[i].status}</td>)
+      cells.push(
+        <td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>
+      );
+      cells.push(
+        <td key="PROFIT">
+          {Math.round(((itemState.items[i].totalValue - itemState.items[i].budget) /
+            itemState.items[i].budget)*1000)/10} %
+        </td>
+      );
+      cells.push(<td key="STATUS">{itemState.items[i].status}</td>);
       cells.push(
         <td key="MODIFY">
           <i
@@ -31,7 +38,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             title="Modify"
             onClick={() => onOption("MODIFY", itemState.items[i])}
           ></i>{" "}
-           <i
+          <i
             className="fa fa-microchip fa-1"
             title="Modify"
             onClick={() => onOption("TRADE_DETAIL_VIEW", itemState.items[i])}
@@ -39,12 +46,21 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
           <i
             className="fa fa-clipboard fa-1"
             title="Historical_Analysis"
-            onClick={() => onOption("HISTORICAL_ANALYSIS_VIEW", itemState.items[i])}
+            onClick={() =>
+              onOption("HISTORICAL_ANALYSIS_VIEW", itemState.items[i])
+            }
           ></i>{" "}
           <i
             className="fa fa-trash fa-1"
             title="Delete"
             onClick={() => onOption("DELETE", itemState.items[i])}
+          ></i>{" "}
+          <i
+            className="fa fa-recycle fa-1"
+            title="Reset"
+            onClick={() =>
+              onOption("RESET", itemState.items[i])
+            }
           ></i>
         </td>
       );
@@ -65,7 +81,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
         <p className="text-center fs-3 fw-bold"> Automated Trades </p>
       </div>
       <div className="row">
-        <div className="col-sm-9"/>
+        <div className="col-sm-9" />
         <div className="col-sm-3">
           <i
             className="fa fa-plus-square fa-1 float-end"
@@ -81,6 +97,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
               <th scope="col">Frequency</th>
               <th scope="col">Buy Condition</th>
               <th scope="col">Sell Condition</th>
+              <th scope="col">Profit</th>
               <th scope="col">Status</th>
               <th scope="col"></th>
             </tr>
