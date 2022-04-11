@@ -54,8 +54,19 @@ import { bindActionCreators } from "redux";
 					symbols = action.responseJson.params.SYMBOLS;
 				}
 				
+				let goldenCross = {}
+				if(action.responseJson.params.GOLDENCROSS != null){
+					for(let i = 0 ; i< symbols.size(); i++){
+						Object.assign(goldenCross , symbols[i] , actions.responseJson.params.GOLDENCROSS[i])
+					}
+				}
+
+				let lowerBollingerBand = {}
+				if (action.responseJson.params.LOWERBOLLINGERBAND != null) {
+					lowerBollingerBand = action.responseJson.params.LOWERBOLLINGERBAND;
+				}
 				return Object.assign({}, state, {
-					cache: symbols,
+					cache: goldenCross,
 					item: {},
 					view: ""
 				});

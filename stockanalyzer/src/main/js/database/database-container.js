@@ -9,7 +9,7 @@ const databaseState = useSelector((state => state.database));
 const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(databaseActions.list());
+    dispatch(databaseActions.getCache());
   }, []);
 
 function backload(){
