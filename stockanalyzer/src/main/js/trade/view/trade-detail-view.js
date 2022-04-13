@@ -39,14 +39,14 @@ export default function TradeDetailView({ itemState, appPrefs, onOption }) {
         <td key="PLACEDAT">
           {moment(
             new Date(itemState.item.tradeDetails[i].placedAt * 1000)
-          ).format("YYYY-MM-DD, h:mm:ss")}
+          ).format("MMM Do, YYYY, h:mm:ss a")}
         </td>
       );
       cells.push(
         <td key="FILLEDAT">
           {moment(
             new Date(itemState.item.tradeDetails[i].filledAt * 1000)
-          ).format("YYYY-MM-DD, h:mm:ss")}
+          ).format("MMM Do, YYYY, h:mm:ss a")}
         </td>
       );
       cells.push(
