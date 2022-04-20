@@ -12,6 +12,6 @@ public class ExternalAPIConfig {
 
 	@Bean
 	public AlpacaAPI alpacaAPI() {
-        return new AlpacaAPI("PK94RB6C0KXUIOLJT470", "bmhK6AhO3lD9DEeLvN8UdkEXq3Doq7wXZ3Ub8gTg", EndpointAPIType.PAPER, DataAPIType.IEX);
+        return new AlpacaAPI("PK7T324110B5YS85YRDC", "lTFvuA6aKwMB9PX9VSRUKjpG5bqtwalEoxFnMt0a", EndpointAPIType.PAPER, DataAPIType.IEX);
     }
 }

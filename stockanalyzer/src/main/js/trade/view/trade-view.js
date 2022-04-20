@@ -26,8 +26,12 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
       );
       cells.push(
         <td key="PROFIT">
-          {Math.round(((itemState.items[i].totalValue - itemState.items[i].budget) /
-            itemState.items[i].budget)*1000)/10} %
+          {Math.round(
+            ((itemState.items[i].totalValue - itemState.items[i].budget) /
+              itemState.items[i].budget) *
+              1000
+          ) / 10}{" "}
+          %
         </td>
       );
       cells.push(<td key="STATUS">{itemState.items[i].status}</td>);
@@ -58,9 +62,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
           <i
             className="fa fa-recycle fa-1"
             title="Reset"
-            onClick={() =>
-              onOption("RESET", itemState.items[i])
-            }
+            onClick={() => onOption("RESET", itemState.items[i])}
           ></i>
         </td>
       );
