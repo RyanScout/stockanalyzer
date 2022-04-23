@@ -1,5 +1,3 @@
-
-	
 CREATE TABLE `ta_lower_bollinger_band`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),

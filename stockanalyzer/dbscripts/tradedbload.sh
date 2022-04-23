@@ -7,13 +7,6 @@ load_base(){
 	else
 		echo "ERROR **** File trade_db.sql is missing ***"   
 	fi
-
-		echo "Loading trade_detail_db.sql to ${1}"     
-	if [ -f trade_detail_db.sql ]; then
-   		mysql -h ${2} -u ${3} --password=${4} ${1} < trade_detail_db.sql
-	else
-		echo "ERROR **** File trade_detail_db.sql is missing ***"   
-	fi
 }
 	
 all() {
