@@ -17,12 +17,34 @@ function DatabaseContainer() {
         databaseActions.backload();
         return true;
       case "GET_SYMBOL":
-        databaseActions.getSymbol();
+        dispatch(databaseActions.getSymbol(item.tradeSignal, item.symbol));
         return true;
     }
   }
 
-  return <DatabaseView onOption={onOption} itemState={databaseState} />;
+  function inputChange(event) {
+    let val = "";
+
+    if (event != null) {
+      if (event.target != null) {
+        if (event.target.type === "Number")
+          val = parseInt(event.target.value, 0);
+        else if (event.target.type == "date")
+          val = parseInt(event.target.valueAsNumber / 1000);
+        else val = event.target.value;
+      } else val = event;
+      let field = event.target.id;
+      dispatch(databaseActions.inputChange(field, val));
+    }
+  }
+
+  return (
+    <DatabaseView
+      onOption={onOption}
+      itemState={databaseState}
+      inputChange={inputChange}
+    />
+  );
 }
 
 export default DatabaseContainer;

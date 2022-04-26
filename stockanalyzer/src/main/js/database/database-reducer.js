@@ -4,6 +4,23 @@ export default function databaseReducer(state = {}, action) {
     case "DATABASE_BACKLOAD": {
       return state;
     }
+    case 'DATABASE_INPUT_CHANGE': {
+			if (action.params != null) {
+				let item = {};
+				if (state.item == null) {
+					item[action.params.field] = action.params.value;
+				} else {
+					item = Object.assign({}, state.item);
+					item[action.params.field] = action.params.value;
+				}
+				return Object.assign({}, state, {
+					item: item
+				});
+			} else {
+        		return state;
+    		}
+    	}
+      
     case "DATABASE_LIST": {
       if (action.responseJson != null && action.responseJson.params != null) {
         let stockDay = {};
@@ -22,12 +39,27 @@ export default function databaseReducer(state = {}, action) {
         return state;
       }
     }
+  
     case "DATABASE_CACHE": {
       if (action.responseJson != null && action.responseJson.params != null) {
 
         let cache = new Object();
-
         let goldenCross = new Object();
+        let lowerBollingerBand = new Object();
+        let upperBollingerBand = new Object();
+        if(state.cache != null){
+          cache = state.cache;
+          if(state.cache.goldenCross != null){
+            goldenCross = state.cache.goldenCross;
+          }
+          if(state.cache.lowerBollingerBand != null){
+            lowerBollingerBand = state.cache.lowerBollingerBand;
+          }
+          if(state.cache.upperBollingerBand != null){
+            upperBollingerBand = state.cache.upperBollingerBand;
+          }
+        }
+
         if (action.responseJson.params.GOLDEN_CROSS_DAY != null) {
           goldenCross["day"] = action.responseJson.params.GOLDEN_CROSS_DAY;
         }
@@ -37,7 +69,6 @@ export default function databaseReducer(state = {}, action) {
         }
         cache["goldenCross"] = goldenCross;
 
-        let lowerBollingerBand = new Object();
         if (action.responseJson.params.LOWER_BOLLINGER_BAND_DAY != null) {
           lowerBollingerBand["day"] =
             action.responseJson.params.LOWER_BOLLINGER_BAND_DAY;
@@ -48,7 +79,6 @@ export default function databaseReducer(state = {}, action) {
         }
         cache["lowerBollingerBand"] = lowerBollingerBand;
 
-        let upperBollingerBand = new Object();
         if (action.responseJson.params.UPPER_BOLLINGER_BAND_DAY != null) {
           upperBollingerBand["day"] =
             action.responseJson.params.UPPER_BOLLINGER_BAND_DAY;
@@ -61,7 +91,6 @@ export default function databaseReducer(state = {}, action) {
 
         return Object.assign({}, state, {
           cache: cache,
-          item: {},
           view: "",
         });
       } else {

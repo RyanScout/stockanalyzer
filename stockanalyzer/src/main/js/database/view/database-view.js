@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-export default function DatabaseView({ onOption, itemState }) {
+export default function DatabaseView({ onOption, itemState, inputChange }) {
   let genericOrderCondition = {
     symbol: "",
     flashed: 0,
@@ -21,7 +21,36 @@ export default function DatabaseView({ onOption, itemState }) {
     minute: genericOrderCondition,
   };
 
+  let symbol1 = "GENERAL";
+  let symbol2 = "GENERAL";
+  let symbol3 = "GENERAL";
+  let symbol4 = "GENERAL";
+  let symbol5 = "GENERAL";
+  let symbol6 = "GENERAL";
+
+  let item = {};
+
   if (itemState != null) {
+    if (itemState.item != null) {
+      if (itemState.item.symbol1 != null) {
+        symbol1 = itemState.item.symbol1;
+      }
+      if (itemState.item.symbol2 != null) {
+        symbol2 = itemState.item.symbol2;
+      }
+      if (itemState.item.symbol3 != null) {
+        symbol3 = itemState.item.symbol3;
+      }
+      if (itemState.item.symbol4 != null) {
+        symbol4 = itemState.item.symbol4;
+      }
+      if (itemState.item.symbol5 != null) {
+        symbol5 = itemState.item.symbol5;
+      }
+      if (itemState.item.symbol6 != null) {
+        symbol6 = itemState.item.symbol6;
+      }
+    }
     if (itemState.cache != null) {
       if (
         itemState.cache.goldenCross != null &&
@@ -71,8 +100,33 @@ export default function DatabaseView({ onOption, itemState }) {
     </td>
   );
   cells1.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol1"
+        name="symbo1"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol1}
+      />
+    </td>
+  );
+  cells1.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "GOLDEN_CROSS_DAY",
+              symbol: symbol1,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -81,7 +135,7 @@ export default function DatabaseView({ onOption, itemState }) {
   cells2.push(<td key="PERIOD">Minute</td>);
   cells2.push(<td key="CHECKED">{String(goldenCross.minute.checked)}</td>);
   cells2.push(<td key="FLASHED">{String(goldenCross.minute.flashed)}</td>);
-  cells2.push(<td key="SUCCESSES">{String(goldenCross.day.successes)}</td>);
+  cells2.push(<td key="SUCCESSES">{String(goldenCross.minute.successes)}</td>);
   cells2.push(
     <td key="FLASHPERCENTAGE">
       {Math.round(
@@ -93,14 +147,39 @@ export default function DatabaseView({ onOption, itemState }) {
   cells2.push(
     <td key="SUCCESSPERCENTAGE">
       {Math.round(
-        (goldenCross.day.successes / goldenCross.day.flashed) * 1000
+        (goldenCross.minute.successes / goldenCross.minute.flashed) * 1000
       ) / 10}
       %
     </td>
   );
   cells2.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol2"
+        name="symbol2"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol2}
+      />
+    </td>
+  );
+  cells2.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "GOLDEN_CROSS_MINUTE",
+              symbol: symbol2,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -110,6 +189,9 @@ export default function DatabaseView({ onOption, itemState }) {
   cells3.push(<td key="CHECKED">{String(lowerBollingerBand.day.checked)}</td>);
   cells3.push(<td key="FLASHED">{String(lowerBollingerBand.day.flashed)}</td>);
   cells3.push(
+    <td key="SUCCESSES">{String(lowerBollingerBand.day.successes)}</td>
+  );
+  cells3.push(
     <td key="FLASHPERCENTAGE">
       {Math.round(
         (lowerBollingerBand.day.flashed / lowerBollingerBand.day.checked) * 1000
@@ -118,8 +200,42 @@ export default function DatabaseView({ onOption, itemState }) {
     </td>
   );
   cells3.push(
+    <td key="SUCCESSPERCENTAGE">
+      {Math.round(
+        (lowerBollingerBand.day.successes / lowerBollingerBand.day.flashed) *
+          1000
+      ) / 10}
+      %
+    </td>
+  );
+  cells3.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol3"
+        name="symbol3"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol3}
+      />
+    </td>
+  );
+  cells3.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "LOWER_BOLLINGER_BAND_DAY",
+              symbol: symbol3,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -133,6 +249,9 @@ export default function DatabaseView({ onOption, itemState }) {
     <td key="FLASHED">{String(lowerBollingerBand.minute.flashed)}</td>
   );
   cells4.push(
+    <td key="SUCCESSES">{String(lowerBollingerBand.minute.successes)}</td>
+  );
+  cells4.push(
     <td key="FLASHPERCENTAGE">
       {Math.round(
         (lowerBollingerBand.minute.flashed /
@@ -143,8 +262,43 @@ export default function DatabaseView({ onOption, itemState }) {
     </td>
   );
   cells4.push(
+    <td key="SUCCESSPERCENTAGE">
+      {Math.round(
+        (lowerBollingerBand.minute.successes /
+          lowerBollingerBand.minute.flashed) *
+          1000
+      ) / 10}
+      %
+    </td>
+  );
+  cells4.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol4"
+        name="symbol4"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol4}
+      />
+    </td>
+  );
+  cells4.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "LOWER_BOLLINGER_BAND_MINUTE",
+              symbol: symbol4,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -154,6 +308,9 @@ export default function DatabaseView({ onOption, itemState }) {
   cells5.push(<td key="CHECKED">{String(upperBollingerBand.day.checked)}</td>);
   cells5.push(<td key="FLASHED">{String(upperBollingerBand.day.flashed)}</td>);
   cells5.push(
+    <td key="SUCCESSES">{String(upperBollingerBand.day.successes)}</td>
+  );
+  cells5.push(
     <td key="FLASHPERCENTAGE">
       {Math.round(
         (upperBollingerBand.day.flashed / upperBollingerBand.day.checked) * 1000
@@ -162,8 +319,42 @@ export default function DatabaseView({ onOption, itemState }) {
     </td>
   );
   cells5.push(
+    <td key="SUCCESSPERCENTAGE">
+      {Math.round(
+        (upperBollingerBand.day.successes / upperBollingerBand.day.flashed) *
+          1000
+      ) / 10}
+      %
+    </td>
+  );
+  cells5.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol5"
+        name="symbol5"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol5}
+      />
+    </td>
+  );
+  cells5.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "UPPER_BOLLINGER_BAND_DAY",
+              symbol: symbol5,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -177,6 +368,9 @@ export default function DatabaseView({ onOption, itemState }) {
     <td key="FLASHED">{String(upperBollingerBand.minute.flashed)}</td>
   );
   cells6.push(
+    <td key="SUCCESSES">{String(upperBollingerBand.minute.successes)}</td>
+  );
+  cells6.push(
     <td key="FLASHPERCENTAGE">
       {Math.round(
         (upperBollingerBand.minute.flashed /
@@ -187,8 +381,43 @@ export default function DatabaseView({ onOption, itemState }) {
     </td>
   );
   cells6.push(
+    <td key="SUCCESSPERCENTAGE">
+      {Math.round(
+        (upperBollingerBand.minute.successes /
+          upperBollingerBand.minute.flashed) *
+          1000
+      ) / 10}
+      %
+    </td>
+  );
+  cells6.push(
+    <td key="SYMBOL">
+      <input
+        type="text"
+        id="symbol6"
+        name="symbol6"
+        className="form-control"
+        autoCapitalize="off"
+        onChange={inputChange}
+        value={symbol6}
+      />
+    </td>
+  );
+  cells6.push(
     <td key="MODIFY">
-      <i className="fa fa-bullseye fa-1" title="Modify"></i>
+      <i
+        className="fa fa-bullseye fa-1"
+        title="Modify"
+        onClick={() =>
+          onOption(
+            "GET_SYMBOL",
+            Object.assign(item, {
+              tradeSignal: "UPPER_BOLLINGER_BAND_MINUTE",
+              symbol: symbol6,
+            })
+          )
+        }
+      ></i>
     </td>
   );
 
@@ -224,6 +453,7 @@ export default function DatabaseView({ onOption, itemState }) {
               <th scope="col">Successes</th>
               <th scope="col">Flash %</th>
               <th scope="col">Success %</th>
+              <th scope="col">Symbol</th>
               <th scope="col"></th>
             </tr>
           </thead>
