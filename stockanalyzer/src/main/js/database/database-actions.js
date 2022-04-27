@@ -93,6 +93,7 @@ export function getSymbol(tradeSignal, symbol) {
       .catch(function (error) {});
   };
 }
+
 export function getCache() {
   return function (dispatch) {
     let params = {};
@@ -166,3 +167,9 @@ export function list() {
       .catch(function (error) {});
   };
 }
+
+  export function databaseDetailView(item) {
+    return function (dispatch) {
+      dispatch({ type: "DATABASE_DETAIL_VIEW" , action: item});
+    };
+  };

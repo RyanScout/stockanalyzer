@@ -98,6 +98,22 @@ export default function databaseReducer(state = {}, action) {
       }
     }
 
+    case "DATABASE_DETAIL_VIEW":{
+      if (action != null) {
+				let item = {};
+  				if (action.action != null) {
+    				item = action.action;
+  				}
+				return Object.assign({}, state, {
+					item: item,
+					view: "DATABASE_DETAIL"
+				});
+			
+			} else {
+        		return state;
+    		}
+      }
+
     default:
       return state;
   }

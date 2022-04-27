@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import DatabaseView from "./view/database-view";
-import * as databaseActions from "./database-actions";
+import DatabaseDetailView from "./view/database-detail-view";
+import * as databaseActions from "../database/database-actions"
 import { useSelector, useDispatch } from "react-redux";
 
 function DatabaseContainer() {
@@ -18,6 +19,9 @@ function DatabaseContainer() {
         return true;
       case "GET_SYMBOL":
         dispatch(databaseActions.getSymbol(item.tradeSignal, item.symbol));
+        return true;
+      case "DETAIL_VIEW":
+        dispatch(databaseActions.databaseDetailView(item));
         return true;
     }
   }
@@ -38,13 +42,20 @@ function DatabaseContainer() {
     }
   }
 
-  return (
-    <DatabaseView
-      onOption={onOption}
-      itemState={databaseState}
-      inputChange={inputChange}
-    />
-  );
+  if (databaseState != null && databaseState.view != "DATABASE_DETAIL") {
+    return (
+      <DatabaseView
+        onOption={onOption}
+        itemState={databaseState}
+        inputChange={inputChange}
+      />
+    );
+  } else if (databaseState.view == "DATABASE_DETAIL") {
+    return <DatabaseDetailView
+    itemState = {databaseState} />;
+  } else {
+    return <div> Loading... </div>;
+  }
 }
 
 export default DatabaseContainer;

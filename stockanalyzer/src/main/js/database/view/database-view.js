@@ -113,7 +113,7 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
     </td>
   );
   cells1.push(
-    <td key="MODIFY">
+    <td key="SYMBOL_SELECTOR">
       <i
         className="fa fa-bullseye fa-1"
         title="Modify"
@@ -126,6 +126,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
             })
           )
         }
+      ></i>
+    </td>
+  );
+  cells1.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", goldenCross.day)}
       ></i>
     </td>
   );
@@ -182,6 +191,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
       ></i>
     </td>
   );
+  cells2.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", goldenCross.minute)}
+      ></i>
+    </td>
+  );
 
   let cells3 = [];
   cells3.push(<td key="ORDERCONDITION">Lower Bollinger Band</td>);
@@ -235,6 +253,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
             })
           )
         }
+      ></i>
+    </td>
+  );
+  cells3.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", lowerBollingerBand.day)}
       ></i>
     </td>
   );
@@ -301,6 +328,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
       ></i>
     </td>
   );
+  cells4.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", lowerBollingerBand.minute)}
+      ></i>
+    </td>
+  );
 
   let cells5 = [];
   cells5.push(<td key="ORDERCONDITION">Upper Bollinger Band</td>);
@@ -354,6 +390,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
             })
           )
         }
+      ></i>
+    </td>
+  );
+  cells5.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", upperBollingerBand.day)}
       ></i>
     </td>
   );
@@ -417,6 +462,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
             })
           )
         }
+      ></i>
+    </td>
+  );
+  cells6.push(
+    <td key="DETAIL_VIEW">
+      <i
+        className="fa fa-microchip fa-1"
+        title="Modify"
+        onClick={() => onOption("DETAIL_VIEW", upperBollingerBand.minute)}
       ></i>
     </td>
   );

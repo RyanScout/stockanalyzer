@@ -36,6 +36,7 @@ CREATE TABLE `ta_golden_cross_detail`
 	`vwap`decimal(10,4),
 	`checked` bigint (20),
 	`success`bit(1) DEFAULT 0,
+	`success_percent` decimal (10,4),
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,
