@@ -173,3 +173,9 @@ export function list() {
       dispatch({ type: "DATABASE_DETAIL_VIEW" , action: item});
     };
   };
+
+  export function cancelItem() {
+    return function (dispatch) {
+      dispatch({ type: "DATABASE_CANCEL_ITEM" });
+    };
+  }

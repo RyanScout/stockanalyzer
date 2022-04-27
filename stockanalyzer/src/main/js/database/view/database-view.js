@@ -31,26 +31,25 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
   let item = {};
 
   if (itemState != null) {
-    if (itemState.item != null) {
-      if (itemState.item.symbol1 != null) {
-        symbol1 = itemState.item.symbol1;
+      if (itemState.symbol1 != null) {
+        symbol1 = itemState.symbol1;
       }
-      if (itemState.item.symbol2 != null) {
-        symbol2 = itemState.item.symbol2;
+      if (itemState.symbol2 != null) {
+        symbol2 = itemState.symbol2;
       }
-      if (itemState.item.symbol3 != null) {
-        symbol3 = itemState.item.symbol3;
+      if (itemState.symbol3 != null) {
+        symbol3 = itemState.symbol3;
       }
-      if (itemState.item.symbol4 != null) {
-        symbol4 = itemState.item.symbol4;
+      if (itemState.symbol4 != null) {
+        symbol4 = itemState.symbol4;
       }
-      if (itemState.item.symbol5 != null) {
-        symbol5 = itemState.item.symbol5;
+      if (itemState.symbol5 != null) {
+        symbol5 = itemState.symbol5;
       }
-      if (itemState.item.symbol6 != null) {
-        symbol6 = itemState.item.symbol6;
+      if (itemState.symbol6 != null) {
+        symbol6 = itemState.symbol6;
       }
-    }
+      
     if (itemState.cache != null) {
       if (
         itemState.cache.goldenCross != null &&

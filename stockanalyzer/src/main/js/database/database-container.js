@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DatabaseView from "./view/database-view";
 import DatabaseDetailView from "./view/database-detail-view";
-import * as databaseActions from "../database/database-actions"
+import * as databaseActions from "../database/database-actions";
 import { useSelector, useDispatch } from "react-redux";
 
 function DatabaseContainer() {
@@ -23,6 +23,10 @@ function DatabaseContainer() {
       case "DETAIL_VIEW":
         dispatch(databaseActions.databaseDetailView(item));
         return true;
+        case "CANCEL": {
+          dispatch(databaseActions.cancelItem());
+          return true;
+        }
     }
   }
 
@@ -51,8 +55,7 @@ function DatabaseContainer() {
       />
     );
   } else if (databaseState.view == "DATABASE_DETAIL") {
-    return <DatabaseDetailView
-    itemState = {databaseState} />;
+    return <DatabaseDetailView onOption={onOption} itemState={databaseState} />;
   } else {
     return <div> Loading... </div>;
   }

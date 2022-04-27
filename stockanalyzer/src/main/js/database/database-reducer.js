@@ -4,23 +4,16 @@ export default function databaseReducer(state = {}, action) {
     case "DATABASE_BACKLOAD": {
       return state;
     }
-    case 'DATABASE_INPUT_CHANGE': {
-			if (action.params != null) {
-				let item = {};
-				if (state.item == null) {
-					item[action.params.field] = action.params.value;
-				} else {
-					item = Object.assign({}, state.item);
-					item[action.params.field] = action.params.value;
-				}
-				return Object.assign({}, state, {
-					item: item
-				});
-			} else {
-        		return state;
-    		}
-    	}
-      
+    case "DATABASE_INPUT_CHANGE": {
+      if (action.params != null) {
+        let tempState = Object.assign({},state);
+        tempState[action.params.field] = action.params.value;
+        return tempState
+      } else {
+        return state;
+      }
+    }
+
     case "DATABASE_LIST": {
       if (action.responseJson != null && action.responseJson.params != null) {
         let stockDay = {};
@@ -39,23 +32,22 @@ export default function databaseReducer(state = {}, action) {
         return state;
       }
     }
-  
+
     case "DATABASE_CACHE": {
       if (action.responseJson != null && action.responseJson.params != null) {
-
         let cache = new Object();
         let goldenCross = new Object();
         let lowerBollingerBand = new Object();
         let upperBollingerBand = new Object();
-        if(state.cache != null){
+        if (state.cache != null) {
           cache = state.cache;
-          if(state.cache.goldenCross != null){
+          if (state.cache.goldenCross != null) {
             goldenCross = state.cache.goldenCross;
           }
-          if(state.cache.lowerBollingerBand != null){
+          if (state.cache.lowerBollingerBand != null) {
             lowerBollingerBand = state.cache.lowerBollingerBand;
           }
-          if(state.cache.upperBollingerBand != null){
+          if (state.cache.upperBollingerBand != null) {
             upperBollingerBand = state.cache.upperBollingerBand;
           }
         }
@@ -98,21 +90,27 @@ export default function databaseReducer(state = {}, action) {
       }
     }
 
-    case "DATABASE_DETAIL_VIEW":{
+    case "DATABASE_DETAIL_VIEW": {
       if (action != null) {
-				let item = {};
-  				if (action.action != null) {
-    				item = action.action;
-  				}
-				return Object.assign({}, state, {
-					item: item,
-					view: "DATABASE_DETAIL"
-				});
-			
-			} else {
-        		return state;
-    		}
+        let item = {};
+        if (action.action != null) {
+          item = action.action;
+        }
+        return Object.assign({}, state, {
+          item: item,
+          view: "DATABASE_DETAIL",
+        });
+      } else {
+        return state;
       }
+    }
+
+    case "DATABASE_CANCEL_ITEM": {
+      let clone = Object.assign({}, state);
+      clone.view = "";
+      clone.item = {};
+      return clone;
+    }
 
     default:
       return state;
