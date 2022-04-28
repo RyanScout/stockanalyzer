@@ -1,9 +1,10 @@
 import "chart.js/auto";
 import React from "react";
-import { Chart, Line, Scatter } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 export default function DatabaseDetailView({ itemState, onOption }) {
   let volumeData = [];
   let vwapData = [];
+  let priceData =[];
 
   function compare(a, b) {
     if (a.x > b.x) return 1;
@@ -94,6 +95,17 @@ export default function DatabaseDetailView({ itemState, onOption }) {
               )
             );
           }
+          if (detail.successPercent != null && detail.flashPrice != null) {
+            priceData.push(
+              Object.assign(
+                {},
+                {
+                  x: detail.flashPrice,
+                  y: detail.successPercent,
+                }
+              )
+            );
+          }
         });
       }
       if (itemState.item.lowerBollingerBandDetails != null) {
@@ -120,6 +132,17 @@ export default function DatabaseDetailView({ itemState, onOption }) {
               )
             );
           }
+          if (detail.successPercent != null && detail.flashPrice != null) {
+            priceData.push(
+              Object.assign(
+                {},
+                {
+                  x: detail.flashPrice,
+                  y: detail.successPercent,
+                }
+              )
+            );
+          }
         });
       }
       if (itemState.item.upperBollingerBandDetails != null) {
@@ -141,6 +164,17 @@ export default function DatabaseDetailView({ itemState, onOption }) {
                 {},
                 {
                   x: detail.vwap,
+                  y: detail.successPercent,
+                }
+              )
+            );
+          }
+          if (detail.successPercent != null && detail.flashPrice != null) {
+            priceData.push(
+              Object.assign(
+                {},
+                {
+                  x: detail.flashPrice,
                   y: detail.successPercent,
                 }
               )
@@ -195,6 +229,25 @@ export default function DatabaseDetailView({ itemState, onOption }) {
               borderColor: "blue",
               spanGaps: true,
             },
+            {
+              type: "scatter",
+              id: 5,
+              label: "Price Association",
+              data: priceData,
+              xAxisID: "Price",
+              yAxisID: "SuccessPercent",
+              borderColor: "green",
+            },
+            {
+              type: "line",
+              id: 6,
+              label: "Price Association Best Fit",
+              data: findLineByLeastSquares(priceData),
+              xAxisID: "Price",
+              yAxisID: "SuccessPercent",
+              borderColor: "green",
+              spanGaps: true,
+            },
           ],
         }}
         options={{
@@ -221,6 +274,15 @@ export default function DatabaseDetailView({ itemState, onOption }) {
               title: {
                 display: true,
                 text: "Vwap",
+              },
+            },
+            Price: {
+              axis: "x",
+              type: "linear",
+              display: "auto",
+              title: {
+                display: true,
+                text: "Price",
               },
             },
             SuccessPercent: {
