@@ -251,6 +251,7 @@ export function saveItem(item) {
       .catch(function (error) {});
   };
 }
+
 export function historicallyAnalyzeSwingTrade(item) {
   return function (dispatch) {
     let params = {};

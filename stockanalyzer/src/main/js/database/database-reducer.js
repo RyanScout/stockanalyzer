@@ -6,13 +6,30 @@ export default function databaseReducer(state = {}, action) {
     }
     case "DATABASE_INPUT_CHANGE": {
       if (action.params != null) {
-        let tempState = Object.assign({},state);
+        let tempState = Object.assign({}, state);
         tempState[action.params.field] = action.params.value;
-        return tempState
+        return tempState;
       } else {
         return state;
       }
     }
+
+    case 'DATABASE_INPUT_ITEM_CHANGE': {
+			if (action.params != null) {
+				let item = {};
+				if (state.item == null) {
+					item[action.params.field] = action.params.value;
+				} else {
+					item = Object.assign({}, state.item);
+					item[action.params.field] = action.params.value;
+				}
+				return Object.assign({}, state, {
+					item: item
+				});
+			} else {
+        		return state;
+    		}
+    	}
 
     case "DATABASE_LIST": {
       if (action.responseJson != null && action.responseJson.params != null) {
@@ -99,6 +116,21 @@ export default function databaseReducer(state = {}, action) {
         return Object.assign({}, state, {
           item: item,
           view: "DATABASE_DETAIL",
+        });
+      } else {
+        return state;
+      }
+    }
+
+    case "DATABASE_MODIFY_VIEW": {
+      if (action != null) {
+        let item = {};
+        if (action.action != null) {
+          item = action.action;
+        }
+        return Object.assign({}, state, {
+          item: item,
+          view: "DATABASE_MODIFY",
         });
       } else {
         return state;

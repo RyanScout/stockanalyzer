@@ -21,35 +21,39 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
     minute: genericOrderCondition,
   };
 
-  let symbol1 = "GENERAL";
-  let symbol2 = "GENERAL";
-  let symbol3 = "GENERAL";
-  let symbol4 = "GENERAL";
-  let symbol5 = "GENERAL";
-  let symbol6 = "GENERAL";
+  let GOLDEN_CROSS_DAY_SYMBOL = "GENERAL";
+  let GOLDEN_CROSS_MINUTE_SYMBOL = "GENERAL";
+  let LOWER_BOLLINGER_BAND_DAY_SYMBOL = "GENERAL";
+  let LOWER_BOLLINGER_BAND_MINUTE_SYMBOL = "GENERAL";
+  let UPPER_BOLLINGER_BAND_DAY_SYMBOL = "GENERAL";
+  let UPPER_BOLLINGER_BAND_MINUTE_SYMBOL = "GENERAL";
 
   let item = {};
 
   if (itemState != null) {
-      if (itemState.symbol1 != null) {
-        symbol1 = itemState.symbol1;
-      }
-      if (itemState.symbol2 != null) {
-        symbol2 = itemState.symbol2;
-      }
-      if (itemState.symbol3 != null) {
-        symbol3 = itemState.symbol3;
-      }
-      if (itemState.symbol4 != null) {
-        symbol4 = itemState.symbol4;
-      }
-      if (itemState.symbol5 != null) {
-        symbol5 = itemState.symbol5;
-      }
-      if (itemState.symbol6 != null) {
-        symbol6 = itemState.symbol6;
-      }
-      
+    if (itemState.GOLDEN_CROSS_DAY_SYMBOL != null) {
+      GOLDEN_CROSS_DAY_SYMBOL = itemState.GOLDEN_CROSS_DAY_SYMBOL;
+    }
+    if (itemState.GOLDEN_CROSS_MINUTE_SYMBOL != null) {
+      GOLDEN_CROSS_MINUTE_SYMBOL = itemState.GOLDEN_CROSS_MINUTE_SYMBOL;
+    }
+    if (itemState.LOWER_BOLLINGER_BAND_DAY_SYMBOL != null) {
+      LOWER_BOLLINGER_BAND_DAY_SYMBOL =
+        itemState.LOWER_BOLLINGER_BAND_DAY_SYMBOL;
+    }
+    if (itemState.LOWER_BOLLINGER_BAND_MINUTE_SYMBOL != null) {
+      LOWER_BOLLINGER_BAND_MINUTE_SYMBOL =
+        itemState.LOWER_BOLLINGER_BAND_MINUTE_SYMBOL;
+    }
+    if (itemState.UPPER_BOLLINGER_BAND_DAY_SYMBOL != null) {
+      UPPER_BOLLINGER_BAND_DAY_SYMBOL =
+        itemState.UPPER_BOLLINGER_BAND_DAY_SYMBOL;
+    }
+    if (itemState.UPPER_BOLLINGER_BAND_MINUTE_SYMBOL != null) {
+      UPPER_BOLLINGER_BAND_MINUTE_SYMBOL =
+        itemState.UPPER_BOLLINGER_BAND_MINUTE_SYMBOL;
+    }
+
     if (itemState.cache != null) {
       if (
         itemState.cache.goldenCross != null &&
@@ -77,409 +81,179 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
 
   let automatedTradeTableRows = [];
 
-  let cells1 = [];
-  cells1.push(<td key="ORDERCONDITION">Golden Cross</td>);
-  cells1.push(<td key="PERIOD">Day</td>);
-  cells1.push(<td key="CHECKED">{String(goldenCross.day.checked)}</td>);
-  cells1.push(<td key="FLASHED">{String(goldenCross.day.flashed)}</td>);
-  cells1.push(<td key="SUCCESSES">{String(goldenCross.day.successes)}</td>);
-  cells1.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round((goldenCross.day.flashed / goldenCross.day.checked) * 1000) /
-        10}
-      %
-    </td>
-  );
-  cells1.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (goldenCross.day.successes / goldenCross.day.flashed) * 1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells1.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol1"
-        name="symbo1"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol1}
-      />
-    </td>
-  );
-  cells1.push(
-    <td key="SYMBOL_SELECTOR">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "GOLDEN_CROSS_DAY",
-              symbol: symbol1,
-            })
-          )
-        }
-      ></i>
-    </td>
-  );
-  cells1.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", goldenCross.day)}
-      ></i>
-    </td>
-  );
+  function genericTradeSignal(
+    tradeSignal,
+    evaluationPeriod,
+    symbol,
+    symbolName
+  ) {
+    let cells = [];
+    let tempTradeSignal1 = "";
+    let tempTradeSignal2 = "";
+    let tempEvaluationPeriod1 = "";
+    let tempEvaluationPeriod2 = "";
+    switch (tradeSignal) {
+      case goldenCross:
+        tempTradeSignal1 = "Golden Cross";
+        tempTradeSignal2 = "GOLDEN_CROSS_";
+        break;
+      case lowerBollingerBand:
+        tempTradeSignal1 = "Lower Bollinger Band";
+        tempTradeSignal2 = "LOWER_BOLLINGER_BAND_";
+        break;
+      case upperBollingerBand:
+        tempTradeSignal1 = "Upper Bollinger Band";
+        tempTradeSignal2 = "UPPER_BOLLINGER_BAND_";
+        break;
+      default:
+        console.log("ERROR");
+    }
+    switch (evaluationPeriod) {
+      case "day":
+        tempEvaluationPeriod1 = "Day";
+        tempEvaluationPeriod2 = "DAY";
+        break;
+      case "minute":
+        tempEvaluationPeriod1 = "Minute";
+        tempEvaluationPeriod2 = "MINUTE";
+        break;
+      default:
+        console.log("ERROR");
+    }
 
-  let cells2 = [];
-  cells2.push(<td key="ORDERCONDITION">Golden Cross</td>);
-  cells2.push(<td key="PERIOD">Minute</td>);
-  cells2.push(<td key="CHECKED">{String(goldenCross.minute.checked)}</td>);
-  cells2.push(<td key="FLASHED">{String(goldenCross.minute.flashed)}</td>);
-  cells2.push(<td key="SUCCESSES">{String(goldenCross.minute.successes)}</td>);
-  cells2.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round(
-        (goldenCross.minute.flashed / goldenCross.minute.checked) * 1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells2.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (goldenCross.minute.successes / goldenCross.minute.flashed) * 1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells2.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol2"
-        name="symbol2"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol2}
-      />
-    </td>
-  );
-  cells2.push(
-    <td key="MODIFY">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "GOLDEN_CROSS_MINUTE",
-              symbol: symbol2,
-            })
-          )
-        }
-      ></i>
-    </td>
-  );
-  cells2.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", goldenCross.minute)}
-      ></i>
-    </td>
-  );
+    cells.push(<td key="ORDERCONDITION">{tempTradeSignal1}</td>);
+    cells.push(<td key="PERIOD">{tempEvaluationPeriod1}</td>);
+    cells.push(
+      <td key="CHECKED">{String(tradeSignal[evaluationPeriod].checked)}</td>
+    );
+    cells.push(
+      <td key="FLASHED">{String(tradeSignal[evaluationPeriod].flashed)}</td>
+    );
+    cells.push(
+      <td key="SUCCESSES">{String(tradeSignal[evaluationPeriod].successes)}</td>
+    );
+    cells.push(
+      <td key="FLASHPERCENTAGE">
+        {Math.round(
+          (tradeSignal[evaluationPeriod].flashed /
+            tradeSignal[evaluationPeriod].checked) *
+            1000
+        ) / 10}
+        %
+      </td>
+    );
+    cells.push(
+      <td key="SUCCESSPERCENTAGE">
+        {Math.round(
+          (tradeSignal[evaluationPeriod].successes /
+            tradeSignal[evaluationPeriod].flashed) *
+            1000
+        ) / 10}
+        %
+      </td>
+    );
+    cells.push(
+      <td key="SYMBOL">
+        <input
+          type="text"
+          id={symbolName}
+          name={symbolName}
+          className="form-control"
+          autoCapitalize="off"
+          onChange={inputChange}
+          value={symbol}
+        />
+      </td>
+    );
+    cells.push(
+      <td key="SYMBOL_SELECTOR">
+        <i
+          className="fa fa-bullseye fa-1"
+          title="Modify"
+          onClick={() =>
+            onOption(
+              "GET_SYMBOL",
+              Object.assign(item, {
+                tradeSignal: tempTradeSignal2 + tempEvaluationPeriod2,
+                symbol: symbol,
+              })
+            )
+          }
+        ></i>
+      </td>
+    );
+    cells.push(
+      <td key="DETAIL_VIEW">
+        <i
+          className="fa fa-microchip fa-1"
+          title="Modify"
+          onClick={() => onOption("DETAIL_VIEW", tradeSignal[evaluationPeriod])}
+        ></i>
+      </td>
+    );
+    return cells;
+  }
 
-  let cells3 = [];
-  cells3.push(<td key="ORDERCONDITION">Lower Bollinger Band</td>);
-  cells3.push(<td key="PERIOD">Day</td>);
-  cells3.push(<td key="CHECKED">{String(lowerBollingerBand.day.checked)}</td>);
-  cells3.push(<td key="FLASHED">{String(lowerBollingerBand.day.flashed)}</td>);
-  cells3.push(
-    <td key="SUCCESSES">{String(lowerBollingerBand.day.successes)}</td>
+  automatedTradeTableRows.push(
+    <tr key={0}>
+      {genericTradeSignal(
+        goldenCross,
+        "day",
+        GOLDEN_CROSS_DAY_SYMBOL,
+        "GOLDEN_CROSS_DAY_SYMBOL"
+      )}
+    </tr>
   );
-  cells3.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round(
-        (lowerBollingerBand.day.flashed / lowerBollingerBand.day.checked) * 1000
-      ) / 10}
-      %
-    </td>
+  automatedTradeTableRows.push(
+    <tr key={1}>
+      {genericTradeSignal(
+        goldenCross,
+        "minute",
+        GOLDEN_CROSS_MINUTE_SYMBOL,
+        "GOLDEN_CROSS_MINUTE_SYMBOL"
+      )}
+    </tr>
   );
-  cells3.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (lowerBollingerBand.day.successes / lowerBollingerBand.day.flashed) *
-          1000
-      ) / 10}
-      %
-    </td>
+  automatedTradeTableRows.push(
+    <tr key={2}>
+      {genericTradeSignal(
+        lowerBollingerBand,
+        "day",
+        LOWER_BOLLINGER_BAND_DAY_SYMBOL,
+        "LOWER_BOLLINGER_BAND_DAY_SYMBOL"
+      )}
+    </tr>
   );
-  cells3.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol3"
-        name="symbol3"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol3}
-      />
-    </td>
+  automatedTradeTableRows.push(
+    <tr key={3}>
+      {genericTradeSignal(
+        lowerBollingerBand,
+        "minute",
+        LOWER_BOLLINGER_BAND_MINUTE_SYMBOL,
+        "LOWER_BOLLINGER_BAND_MINUTE_SYMBOL"
+      )}
+    </tr>
   );
-  cells3.push(
-    <td key="MODIFY">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "LOWER_BOLLINGER_BAND_DAY",
-              symbol: symbol3,
-            })
-          )
-        }
-      ></i>
-    </td>
+  automatedTradeTableRows.push(
+    <tr key={4}>
+      {genericTradeSignal(
+        upperBollingerBand,
+        "day",
+        UPPER_BOLLINGER_BAND_DAY_SYMBOL,
+        "UPPER_BOLLINGER_BAND_DAY_SYMBOL"
+      )}
+    </tr>
   );
-  cells3.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", lowerBollingerBand.day)}
-      ></i>
-    </td>
+  automatedTradeTableRows.push(
+    <tr key={5}>
+      {genericTradeSignal(
+        upperBollingerBand,
+        "minute",
+        UPPER_BOLLINGER_BAND_MINUTE_SYMBOL,
+        "UPPER_BOLLINGER_BAND_MINUTE_SYMBOL"
+      )}
+    </tr>
   );
-
-  let cells4 = [];
-  cells4.push(<td key="ORDERCONDITION">Lower Bollinger Band</td>);
-  cells4.push(<td key="PERIOD">Minute</td>);
-  cells4.push(
-    <td key="CHECKED">{String(lowerBollingerBand.minute.checked)}</td>
-  );
-  cells4.push(
-    <td key="FLASHED">{String(lowerBollingerBand.minute.flashed)}</td>
-  );
-  cells4.push(
-    <td key="SUCCESSES">{String(lowerBollingerBand.minute.successes)}</td>
-  );
-  cells4.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round(
-        (lowerBollingerBand.minute.flashed /
-          lowerBollingerBand.minute.checked) *
-          1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells4.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (lowerBollingerBand.minute.successes /
-          lowerBollingerBand.minute.flashed) *
-          1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells4.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol4"
-        name="symbol4"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol4}
-      />
-    </td>
-  );
-  cells4.push(
-    <td key="MODIFY">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "LOWER_BOLLINGER_BAND_MINUTE",
-              symbol: symbol4,
-            })
-          )
-        }
-      ></i>
-    </td>
-  );
-  cells4.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", lowerBollingerBand.minute)}
-      ></i>
-    </td>
-  );
-
-  let cells5 = [];
-  cells5.push(<td key="ORDERCONDITION">Upper Bollinger Band</td>);
-  cells5.push(<td key="PERIOD">Day</td>);
-  cells5.push(<td key="CHECKED">{String(upperBollingerBand.day.checked)}</td>);
-  cells5.push(<td key="FLASHED">{String(upperBollingerBand.day.flashed)}</td>);
-  cells5.push(
-    <td key="SUCCESSES">{String(upperBollingerBand.day.successes)}</td>
-  );
-  cells5.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round(
-        (upperBollingerBand.day.flashed / upperBollingerBand.day.checked) * 1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells5.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (upperBollingerBand.day.successes / upperBollingerBand.day.flashed) *
-          1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells5.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol5"
-        name="symbol5"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol5}
-      />
-    </td>
-  );
-  cells5.push(
-    <td key="MODIFY">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "UPPER_BOLLINGER_BAND_DAY",
-              symbol: symbol5,
-            })
-          )
-        }
-      ></i>
-    </td>
-  );
-  cells5.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", upperBollingerBand.day)}
-      ></i>
-    </td>
-  );
-
-  let cells6 = [];
-  cells6.push(<td key="ORDERCONDITION">Upper Bollinger Band</td>);
-  cells6.push(<td key="PERIOD">Minute</td>);
-  cells6.push(
-    <td key="CHECKED">{String(upperBollingerBand.minute.checked)}</td>
-  );
-  cells6.push(
-    <td key="FLASHED">{String(upperBollingerBand.minute.flashed)}</td>
-  );
-  cells6.push(
-    <td key="SUCCESSES">{String(upperBollingerBand.minute.successes)}</td>
-  );
-  cells6.push(
-    <td key="FLASHPERCENTAGE">
-      {Math.round(
-        (upperBollingerBand.minute.flashed /
-          upperBollingerBand.minute.checked) *
-          1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells6.push(
-    <td key="SUCCESSPERCENTAGE">
-      {Math.round(
-        (upperBollingerBand.minute.successes /
-          upperBollingerBand.minute.flashed) *
-          1000
-      ) / 10}
-      %
-    </td>
-  );
-  cells6.push(
-    <td key="SYMBOL">
-      <input
-        type="text"
-        id="symbol6"
-        name="symbol6"
-        className="form-control"
-        autoCapitalize="off"
-        onChange={inputChange}
-        value={symbol6}
-      />
-    </td>
-  );
-  cells6.push(
-    <td key="MODIFY">
-      <i
-        className="fa fa-bullseye fa-1"
-        title="Modify"
-        onClick={() =>
-          onOption(
-            "GET_SYMBOL",
-            Object.assign(item, {
-              tradeSignal: "UPPER_BOLLINGER_BAND_MINUTE",
-              symbol: symbol6,
-            })
-          )
-        }
-      ></i>
-    </td>
-  );
-  cells6.push(
-    <td key="DETAIL_VIEW">
-      <i
-        className="fa fa-microchip fa-1"
-        title="Modify"
-        onClick={() => onOption("DETAIL_VIEW", upperBollingerBand.minute)}
-      ></i>
-    </td>
-  );
-
-  automatedTradeTableRows.push(<tr key={0}>{cells1}</tr>);
-  automatedTradeTableRows.push(<tr key={1}>{cells2}</tr>);
-  automatedTradeTableRows.push(<tr key={2}>{cells3}</tr>);
-  automatedTradeTableRows.push(<tr key={3}>{cells4}</tr>);
-  automatedTradeTableRows.push(<tr key={4}>{cells5}</tr>);
-  automatedTradeTableRows.push(<tr key={5}>{cells6}</tr>);
 
   let automatedTradeTableBody = <tbody>{automatedTradeTableRows}</tbody>;
   return (
@@ -491,9 +265,9 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
         <div className="col-sm-9" />
         <div className="col-sm-3">
           <i
-            className="fa fa-bolt fa-1 float-end"
-            title="Backload"
-            onClick={() => onOption("BACKLOAD")}
+            className="fa fa-plus-square fa-1 float-end"
+            title="Modify"
+            onClick={() => onOption("MODIFY_VIEW")}
           ></i>
         </div>
         <table className="table table-striped">

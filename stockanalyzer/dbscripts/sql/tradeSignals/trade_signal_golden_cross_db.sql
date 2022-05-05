@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS `ta_golden_cross_detail`, `ta_golden_cross`;
 CREATE TABLE `ta_golden_cross`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
+	`trade_signal_key`varchar(64),
+	`eval_period`varchar(64),
     `flashing` bit(1) DEFAULT 0,
 	`symbol` varchar(64),
 	`short_sma_type` varchar(64),

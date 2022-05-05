@@ -1,7 +1,10 @@
 DROP TABLE IF EXISTS `ta_lower_bollinger_band_detail`, `ta_lower_bollinger_band`;
+
 CREATE TABLE `ta_lower_bollinger_band`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
+	`trade_signal_key` varchar(64),
+	`eval_period` varchar(64),
     `flashing` bit(1) DEFAULT 0,
 	`symbol` varchar(64),
 	`lbb_type` varchar(64),
