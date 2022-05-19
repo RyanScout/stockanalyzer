@@ -1,13 +1,14 @@
-DROP TABLE IF EXISTS `ta_upper_bollinger_band_detail`,`ta_upper_bollinger_band`;
-CREATE TABLE `ta_upper_bollinger_band`
+DROP TABLE IF EXISTS `ta_lower_bollinger_band_detail`, `ta_lower_bollinger_band`;
+
+CREATE TABLE `ta_lower_bollinger_band`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`trade_signal_key` varchar(64),
 	`eval_period` varchar(64),
     `flashing` bit(1) DEFAULT 0,
 	`symbol` varchar(64),
-	`ubb_type` varchar(64),
-    `standard_deviation_value` decimal (10,4),
+	`lbb_type` varchar(64),
+    `standard_deviations` decimal (10,4),
     `flashed`bigint(20) DEFAULT 0,
     `checked`bigint(20) DEFAULT 0,
 	`successes`bigint(20) DEFAULT 0,
@@ -23,13 +24,13 @@ CREATE TABLE `ta_upper_bollinger_band`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_symbol_ubb_type_standard_deviation_value` (`symbol`,`ubb_type`,`standard_deviation_value`)
+	UNIQUE KEY `UK_symbol_lbb_type_standard_deviations` (`symbol`,`lbb_type`,`standard_deviations`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `ta_upper_bollinger_band_detail`
+CREATE TABLE `ta_lower_bollinger_band_detail`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`upper_bollinger_band_id` bigint (20) NOT NULL,
+	`lower_bollinger_band_id` bigint (20) NOT NULL,
 	`flash_time` bigint (20),
 	`flash_price` decimal (10,4),
 	`volume`bigint (20),
@@ -46,6 +47,6 @@ CREATE TABLE `ta_upper_bollinger_band_detail`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`upper_bollinger_band_id`) REFERENCES `ta_upper_bollinger_band` (`id`),
-	UNIQUE KEY `UK_upper_bollinger_band_id_flash_time` (`upper_bollinger_band_id`,`flash_time`)
+	FOREIGN KEY (`lower_bollinger_band_id`) REFERENCES `ta_lower_bollinger_band` (`id`),
+	UNIQUE KEY `UK_lower_bollinger_band_id_flash_time` (`lower_bollinger_band_id`,`flash_time`)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

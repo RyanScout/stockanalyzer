@@ -203,7 +203,7 @@ export function getCache() {
     let params = {};
     params.requestParams = {};
     params.requestParams.service = "CACHE";
-    params.requestParams.action = "LIST";
+    params.requestParams.action = "LIST_GENERALS";
     params.URI = "/api/public/callService";
 
     const uri = getHost() + params.URI;

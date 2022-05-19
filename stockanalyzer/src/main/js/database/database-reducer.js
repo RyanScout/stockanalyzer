@@ -33,21 +33,26 @@ export default function databaseReducer(state = {}, action) {
 
     case "DATABASE_LIST": {
       if (action.responseJson != null && action.responseJson.params != null) {
-        let stockDay = {};
-        if (action.responseJson.params.STOCKDAY != null) {
-          stockDay = action.responseJson.params.STOCKDAY;
-        }
-        let stockMinute = {};
-        if (action.responseJson.params.STOCKMINUTE != null) {
-          stockMinute = action.responseJson.params.STOCKMINUTE;
-        }
-        return Object.assign({}, state, {
-          stockDay: stockDay,
-          stockMinute: stockMinute,
-        });
-      } else {
-        return state;
-      }
+
+				let itemCount = {};
+  				if (action.responseJson.params.ITEMCOUNT != null) {
+    				itemCount = action.responseJson.params.ITEMCOUNT;
+  				}
+
+				let items = {};
+  				if (action.responseJson.params.ITEMS != null) {
+    				items = action.responseJson.params.ITEMS;
+  				}
+				return Object.assign({}, state, {
+					itemCount: itemCount,
+					items: items,
+					item: {},
+					view: ""
+				});
+			
+			} else {
+        		return state;
+    		}
     }
 
     case "DATABASE_CACHE": {

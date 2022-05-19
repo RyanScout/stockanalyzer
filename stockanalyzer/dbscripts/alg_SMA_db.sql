@@ -1,6 +1,6 @@
-
+DROP TABLE IF EXISTS `ta_SMA`;
 	
-CREATE TABLE `ta_LBB`
+CREATE TABLE `ta_SMA`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`epoch_seconds` bigint(20),
