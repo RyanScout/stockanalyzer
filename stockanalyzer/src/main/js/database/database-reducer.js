@@ -4,55 +4,43 @@ export default function databaseReducer(state = {}, action) {
     case "DATABASE_BACKLOAD": {
       return state;
     }
+
     case "DATABASE_INPUT_CHANGE": {
       if (action.params != null) {
-        let tempState = Object.assign({}, state);
-        tempState[action.params.field] = action.params.value;
-        return tempState;
+        let item = {};
+        if (state.item == null) {
+          item[action.params.field] = action.params.value;
+        } else {
+          item = Object.assign({}, state.item);
+          item[action.params.field] = action.params.value;
+        }
+        return Object.assign({}, state, {
+          item: item,
+        });
       } else {
         return state;
       }
     }
-
-    case 'DATABASE_INPUT_ITEM_CHANGE': {
-			if (action.params != null) {
-				let item = {};
-				if (state.item == null) {
-					item[action.params.field] = action.params.value;
-				} else {
-					item = Object.assign({}, state.item);
-					item[action.params.field] = action.params.value;
-				}
-				return Object.assign({}, state, {
-					item: item
-				});
-			} else {
-        		return state;
-    		}
-    	}
-
     case "DATABASE_LIST": {
       if (action.responseJson != null && action.responseJson.params != null) {
+        let itemCount = {};
+        if (action.responseJson.params.ITEMCOUNT != null) {
+          itemCount = action.responseJson.params.ITEMCOUNT;
+        }
 
-				let itemCount = {};
-  				if (action.responseJson.params.ITEMCOUNT != null) {
-    				itemCount = action.responseJson.params.ITEMCOUNT;
-  				}
-
-				let items = {};
-  				if (action.responseJson.params.ITEMS != null) {
-    				items = action.responseJson.params.ITEMS;
-  				}
-				return Object.assign({}, state, {
-					itemCount: itemCount,
-					items: items,
-					item: {},
-					view: ""
-				});
-			
-			} else {
-        		return state;
-    		}
+        let items = {};
+        if (action.responseJson.params.ITEMS != null) {
+          items = action.responseJson.params.ITEMS;
+        }
+        return Object.assign({}, state, {
+          itemCount: itemCount,
+          items: items,
+          item: {},
+          view: "",
+        });
+      } else {
+        return state;
+      }
     }
 
     case "DATABASE_CACHE": {
@@ -129,12 +117,7 @@ export default function databaseReducer(state = {}, action) {
 
     case "DATABASE_MODIFY_VIEW": {
       if (action != null) {
-        let item = {};
-        if (action.action != null) {
-          item = action.action;
-        }
         return Object.assign({}, state, {
-          item: item,
           view: "DATABASE_MODIFY",
         });
       } else {

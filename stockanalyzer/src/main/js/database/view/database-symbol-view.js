@@ -1,19 +1,22 @@
 import React from "react";
 import moment from "moment";
 
-export default function DatabaseView({ onOption, itemState, inputChange }) {
+export default function DatabaseSymbolView({ onOption, itemState, inputChange }) {
   let automatedTradeTableRows1 = [];
   // fill latest tradestable
   if (
     itemState != null &&
-    itemState.items != null &&
-    itemState.items.length > 0
+    itemState.item != null &&
+    itemState.item.tradeSignal != null &&
+    itemState.item.tradeSignal.length > 0
   ) {
-    for (let i = 0; i < itemState.items.length; i++) {
+    
+    for (let i = 0; i < itemState.item.tradeSignal.length; i++) {
       let cells = [];
-      cells.push(<td key="NAME">{itemState.items[i].name}</td>);
-      cells.push(<td key="EVALPERIOD">{itemState.items[i].evalPeriod}</td>);
-      cells.push(<td key="SYMBOL">{itemState.items[i].symbol}</td>);
+      cells.push(<td key="SYMBOL">{itemState.item.tradeSignal[i].symbol}</td>);
+      cells.push(<td key="CHECKED">{itemState.item.tradeSignal[i].checked}</td>);
+      cells.push(<td key="FLASHED">{itemState.item.tradeSignal[i].flashed}</td>);
+      cells.push(<td key="SUCCESSES">{itemState.item.tradeSignal[i].successses}</td>);
       automatedTradeTableRows1.push(<tr key={i}>{cells}</tr>);
     }
   } else {
@@ -42,9 +45,11 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Evaluation Period</th>
               <th scope="col">Symbol</th>
+              <th scope="col">Key</th>
+              <th scope="col">Checks</th>
+              <th scope="col">Flashes</th>
+              <th scope="col">Successes</th>
               <th scope="col"></th>
             </tr>
           </thead>

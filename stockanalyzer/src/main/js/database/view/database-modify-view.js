@@ -11,14 +11,30 @@ export default function DatabaseModifyView({
   itemState,
   inputChange,
   onOption,
+  manuallyInputChange,
 }) {
+  let name = "";
   let evalPeriod = "";
+  let symbol = "";
+  let symbols = [];
   let identifier = "";
   let shortSMAType = "";
   let longSMAType = "";
+
+  let unorderedSymbols = [];
+
   if (itemState.item != null) {
+    if (itemState.item.name != null) {
+      name = itemState.item.name;
+    }
     if (itemState.item.evalPeriod != null) {
       evalPeriod = itemState.item.evalPeriod;
+    }
+    if (itemState.item.symbol != null) {
+      symbol = itemState.item.symbol;
+    }
+    if(itemState.item.symbols != null){
+      symbols = Array.from(itemState.item.symbols);
     }
     if (itemState.item.identifier != null) {
       identifier = itemState.item.identifier;
@@ -30,6 +46,14 @@ export default function DatabaseModifyView({
       longSMAType = itemState.item.longSMAType;
     }
   }
+
+  (function renderSymbols(){
+    symbols.forEach(symbol=>{
+      unorderedSymbols.push(
+        <ul>{symbol}</ul>
+      )
+    })
+  })()
 
   let dynamicallyShowTradeSignalParams = (value) => {
     if (identifier == value) return "";
@@ -107,7 +131,19 @@ export default function DatabaseModifyView({
           <RenderTab value="UpperBollingerBand" />
         </ul>
         <div>
-          <label htmlFor="EvalPeriod">Eval Period</label>
+          <label htmlFor="name">Name</label>
+          <input
+            type="Text"
+            id="name"
+            name="name"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={inputChange}
+            value={name}
+          />
+        </div>
+        <div>
+          <label htmlFor="EvalPeriod">Evaluation Period</label>
           <select
             id="evalPeriod"
             name="evalPeriod"
@@ -117,6 +153,29 @@ export default function DatabaseModifyView({
           >
             {selectOptionsEvalPeriod}
           </select>
+        </div>
+        <div>
+          <label htmlFor="symbol">Symbol</label>
+          <i
+            className="fa fa-plus-square fa-1 float-end"
+            title="Add Symbol"
+            onClick={
+              ()=>{
+                symbols.push(symbol)
+                manuallyInputChange("symbols" , symbols)
+                manuallyInputChange("symbol" , "")
+              }
+            }
+          ></i>
+          <input
+            type="Text"
+            id="symbol"
+            name="symbol"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={inputChange}
+            value={symbol}
+          />
         </div>
 
         <div className={dynamicallyShowTradeSignalParams("GoldenCross")}>
@@ -140,6 +199,10 @@ export default function DatabaseModifyView({
             onChange={inputChange}
             value={longSMAType}
           />
+        </div>
+        <div>
+          <label htmlFor="current Symbols">Current Symbols</label>
+          {unorderedSymbols}
         </div>
       </div>
       <br />

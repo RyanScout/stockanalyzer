@@ -1,8 +1,12 @@
-DROP TABLE IF EXISTS `ta_user_trade_signal_key`,`ta_user`;
+DROP TABLE IF EXISTS `ta_technical_indicator_key,ta_symbol`;
 
-CREATE TABLE `ta_user`
+CREATE TABLE `ta_custom_technical_indicator`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
+	`name`varchar(64),
+	`technical_indicator_type`varchar(64),
+	`technical_indicator_key`varchar(64),
+	`evaluation_period`varchar(64),
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,
@@ -14,11 +18,11 @@ CREATE TABLE `ta_user`
 	PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `ta_user_trade_signal_key`
+CREATE TABLE `ta_symbol`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`user_id`bigint(20),
-	`user_trade_signal_key` varchar(64),
+	`symbol` varchar(64),
+	`custom_technical_indicator_id` bigint(20),
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,
@@ -28,5 +32,5 @@ CREATE TABLE `ta_user_trade_signal_key`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`user_id`) REFERENCES `ta_user` (`id`)
+	FOREIGN KEY (`custom_technical_indicator_id`) REFERENCES `ta_custom_technical_indicator` (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

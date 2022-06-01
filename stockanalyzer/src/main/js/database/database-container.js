@@ -10,7 +10,7 @@ function DatabaseContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(databaseActions.getCache());
+    dispatch(databaseActions.list());
   }, []);
 
   function onOption(code, item) {
@@ -59,22 +59,17 @@ function DatabaseContainer() {
     }
   }
 
-  function inputItemChange(event) {
-    let val = "";
 
-    if (event != null) {
-      if (event.target != null) {
-        val = event.target.value;
-      } else val = event;
-      let field = event.target.id;
-      dispatch(databaseActions.inputItemChange(field, val));
-    }
+  function manuallyInputChange(field, value){
+    dispatch(databaseActions.inputChange(field,value));
   }
+
 
   if (
     databaseState != null &&
     databaseState.view != "DATABASE_DETAIL" &&
-    databaseState.view != "DATABASE_MODIFY"
+    databaseState.view != "DATABASE_MODIFY" &&
+    databaseState.view != "DATABASE_SYMBOL"
   ) {
     return (
       <DatabaseView
@@ -88,9 +83,19 @@ function DatabaseContainer() {
       <DatabaseModifyView
         onOption={onOption}
         itemState={databaseState}
-        inputChange={inputItemChange}
+        inputChange={inputChange}
+        manuallyInputChange={manuallyInputChange}
       />
     );
+  }else if (databaseState.view == "DATABASE_SYMBOL") {
+    return (
+      <DatabaseSymbolView
+        onOption={onOption}
+        itemState={databaseState}
+        inputChange={inputChange}
+      />
+    );
+    
   } else if (databaseState.view == "DATABASE_DETAIL") {
     return <DatabaseDetailView onOption={onOption} itemState={databaseState} />;
   } else {
