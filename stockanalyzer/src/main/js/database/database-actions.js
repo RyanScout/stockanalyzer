@@ -61,7 +61,9 @@ export function saveItem(item) {
     let params = {};
     params.requestParams = {};
     params.requestParams.action = "SAVE";
-    params.requestParams.service = "CACHE";
+    params.requestParams.service = "CUSTOM_TECHNICAL_INDICATOR";
+    item.shortSMAType = item.shortSMAType + "-" +item.evaluationPeriod.toLowerCase();
+    item.longSMAType = item.longSMAType + "-" +item.evaluationPeriod.toLowerCase();
     params.requestParams.ITEM = item;
 
     params.URI = "/api/public/callService";
@@ -266,6 +268,12 @@ export function list() {
 export function databaseDetailView(item) {
   return function (dispatch) {
     dispatch({ type: "DATABASE_DETAIL_VIEW", action: item });
+  };
+}
+
+export function databaseSymbolView(item) {
+  return function (dispatch) {
+    dispatch({ type: "DATABASE_SYMBOL_VIEW", action: item });
   };
 }
 

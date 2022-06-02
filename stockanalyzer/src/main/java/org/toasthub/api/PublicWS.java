@@ -4,6 +4,7 @@ import org.toasthub.analysis.algorithm.AlgorithmCruncherSvc;
 import org.toasthub.stock.analysis.CurrentTestingSvc;
 import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.cache.CacheSvc;
+import org.toasthub.stock.custom_technical_indicator.CustomTechnicalIndicatorSvc;
 import org.toasthub.stock.dashboard.DashboardSvc;
 import org.toasthub.stock.historicalanalysis.HistoricalAnalysisSvc;
 import org.toasthub.stock.order.PlaceOrderSvc;
@@ -47,6 +48,9 @@ public class PublicWS {
 	@Autowired
 	CacheSvc cacheSvc;
 
+	@Autowired
+	CustomTechnicalIndicatorSvc customTechnicalIndicatorSvc;
+
 	@RequestMapping(value = "callService", method = RequestMethod.POST)
 	public Response service(@RequestBody Request request) {
 		String service = (String) request.getParams().get("service");
@@ -75,6 +79,8 @@ public class PublicWS {
 			case "CACHE":
 				cacheSvc.process(request, response);
 				break;
+			case "CUSTOM_TECHNICAL_INDICATOR":
+				customTechnicalIndicatorSvc.process(request, response);
 			default:
 				break;
 		}

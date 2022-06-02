@@ -12,8 +12,24 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
     for (let i = 0; i < itemState.items.length; i++) {
       let cells = [];
       cells.push(<td key="NAME">{itemState.items[i].name}</td>);
-      cells.push(<td key="EVALPERIOD">{itemState.items[i].evalPeriod}</td>);
-      cells.push(<td key="SYMBOL">{itemState.items[i].symbol}</td>);
+      cells.push(<td key="KEY">{itemState.items[i].technicalIndicatorKey}</td>);
+      cells.push(
+        <td key="EVALPERIOD">{itemState.items[i].evaluationPeriod}</td>
+      );
+      cells.push(
+        <td key="MODIFY">
+          <i
+            className="fa fa-edit fa-1"
+            title="Modify"
+            onClick={() => onOption("MODIFY_VIEW", itemState.items[i])}
+          ></i>{" "}
+          <i
+            className="fa fa-solid fa-bars"
+            title="SymbolView"
+            onClick={() => onOption("SYMBOL_VIEW", itemState.items[i])}
+          ></i>
+        </td>
+      );
       automatedTradeTableRows1.push(<tr key={i}>{cells}</tr>);
     }
   } else {
@@ -36,15 +52,15 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
           <i
             className="fa fa-plus-square fa-1 float-end"
             title="Modify"
-            onClick={(e) => onOption("MODIFY_VIEW", e)}
+            onClick={() => onOption("MODIFY_VIEW")}
           ></i>
         </div>
         <table className="table table-striped">
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Key</th>
               <th scope="col">Evaluation Period</th>
-              <th scope="col">Symbol</th>
               <th scope="col"></th>
             </tr>
           </thead>

@@ -1,5 +1,10 @@
 export default function databaseReducer(state = {}, action) {
-  let myState = {};
+  let defaultItemState = {
+    evaluationPeriod: "DAY",
+    shortSMAType: "15",
+    longSMAType: "50",
+  };
+
   switch (action.type) {
     case "DATABASE_BACKLOAD": {
       return state;
@@ -115,16 +120,35 @@ export default function databaseReducer(state = {}, action) {
       }
     }
 
-    case "DATABASE_MODIFY_VIEW": {
+    case "DATABASE_SYMBOL_VIEW": {
       if (action != null) {
+        let item = {};
+        if (action.action != null) {
+          item = action.action;
+        }
         return Object.assign({}, state, {
-          view: "DATABASE_MODIFY",
+          item: item,
+          view: "DATABASE_SYMBOL",
         });
       } else {
         return state;
       }
     }
 
+    case "DATABASE_MODIFY_VIEW": {
+      if (action != null) {
+        let item = defaultItemState;
+        if (action.action != null) {
+          item = Object.assign(item, action.action);
+        }
+        return Object.assign({}, state, {
+          item: item,
+          view: "DATABASE_MODIFY",
+        });
+      } else {
+        return state;
+      }
+    }
     case "DATABASE_CANCEL_ITEM": {
       let clone = Object.assign({}, state);
       clone.view = "";

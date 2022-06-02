@@ -1,14 +1,17 @@
-DROP TABLE IF EXISTS `ta_golden_cross_detail`, `ta_golden_cross`;
+DROP TABLE IF EXISTS `ta_technical_indicator_detail`, `ta_technical_indicator`;
 
-CREATE TABLE `ta_golden_cross`
+CREATE TABLE `ta_technical_indicator`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`trade_signal_key`varchar(64),
-	`eval_period`varchar(64),
+	`technical_indicator_key`varchar(64),
+    `technical_indicator_type`varchar(64),
+	`evaluation_period`varchar(64),
     `flashing` bit(1) DEFAULT 0,
-	`symbol` varchar(64),
 	`short_sma_type` varchar(64),
     `long_sma_type` varchar(64),
+    `lbb_type` varchar(64),
+    `ubb_type`varchar(64),
+    `standard_deviations` decimal (10,4),
     `flashed`bigint(20) DEFAULT 0,
     `checked`bigint(20) DEFAULT 0,
 	`successes`bigint(20) DEFAULT 0,
@@ -24,13 +27,13 @@ CREATE TABLE `ta_golden_cross`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_symbol_short_sma_type_long_sma_type` (`symbol`,`short_sma_type`,`long_sma_type`)
+	UNIQUE KEY `UK_technical_indicator_key` (`technical_indicator_key`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
-CREATE TABLE `ta_golden_cross_detail`
+CREATE TABLE `ta_technical_indicator_detail`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`golden_cross_id` bigint (20) NOT NULL,
+	`technical_indicator_id` bigint (20) NOT NULL,
 	`flash_time` bigint (20),
 	`flash_price` decimal (10,4),
 	`volume`bigint (20),
@@ -47,6 +50,6 @@ CREATE TABLE `ta_golden_cross_detail`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`golden_cross_id`) REFERENCES `ta_golden_cross` (`id`),
-	UNIQUE KEY `UK_golden_cross_id_flash_time` (`golden_cross_id`,`flash_time`)
+	FOREIGN KEY (`technical_indicator_id`) REFERENCES `ta_technical_indicator` (`id`),
+	UNIQUE KEY `UK_technical_indicator_id_flash_time` (`technical_indicator_id`,`flash_time`)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

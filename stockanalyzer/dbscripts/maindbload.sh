@@ -113,6 +113,20 @@ load_base(){
 		echo "ERROR **** custom_technical_indicator_db.sql is missing ***"   
 	fi
 
+	echo "Loading technical_indicator_db.sql to ${1}"     
+	if [ -f technical_indicator_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < technical_indicator_db.sql
+	else
+		echo "ERROR **** technical_indicator_db.sql is missing ***"   
+	fi
+
+	echo "Loading symbol_db.sql to ${1}"     
+	if [ -f symbol_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < symbol_db.sql
+	else
+		echo "ERROR **** symbol_db.sql is missing ***"   
+	fi
+
 	echo "Done Loading db ${1}"
 }
 	

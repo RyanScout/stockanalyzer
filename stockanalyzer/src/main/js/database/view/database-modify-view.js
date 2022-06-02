@@ -14,30 +14,27 @@ export default function DatabaseModifyView({
   manuallyInputChange,
 }) {
   let name = "";
-  let evalPeriod = "";
+  let evaluationPeriod = "";
   let symbol = "";
-  let symbols = [];
-  let identifier = "";
+  let technicalIndicatorType = "";
   let shortSMAType = "";
   let longSMAType = "";
 
+  let symbols = [];
   let unorderedSymbols = [];
 
   if (itemState.item != null) {
     if (itemState.item.name != null) {
       name = itemState.item.name;
     }
-    if (itemState.item.evalPeriod != null) {
-      evalPeriod = itemState.item.evalPeriod;
+    if (itemState.item.evaluationPeriod != null) {
+      evaluationPeriod = itemState.item.evaluationPeriod;
     }
     if (itemState.item.symbol != null) {
       symbol = itemState.item.symbol;
     }
-    if(itemState.item.symbols != null){
-      symbols = Array.from(itemState.item.symbols);
-    }
-    if (itemState.item.identifier != null) {
-      identifier = itemState.item.identifier;
+    if (itemState.item.technicalIndicatorType != null) {
+      technicalIndicatorType = itemState.item.technicalIndicatorType;
     }
     if (itemState.item.shortSMAType != null) {
       shortSMAType = itemState.item.shortSMAType;
@@ -45,47 +42,47 @@ export default function DatabaseModifyView({
     if (itemState.item.longSMAType != null) {
       longSMAType = itemState.item.longSMAType;
     }
+    if (itemState.item.symbols != null) {
+      let x = 0;
+      itemState.item.symbols.forEach((symbol) => {
+        x++;
+        if (typeof symbol !== "string") {
+          symbol = symbol.symbol;
+        }
+        symbols.push(symbol);
+        unorderedSymbols.push(<ul key={x}>{symbol}</ul>);
+      });
+    }
   }
 
-  (function renderSymbols(){
-    symbols.forEach(symbol=>{
-      unorderedSymbols.push(
-        <ul>{symbol}</ul>
-      )
-    })
-  })()
-
   let dynamicallyShowTradeSignalParams = (value) => {
-    if (identifier == value) return "";
+    if (technicalIndicatorType == value) return "";
     else return "invisible-element";
-  };
-
-  let orderSideClassName = (value) => {
-    switch (identifier) {
-      case value:
-        return "nav-link active";
-      default:
-        return "nav-link";
-    }
-  };
-  let orderSideAriaSelected = (value) => {
-    switch (identifier) {
-      case value:
-        return "true";
-      default:
-        return "false";
-    }
   };
 
   function RenderTab(props) {
     return (
       <li className="nav-item" role="presentation">
         <button
-          className={orderSideClassName(props.value)}
-          id="identifier"
+          className={(() => {
+            switch (technicalIndicatorType) {
+              case props.value:
+                return "nav-link active";
+              default:
+                return "nav-link";
+            }
+          })()}
+          id="technicalIndicatorType"
           data-mdb-toggle="pill"
           role="tab"
-          aria-selected={orderSideAriaSelected(props.value)}
+          aria-selected={(() => {
+            switch (technicalIndicatorType) {
+              case props.value:
+                return "true";
+              default:
+                return "false";
+            }
+          })()}
           value={props.value}
           onClick={inputChange}
         >
@@ -95,20 +92,19 @@ export default function DatabaseModifyView({
     );
   }
 
-  let optionsEvalPeriod = [
-    { label: "null", value: "null" },
+  let optionsEvaluationPeriod = [
     { label: "DAY", value: "DAY" },
     { label: "MINUTE", value: "MINUTE" },
   ];
-  let selectOptionsEvalPeriod = [];
-  for (let i = 0; i < optionsEvalPeriod.length; i++) {
+  let selectOptionsEvaluationPeriod = [];
+  for (let i = 0; i < optionsEvaluationPeriod.length; i++) {
     let label = "";
-    if (optionsEvalPeriod[i].label == null) {
-    } else if (optionsEvalPeriod[i].label != null) {
-      label = optionsEvalPeriod[i].label;
+    if (optionsEvaluationPeriod[i].label == null) {
+    } else if (optionsEvaluationPeriod[i].label != null) {
+      label = optionsEvaluationPeriod[i].label;
     }
-    selectOptionsEvalPeriod.push(
-      <option key={i} value={optionsEvalPeriod[i].value}>
+    selectOptionsEvaluationPeriod.push(
+      <option key={i} value={optionsEvaluationPeriod[i].value}>
         {label}
       </option>
     );
@@ -143,15 +139,15 @@ export default function DatabaseModifyView({
           />
         </div>
         <div>
-          <label htmlFor="EvalPeriod">Evaluation Period</label>
+          <label htmlFor="EvaluationPeriod">Evaluation Period</label>
           <select
-            id="evalPeriod"
-            name="evalPeriod"
-            value={evalPeriod}
+            id="evaluationPeriod"
+            name="evaluationPeriod"
+            value={evaluationPeriod}
             className="form-control"
             onChange={inputChange}
           >
-            {selectOptionsEvalPeriod}
+            {selectOptionsEvaluationPeriod}
           </select>
         </div>
         <div>
@@ -159,13 +155,11 @@ export default function DatabaseModifyView({
           <i
             className="fa fa-plus-square fa-1 float-end"
             title="Add Symbol"
-            onClick={
-              ()=>{
-                symbols.push(symbol)
-                manuallyInputChange("symbols" , symbols)
-                manuallyInputChange("symbol" , "")
-              }
-            }
+            onClick={() => {
+              symbols.push(symbol);
+              manuallyInputChange("symbols", symbols);
+              manuallyInputChange("symbol", "");
+            }}
           ></i>
           <input
             type="Text"
@@ -186,8 +180,22 @@ export default function DatabaseModifyView({
             name="shortSMAType"
             className="form-control"
             autoCapitalize="off"
-            onChange={inputChange}
-            value={shortSMAType}
+            onChange={(event) => {
+              let x = event.target.value.substring(
+                0,
+                event.target.value.length - evaluationPeriod.length - 1
+              );
+              let num = Number(x);
+              if (num >= 999) return;
+              if (
+                event.target.value.endsWith(
+                  "-" + evaluationPeriod.toLowerCase()
+                )
+              ) {
+                manuallyInputChange("shortSMAType", x);
+              }
+            }}
+            value={shortSMAType + "-" + evaluationPeriod.toLowerCase()}
           />
           <label htmlFor="longSMAType">Long SMA Type</label>
           <input
@@ -196,8 +204,22 @@ export default function DatabaseModifyView({
             name="longSMAType"
             className="form-control"
             autoCapitalize="off"
-            onChange={inputChange}
-            value={longSMAType}
+            onChange={(event) => {
+              let x = event.target.value.substring(
+                0,
+                event.target.value.length - evaluationPeriod.length - 1
+              );
+              let num = Number(x);
+              if (num > 999) return;
+              if (
+                event.target.value.endsWith(
+                  "-" + evaluationPeriod.toLowerCase()
+                )
+              ) {
+                manuallyInputChange("longSMAType", x);
+              }
+            }}
+            value={longSMAType + "-" + evaluationPeriod.toLowerCase()}
           />
         </div>
         <div>
@@ -214,7 +236,10 @@ export default function DatabaseModifyView({
             id="SaveButton"
             className="form-control btn-primary"
             value="Save"
-            onClick={(e) => onOption("SAVE")}
+            onClick={() => {
+              manuallyInputChange("symbols", symbols);
+              onOption("SAVE");
+            }}
           />
         </div>
         <div className="col-sm">

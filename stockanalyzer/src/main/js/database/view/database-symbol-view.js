@@ -1,22 +1,51 @@
 import React from "react";
 import moment from "moment";
 
-export default function DatabaseSymbolView({ onOption, itemState, inputChange }) {
+export default function DatabaseSymbolView({
+  onOption,
+  itemState,
+  inputChange,
+}) {
   let automatedTradeTableRows1 = [];
   // fill latest tradestable
   if (
     itemState != null &&
     itemState.item != null &&
-    itemState.item.tradeSignal != null &&
-    itemState.item.tradeSignal.length > 0
+    itemState.item.technicalIndicators != null &&
+    itemState.item.technicalIndicators.length > 0
   ) {
-    
-    for (let i = 0; i < itemState.item.tradeSignal.length; i++) {
+    for (let i = 0; i < itemState.item.technicalIndicators.length; i++) {
+      if (itemState.item.technicalIndicators[i] === null) {
+        continue;
+      }
       let cells = [];
-      cells.push(<td key="SYMBOL">{itemState.item.tradeSignal[i].symbol}</td>);
-      cells.push(<td key="CHECKED">{itemState.item.tradeSignal[i].checked}</td>);
-      cells.push(<td key="FLASHED">{itemState.item.tradeSignal[i].flashed}</td>);
-      cells.push(<td key="SUCCESSES">{itemState.item.tradeSignal[i].successses}</td>);
+      cells.push(
+        <td key="SYMBOL">
+          {itemState.item.technicalIndicators[i].symbol.symbol}
+        </td>
+      );
+      cells.push(
+        <td key="CHECKED">{itemState.item.technicalIndicators[i].checked}</td>
+      );
+      cells.push(
+        <td key="FLASHED">{itemState.item.technicalIndicators[i].flashed}</td>
+      );
+      cells.push(
+        <td key="SUCCESSES">
+          {itemState.item.technicalIndicators[i].successes}
+        </td>
+      );
+      cells.push(
+        <td key="DETAIL_VIEW">
+          <i
+            className="fa fas fa-chart-bar"
+            title="DetailView"
+            onClick={() =>
+              onOption("DETAIL_VIEW", itemState.item.technicalIndicators[i])
+            }
+          ></i>
+        </td>
+      );
       automatedTradeTableRows1.push(<tr key={i}>{cells}</tr>);
     }
   } else {
@@ -33,6 +62,7 @@ export default function DatabaseSymbolView({ onOption, itemState, inputChange })
       <div className="row">
         <p className="text-center fs-3 fw-bold"> Algorithm Analysis </p>
       </div>
+      <button onClick={() => onOption("CANCEL")}>Back</button>
       <div className="row">
         <div className="col-sm-9" />
         <div className="col-sm-3">
@@ -46,7 +76,6 @@ export default function DatabaseSymbolView({ onOption, itemState, inputChange })
           <thead>
             <tr>
               <th scope="col">Symbol</th>
-              <th scope="col">Key</th>
               <th scope="col">Checks</th>
               <th scope="col">Flashes</th>
               <th scope="col">Successes</th>

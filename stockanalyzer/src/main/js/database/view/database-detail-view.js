@@ -71,82 +71,8 @@ export default function DatabaseDetailView({ itemState, onOption }) {
 
   if (itemState != null) {
     if (itemState.item != null) {
-      if (itemState.item.goldenCrossDetails != null) {
-        itemState.item.goldenCrossDetails.forEach((detail) => {
-          if (detail.successPercent != null && detail.volume != null) {
-            volumeData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.volume,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-          if (detail.successPercent != null && detail.vwap != null) {
-            vwapData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.vwap,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-          if (detail.successPercent != null && detail.flashPrice != null) {
-            priceData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.flashPrice,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-        });
-      }
-      if (itemState.item.lowerBollingerBandDetails != null) {
-        itemState.item.lowerBollingerBandDetails.forEach((detail) => {
-          if (detail.successPercent != null && detail.volume != null) {
-            volumeData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.volume,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-          if (detail.successPercent != null && detail.vwap != null) {
-            vwapData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.vwap,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-          if (detail.successPercent != null && detail.flashPrice != null) {
-            priceData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.flashPrice,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-        });
-      }
-      if (itemState.item.upperBollingerBandDetails != null) {
-        itemState.item.upperBollingerBandDetails.forEach((detail) => {
+      if (itemState.item.details != null) {
+        itemState.item.details.forEach((detail) => {
           if (detail.successPercent != null && detail.volume != null) {
             volumeData.push(
               Object.assign(
