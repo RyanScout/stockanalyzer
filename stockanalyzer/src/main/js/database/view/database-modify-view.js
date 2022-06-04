@@ -18,10 +18,11 @@ export default function DatabaseModifyView({
   let symbol = "";
   let technicalIndicatorType = "";
   let shortSMAType = "";
+  let lbbType = "";
+  let ubbType = "";
+  let standardDeviations = "";
   let longSMAType = "";
-
   let symbols = [];
-  let unorderedSymbols = [];
 
   if (itemState.item != null) {
     if (itemState.item.name != null) {
@@ -42,16 +43,17 @@ export default function DatabaseModifyView({
     if (itemState.item.longSMAType != null) {
       longSMAType = itemState.item.longSMAType;
     }
+    if (itemState.item.lbbType != null) {
+      lbbType = itemState.item.lbbType;
+    }
+    if (itemState.item.ubbType != null) {
+      ubbType = itemState.item.ubbType;
+    }
+    if (itemState.item.standardDeviations != null) {
+      standardDeviations = itemState.item.standardDeviations;
+    }
     if (itemState.item.symbols != null) {
-      let x = 0;
-      itemState.item.symbols.forEach((symbol) => {
-        x++;
-        if (typeof symbol !== "string") {
-          symbol = symbol.symbol;
-        }
-        symbols.push(symbol);
-        unorderedSymbols.push(<ul key={x}>{symbol}</ul>);
-      });
+      symbols = itemState.item.symbols.slice();
     }
   }
 
@@ -222,9 +224,92 @@ export default function DatabaseModifyView({
             value={longSMAType + "-" + evaluationPeriod.toLowerCase()}
           />
         </div>
+
+        <div className={dynamicallyShowTradeSignalParams("LowerBollingerBand")}>
+          <label htmlFor="lbbType">LBB Type</label>
+          <input
+            type="Text"
+            id="lbbType"
+            name="lbbType"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={(event) => {
+              let x = event.target.value.substring(
+                0,
+                event.target.value.length - evaluationPeriod.length - 1
+              );
+              let num = Number(x);
+              if (num > 999) return;
+              if (
+                event.target.value.endsWith(
+                  "-" + evaluationPeriod.toLowerCase()
+                )
+              ) {
+                manuallyInputChange("lbbType", x);
+              }
+            }}
+            value={lbbType + "-" + evaluationPeriod.toLowerCase()}
+          />
+          <label htmlFor="standardDeviations">Standard Deviations</label>
+          <input
+            type="Number"
+            id="standardDeviations"
+            name="standardDeviations"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={inputChange}
+            value={standardDeviations}
+          />
+        </div>
+
+        <div className={dynamicallyShowTradeSignalParams("UpperBollingerBand")}>
+          <label htmlFor="lbbType">LBB Type</label>
+          <input
+            type="Text"
+            id="ubbType"
+            name="ubbType"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={(event) => {
+              let x = event.target.value.substring(
+                0,
+                event.target.value.length - evaluationPeriod.length - 1
+              );
+              let num = Number(x);
+              if (num > 999) return;
+              if (
+                event.target.value.endsWith(
+                  "-" + evaluationPeriod.toLowerCase()
+                )
+              ) {
+                manuallyInputChange("ubbType", x);
+              }
+            }}
+            value={ubbType + "-" + evaluationPeriod.toLowerCase()}
+          />
+          <label htmlFor="standardDeviations">Standard Deviations</label>
+          <input
+            type="Number"
+            id="standardDeviations"
+            name="standardDeviations"
+            className="form-control"
+            autoCapitalize="off"
+            onChange={inputChange}
+            value={standardDeviations}
+          />
+        </div>
+
         <div>
           <label htmlFor="current Symbols">Current Symbols</label>
-          {unorderedSymbols}
+          <ul>
+            {(() => {
+              let arr = [];
+              for (let i = 0; i < symbols.length; i++) {
+                arr.push(<li key={i}>{symbols[i]}</li>);
+              }
+              return arr;
+            })()}
+          </ul>
         </div>
       </div>
       <br />

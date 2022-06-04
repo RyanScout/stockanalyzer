@@ -3,6 +3,9 @@ export default function databaseReducer(state = {}, action) {
     evaluationPeriod: "DAY",
     shortSMAType: "15",
     longSMAType: "50",
+    lbbType: "20",
+    ubbType: "20",
+    standardDeviations: "2",
   };
 
   switch (action.type) {
@@ -33,9 +36,16 @@ export default function databaseReducer(state = {}, action) {
           itemCount = action.responseJson.params.ITEMCOUNT;
         }
 
-        let items = {};
+        let items = [];
         if (action.responseJson.params.ITEMS != null) {
           items = action.responseJson.params.ITEMS;
+          items.forEach((item) => {
+            if (item.symbols != null) {
+              for (let i = 0; i < item.symbols.length; i++) {
+                item.symbols[i] = item.symbols[i].symbol;
+              }
+            }
+          });
         }
         return Object.assign({}, state, {
           itemCount: itemCount,

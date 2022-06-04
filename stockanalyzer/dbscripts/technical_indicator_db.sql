@@ -7,6 +7,7 @@ CREATE TABLE `ta_technical_indicator`
     `technical_indicator_type`varchar(64),
 	`evaluation_period`varchar(64),
     `flashing` bit(1) DEFAULT 0,
+	`symbol`varchar(64),
 	`short_sma_type` varchar(64),
     `long_sma_type` varchar(64),
     `lbb_type` varchar(64),
@@ -27,7 +28,7 @@ CREATE TABLE `ta_technical_indicator`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_technical_indicator_key` (`technical_indicator_key`)
+	UNIQUE KEY `UK_technical_indicator_type_technical_indicator_key_symbol` (`technical_indicator_type`,`technical_indicator_key`,`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE `ta_technical_indicator_detail`

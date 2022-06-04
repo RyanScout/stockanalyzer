@@ -21,7 +21,7 @@ export default function DatabaseSymbolView({
       let cells = [];
       cells.push(
         <td key="SYMBOL">
-          {itemState.item.technicalIndicators[i].symbol.symbol}
+          {itemState.item.technicalIndicators[i].symbol}
         </td>
       );
       cells.push(
