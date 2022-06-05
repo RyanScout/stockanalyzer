@@ -45,6 +45,32 @@ export default function databaseReducer(state = {}, action) {
                 item.symbols[i] = item.symbols[i].symbol;
               }
             }
+            if (item.evaluationPeriod != null) {
+              if (item.longSMAType != null) {
+                item.longSMAType = item.longSMAType.substring(
+                  0,
+                  item.longSMAType.length - item.evaluationPeriod.length - 1
+                );
+              }
+              if (item.shortSMAType != null) {
+                item.shortSMAType = item.shortSMAType.substring(
+                  0,
+                  item.shortSMAType.length - item.evaluationPeriod.length - 1
+                );
+              }
+              if (item.lbbtype != null) {
+                item.lbbType = item.lbbtype.substring(
+                  0,
+                  item.lbbtype.length - item.evaluationPeriod.length - 1
+                );
+              }
+              if (item.ubbtype != null) {
+                item.ubbType = item.ubbtype.substring(
+                  0,
+                  item.ubbtype.length - item.evaluationPeriod.length - 1
+                );
+              }
+            }
           });
         }
         return Object.assign({}, state, {

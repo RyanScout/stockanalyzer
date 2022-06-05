@@ -263,7 +263,7 @@ export default function DatabaseModifyView({
         </div>
 
         <div className={dynamicallyShowTradeSignalParams("UpperBollingerBand")}>
-          <label htmlFor="lbbType">LBB Type</label>
+          <label htmlFor="ubbType">UBB Type</label>
           <input
             type="Text"
             id="ubbType"
