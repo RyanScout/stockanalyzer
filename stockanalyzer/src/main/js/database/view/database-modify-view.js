@@ -158,6 +158,9 @@ export default function DatabaseModifyView({
             className="fa fa-plus-square fa-1 float-end"
             title="Add Symbol"
             onClick={() => {
+              if (symbol === "" || symbol === null) {
+                return;
+              }
               symbols.push(symbol);
               manuallyInputChange("symbols", symbols);
               manuallyInputChange("symbol", "");
@@ -305,7 +308,19 @@ export default function DatabaseModifyView({
             {(() => {
               let arr = [];
               for (let i = 0; i < symbols.length; i++) {
-                arr.push(<li key={i}>{symbols[i]}</li>);
+                arr.push(
+                  <li key={i}>
+                    {symbols[i]}{" "}
+                    <i
+                      className="fa fa-trash fa-1"
+                      title="Delete"
+                      onClick={() => {
+                        symbols.splice(i, 1);
+                        manuallyInputChange("symbols", symbols);
+                      }}
+                    />
+                  </li>
+                );
               }
               return arr;
             })()}
@@ -321,10 +336,7 @@ export default function DatabaseModifyView({
             id="SaveButton"
             className="form-control btn-primary"
             value="Save"
-            onClick={() => {
-              manuallyInputChange("symbols", symbols);
-              onOption("SAVE");
-            }}
+            onClick={() => onOption("SAVE")}
           />
         </div>
         <div className="col-sm">

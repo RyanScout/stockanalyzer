@@ -1,3 +1,5 @@
+import { bindActionCreators } from "redux";
+
 export default function databaseReducer(state = {}, action) {
   let defaultItemState = {
     evaluationPeriod: "DAY",

@@ -12,6 +12,11 @@ export default function TradeModifyView({
   appPrefs,
   inputChange,
   onOption,
+  onKeyDown,
+  input,
+  onChange,
+  SuggestionsListComponent,
+  showSuggestions,
 }) {
   const nav = useNavigate();
   const x = window.location.pathname;
@@ -31,7 +36,9 @@ export default function TradeModifyView({
   let orderSide = "";
   let orderType = "null";
   let currencyType = "Dollars";
-  let evaluationPeriod ="null"
+  let evaluationPeriod = "null";
+  let suggestions = [];
+
   if (itemState.item != null) {
     if (itemState.item.name != null) {
       name = itemState.item.name;
@@ -81,8 +88,15 @@ export default function TradeModifyView({
     if (itemState.item.trailingStopType != null) {
       trailingStopType = itemState.item.trailingStopType;
     }
-    if(itemState.item.evaluationPeriod != null){
+    if (itemState.item.evaluationPeriod != null) {
       evaluationPeriod = itemState.item.evaluationPeriod;
+    }
+    if (itemState.customTechnicalIndicators != null) {
+      suggestions = itemState.customTechnicalIndicators.map(
+        (customTechnicalIndicator) => {
+          return customTechnicalIndicator.name;
+        }
+      );
     }
   }
 
@@ -180,7 +194,7 @@ export default function TradeModifyView({
   let optionsAlgorithm = [
     { label: "null", value: "" },
     { label: "touchesLBB", value: "touchesLBB" },
-    { label: "touchesUBB", value: "touchsUBB"},
+    { label: "touchesUBB", value: "touchsUBB" },
     { label: "goldenCross", value: "goldenCross" },
     { label: "signalLineCross", value: "signalLineCross" },
   ];
@@ -258,7 +272,7 @@ export default function TradeModifyView({
   let optionsEvaluationPeriod = [
     { label: "null", value: "null" },
     { label: "Day", value: "Day" },
-    { label: "Minute", value: "Minute" }
+    { label: "Minute", value: "Minute" },
   ];
   let selectOptionsEvaluationPeriod = [];
   for (let i = 0; i < optionsEvaluationPeriod.length; i++) {
@@ -397,10 +411,10 @@ export default function TradeModifyView({
           />
         </div>
         <div
-          className={function(){
+          className={(function () {
             if (orderSide == "Buy" || orderSide == "Sell") return "";
             else return "invisible-element";
-          }()}
+          })()}
         >
           <label htmlFor="Frequency">Frequency</label>
           <select
@@ -435,9 +449,16 @@ export default function TradeModifyView({
             name="buyCondition"
             className="form-control"
             autoCapitalize="off"
-            onChange={inputChange}
-            value={buyCondition}
+            onChange={(e) => {
+              inputChange(e);
+              onChange(e, suggestions);
+            }}
+            onKeyDown={onKeyDown}
+            value={input}
           />
+          {showSuggestions && input && (
+            <SuggestionsListComponent field="buyCondition" />
+          )}
         </div>
 
         <div className={dynamicallyShowOrderCondition("Sell")}>
@@ -485,7 +506,7 @@ export default function TradeModifyView({
             id="CancelButton"
             className="form-control"
             value="Cancel"
-            onClick={(e) => onOption("CANCEL")}
+            onClick={() => onOption("CANCEL")}
           />
         </div>
       </div>

@@ -49,11 +49,11 @@ export function list() {
   };
 }
 
-export function getCache() {
+export function getCustomTechnicalIndicators() {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "CURRENT_ANALYSIS";
+    params.requestParams.service = "CACHE";
     params.requestParams.action = "LIST";
     params.URI = "/api/public/callService";
 
@@ -77,7 +77,7 @@ export function getCache() {
         }
       })
       .then((responseJson) => {
-        dispatch({ type: "TRADE_CACHE", responseJson });
+        dispatch({ type: "TRADE_CUSTOM_TECHNICAL_INDICATORS", responseJson });
         if (info != null) {
           dispatch({ type: "SHOW_STATUS", info: info });
         }

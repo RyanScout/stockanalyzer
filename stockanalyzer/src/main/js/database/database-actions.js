@@ -62,13 +62,14 @@ export function saveItem(item) {
     params.requestParams = {};
     params.requestParams.action = "SAVE";
     params.requestParams.service = "CUSTOM_TECHNICAL_INDICATOR";
-    item.shortSMAType =
-      item.shortSMAType + "-" + item.evaluationPeriod.toLowerCase();
-    item.longSMAType =
-      item.longSMAType + "-" + item.evaluationPeriod.toLowerCase();
-    item.lbbType = item.lbbType + "-" + item.evaluationPeriod.toLowerCase();
-    item.ubbType = item.ubbType + "-" + item.evaluationPeriod.toLowerCase();
-    params.requestParams.ITEM = item;
+    let clone = Object.assign({}, item);
+    clone.shortSMAType =
+      clone.shortSMAType + "-" + clone.evaluationPeriod.toLowerCase();
+    clone.longSMAType =
+      clone.longSMAType + "-" + clone.evaluationPeriod.toLowerCase();
+    clone.lbbType = clone.lbbType + "-" + clone.evaluationPeriod.toLowerCase();
+    clone.ubbType = clone.ubbType + "-" + clone.evaluationPeriod.toLowerCase();
+    params.requestParams.ITEM = clone;
 
     params.URI = "/api/public/callService";
 
