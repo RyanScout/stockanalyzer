@@ -12,11 +12,7 @@ export default function TradeModifyView({
   appPrefs,
   inputChange,
   onOption,
-  onKeyDown,
-  input,
-  onChange,
-  SuggestionsListComponent,
-  showSuggestions,
+  AutoComplete,
 }) {
   const nav = useNavigate();
   const x = window.location.pathname;
@@ -24,19 +20,20 @@ export default function TradeModifyView({
   let name = "";
   let symbol = "";
   let currencyAmount = "";
-  let trailingStopType = "Trailing Stop Price";
-  let profitLimitType = "Profit Limit Price";
+  let trailingStopType = "";
+  let profitLimitType = "";
   let buyCondition = "";
   let sellCondition = "";
-  let status = "Not Running";
+  let status = "";
   let trailingStopAmount = "";
   let profitLimitAmount = "";
-  let frequency = "null";
+  let iterations = "";
   let budget = "";
   let orderSide = "";
-  let orderType = "null";
-  let currencyType = "Dollars";
-  let evaluationPeriod = "null";
+  let orderType = "";
+  let currencyType = "";
+  let evaluationPeriod = "";
+
   let suggestions = [];
 
   if (itemState.item != null) {
@@ -61,8 +58,8 @@ export default function TradeModifyView({
     if (itemState.item.sellCondition != null) {
       sellCondition = itemState.item.sellCondition;
     }
-    if (itemState.item.frequency != null) {
-      frequency = itemState.item.frequency;
+    if (itemState.item.iterations != null) {
+      iterations = itemState.item.iterations;
     }
     if (itemState.item.status != null) {
       status = itemState.item.status;
@@ -191,58 +188,7 @@ export default function TradeModifyView({
     );
   }
 
-  let optionsAlgorithm = [
-    { label: "null", value: "" },
-    { label: "touchesLBB", value: "touchesLBB" },
-    { label: "touchesUBB", value: "touchsUBB" },
-    { label: "goldenCross", value: "goldenCross" },
-    { label: "signalLineCross", value: "signalLineCross" },
-  ];
-  let selectOptionsAlgorithm = [];
-  for (let i = 0; i < optionsAlgorithm.length; i++) {
-    let label = "";
-    if (
-      optionsAlgorithm[i].label == null &&
-      optionsAlgorithm[i].defaultText != null
-    ) {
-      label = optionsAlgorithm[i].defaultText;
-    } else if (optionsAlgorithm[i].label != null) {
-      label = optionsAlgorithm[i].label;
-    }
-    selectOptionsAlgorithm.push(
-      <option key={i} value={optionsAlgorithm[i].value}>
-        {label}
-      </option>
-    );
-  }
-
-  let optionsFrequency = [
-    { label: "null", value: "null" },
-    { label: "1", value: "1" },
-    { label: "5", value: "5" },
-    { label: "unlimited", value: "unlimited" },
-  ];
-
-  let selectOptionsFrequency = [];
-  for (let i = 0; i < optionsFrequency.length; i++) {
-    let label = "";
-    if (
-      optionsFrequency[i].label == null &&
-      optionsFrequency[i].defaultText != null
-    ) {
-      label = optionsFrequency[i].defaultText;
-    } else if (optionsFrequency[i].label != null) {
-      label = optionsFrequency[i].label;
-    }
-    selectOptionsFrequency.push(
-      <option key={i} value={optionsFrequency[i].value}>
-        {label}
-      </option>
-    );
-  }
-
   let optionsOrderType = [
-    { label: "null", value: "null" },
     { label: "Market", value: "Market" },
     { label: "Trailing Stop", value: "Trailing Stop" },
     { label: "Profit Limit", value: "Profit Limit" },
@@ -270,7 +216,6 @@ export default function TradeModifyView({
   }
 
   let optionsEvaluationPeriod = [
-    { label: "null", value: "null" },
     { label: "Day", value: "Day" },
     { label: "Minute", value: "Minute" },
   ];
@@ -416,16 +361,14 @@ export default function TradeModifyView({
             else return "invisible-element";
           })()}
         >
-          <label htmlFor="Frequency">Frequency</label>
-          <select
-            id="frequency"
-            name="frequency"
-            value={frequency}
+          <label htmlFor="Iterations">Iterations</label>
+          <input
+            id="iterations"
+            name="iterations"
+            value={iterations}
             className="form-control"
             onChange={inputChange}
-          >
-            {selectOptionsFrequency}
-          </select>
+          />
         </div>
         <div className={dynamicallyShowOrderCondition("Bot")}>
           <label htmlFor="Budget">Budget</label>
@@ -442,36 +385,13 @@ export default function TradeModifyView({
           />
         </div>
         <div className={dynamicallyShowOrderCondition("Buy")}>
-          <label htmlFor="BuyCondition">Buy Condition</label>
-          <input
-            type="Text"
-            id="buyCondition"
-            name="buyCondition"
-            className="form-control"
-            autoCapitalize="off"
-            onChange={(e) => {
-              inputChange(e);
-              onChange(e, suggestions);
-            }}
-            onKeyDown={onKeyDown}
-            value={input}
-          />
-          {showSuggestions && input && (
-            <SuggestionsListComponent field="buyCondition" />
-          )}
+        <label htmlFor="BuyCondition">Buy Condition</label>
+          <AutoComplete suggestions = {suggestions} field = "buyCondition"/>
         </div>
 
         <div className={dynamicallyShowOrderCondition("Sell")}>
           <label htmlFor="SellCondition">Sell Condition</label>
-          <input
-            type="Text"
-            id="sellCondition"
-            name="sellCondition"
-            className="form-control"
-            autoCapitalize="off"
-            onChange={inputChange}
-            value={sellCondition}
-          />
+          <AutoComplete suggestions = {suggestions} field = "sellCondition"/>
         </div>
 
         <div>
@@ -496,7 +416,24 @@ export default function TradeModifyView({
             id="SaveButton"
             className="form-control btn-primary"
             value="Save"
-            onClick={(e) => onOption("SAVE")}
+            onClick={() => onOption("SAVE")}
+          />
+        </div>
+        <div
+          className={(() => {
+            if (itemState.item.id == null) {
+              return "invisible-element";
+            }
+            return "col-sm";
+          })()}
+        >
+          <input
+            type="submit"
+            name="ResetButton"
+            id="ResetButton"
+            className="form-control btn-primary"
+            value="Reset"
+            onClick={() => onOption("Reset")}
           />
         </div>
         <div className="col-sm">

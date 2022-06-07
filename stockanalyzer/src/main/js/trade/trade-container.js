@@ -35,10 +35,6 @@ function TradeContainer() {
         dispatch(tradeActions.resetItem(item));
         return true;
       }
-      case "ADD": {
-        onAdd();
-        return true;
-      }
       case "SAVE": {
         onSave();
         return true;
@@ -84,84 +80,94 @@ function TradeContainer() {
     }
   }
 
-  function onAdd() {
-    dispatch(tradeActions.addItem());
-  }
+  const AutoComplete = ({ suggestions, field}) => {
+    const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+    const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [input, setInput] = useState("");
 
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState("");
 
-  const onChange = (e, suggestions) => {
-    let s = e.target.value + "";
-    if (s.indexOf(" ") > -1) {
-      s = s.substring(s.lastIndexOf(" ") + 1, s.length);
-    }
-    const userInput = s;
+    const onChange = (e) => {
+      let s = e.target.value + "";
+      if (s.indexOf(" ") > -1) {
+        s = s.substring(s.lastIndexOf(" ") + 1, s.length);
+      }
+      const userInput = s;
 
-    // Filter our suggestions that don't contain the user's input
-    const unLinked = suggestions.filter(
-      (suggestion) =>
-        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+      const unLinked = suggestions.filter(
+        (suggestion) =>
+          suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+      );
+
+      setInput(e.target.value);
+      setFilteredSuggestions(unLinked);
+      setActiveSuggestionIndex(0);
+      setShowSuggestions(true);
+    };
+
+    const onClick = (e) => {
+      let s = input;
+      if (s.indexOf(" ") > -1) {
+        s = s.substring(0, s.lastIndexOf(" ") + 1);
+        s.concat;
+      } else {
+        s = "";
+      }
+      s = s.concat(e.target.innerText);
+
+      setFilteredSuggestions([]);
+      setInput(s);
+      setActiveSuggestionIndex(0);
+      setShowSuggestions(false);
+    };
+
+    const onKeyDown = (key) => {
+      if (key.keyCode === 13 || key.keyCode === 9) {
+        setInput(filteredSuggestions[activeSuggestionIndex]);
+        setFilteredSuggestions([]);
+      }
+    };
+
+    const SuggestionsListComponent = () => {
+      return filteredSuggestions.length ? (
+        <ul className="suggestions">
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            // Flag the active suggestion with a class
+            if (index === activeSuggestionIndex) {
+              className = "suggestion-active";
+            }
+            return (
+              <li className={className} key={suggestion} onClick={onClick}>
+                {suggestion}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div className="no-suggestions">
+          <em>No Matching Algorithms</em>
+        </div>
+      );
+    };
+
+    return (
+      <>
+        <input
+          type="text"
+          className="form-control"
+          autoCapitalize="off"
+          autoComplete="off"
+          id={field}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={input}
+        />
+        {showSuggestions && input && <SuggestionsListComponent />}
+      </>
     );
-
-    setInput(e.target.value);
-    setFilteredSuggestions(unLinked);
-    setActiveSuggestionIndex(0);
-    setShowSuggestions(true);
   };
 
-  const onClick = (e, field) => {
-    let s = input;
-    if (s.indexOf(" ") > -1) {
-      s = s.substring(0, s.lastIndexOf(" ") + 1);
-      s.concat;
-    } else {
-      s = "";
-    }
-    s = s.concat(e.target.innerText);
-
-    setFilteredSuggestions([]);
-    manuallyInputChange(field, s);
-    setInput(s);
-    setActiveSuggestionIndex(0);
-    setShowSuggestions(false);
-  };
-
-  const onKeyDown = (key) => {
-    if (key.keyCode === 13 || key.keyCode === 9) {
-      setInput(filteredSuggestions[activeSuggestionIndex]);
-      filteredSuggestions = [];
-    }
-  };
-
-  const SuggestionsListComponent = ({ field }) => {
-    return filteredSuggestions.length ? (
-      <ul className="suggestions">
-        {filteredSuggestions.map((suggestion, index) => {
-          let className;
-          // Flag the active suggestion with a class
-          if (index === activeSuggestionIndex) {
-            className = "suggestion-active";
-          }
-          return (
-            <li
-              className={className}
-              key={suggestion}
-              onClick={(e) => onClick(e, field)}
-            >
-              {suggestion}
-            </li>
-          );
-        })}
-      </ul>
-    ) : (
-      <div className="no-suggestions">
-        <em>No suggestions, you're on your own!</em>
-      </div>
-    );
-  };
   function inputChange(event) {
     let val = "";
 
@@ -207,11 +213,7 @@ function TradeContainer() {
         appPrefs={appPrefs}
         inputChange={inputChange}
         onOption={onOption}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        input={input}
-        showSuggestions={showSuggestions}
-        SuggestionsListComponent={SuggestionsListComponent}
+        AutoComplete={AutoComplete}
       />
     );
   } else if (tradeState != null && tradeState.view == "HISTORICAL_ANALYSIS") {

@@ -20,5 +20,6 @@ CREATE TABLE `ta_custom_technical_indicator`
 	`created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `UK_name` (`name`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

@@ -19,7 +19,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
       let cells = [];
       cells.push(<td key="NAME">{itemState.items[i].name}</td>);
       cells.push(<td key="ORDERSIDE">{itemState.items[i].orderSide}</td>);
-      cells.push(<td key="FREQUENCY">{itemState.items[i].frequency}</td>);
+      cells.push(<td key="ITERATIONS">{itemState.items[i].iterations}</td>);
       cells.push(<td key="BUYCONDITION">{itemState.items[i].buyCondition}</td>);
       cells.push(
         <td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>
@@ -43,11 +43,6 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             onClick={() => onOption("MODIFY", itemState.items[i])}
           ></i>{" "}
           <i
-            className="fa fa-microchip fa-1"
-            title="Modify"
-            onClick={() => onOption("TRADE_DETAIL_VIEW", itemState.items[i])}
-          ></i>{" "}
-          <i
             className="fa fa-clipboard fa-1"
             title="Historical_Analysis"
             onClick={() =>
@@ -55,14 +50,14 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             }
           ></i>{" "}
           <i
+            className="fa fa-solid fa-bars"
+            title="Modify"
+            onClick={() => onOption("TRADE_DETAIL_VIEW", itemState.items[i])}
+          ></i>{" "}
+          <i
             className="fa fa-trash fa-1"
             title="Delete"
             onClick={() => onOption("DELETE", itemState.items[i])}
-          ></i>{" "}
-          <i
-            className="fa fa-recycle fa-1"
-            title="Reset"
-            onClick={() => onOption("RESET", itemState.items[i])}
           ></i>
         </td>
       );
@@ -88,7 +83,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
           <i
             className="fa fa-plus-square fa-1 float-end"
             title="Modify"
-            onClick={(e) => onOption("ADD", e)}
+            onClick={() => onOption("MODIFY")}
           ></i>
         </div>
         <table className="table table-striped">
@@ -96,7 +91,7 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             <tr>
               <th scope="col">Name</th>
               <th scope="col">OrderSide</th>
-              <th scope="col">Frequency</th>
+              <th scope="col">Iterations</th>
               <th scope="col">Buy Condition</th>
               <th scope="col">Sell Condition</th>
               <th scope="col">Profit</th>

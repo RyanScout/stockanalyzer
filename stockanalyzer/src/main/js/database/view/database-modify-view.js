@@ -136,7 +136,18 @@ export default function DatabaseModifyView({
             name="name"
             className="form-control"
             autoCapitalize="off"
-            onChange={inputChange}
+            onChange={(event) => {
+              if (event.target.value.indexOf(" ") > -1) {
+                return;
+              }
+              if (event.target.value.indexOf("|") > -1) {
+                return;
+              }
+              if (event.target.value.indexOf("&") > -1) {
+                return;
+              }
+              inputChange(event);
+            }}
             value={name}
           />
         </div>
@@ -337,16 +348,6 @@ export default function DatabaseModifyView({
             className="form-control btn-primary"
             value="Save"
             onClick={() => onOption("SAVE")}
-          />
-        </div>
-        <div className="col-sm">
-          <input
-            type="submit"
-            name="CreateGlobalsButton"
-            id="CreateGlobalsButton"
-            className="form-control btn-primary"
-            value="CreateGlobals"
-            onClick={(e) => onOption("CREATE_GLOBALS")}
           />
         </div>
         <div className="col-sm">

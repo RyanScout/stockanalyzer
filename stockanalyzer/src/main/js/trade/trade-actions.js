@@ -86,15 +86,9 @@ export function getCustomTechnicalIndicators() {
   };
 }
 
-export function addItem() {
-  return function (dispatch) {
-    dispatch({ type: "TRADE_ADD_ITEM" });
-  };
-}
-
 export function cancelItem() {
   return function (dispatch) {
-    dispatch({ type: "TRADE_CANCEL_ITEM" });
+    dispatch({type:"TRADE_CANCEL_ITEM" , action: {}})
   };
 }
 
