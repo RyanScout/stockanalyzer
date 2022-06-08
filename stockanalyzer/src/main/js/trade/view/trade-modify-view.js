@@ -13,6 +13,7 @@ export default function TradeModifyView({
   inputChange,
   onOption,
   AutoComplete,
+  Testform,
 }) {
   const nav = useNavigate();
   const x = window.location.pathname;
@@ -22,8 +23,6 @@ export default function TradeModifyView({
   let currencyAmount = "";
   let trailingStopType = "";
   let profitLimitType = "";
-  let buyCondition = "";
-  let sellCondition = "";
   let status = "";
   let trailingStopAmount = "";
   let profitLimitAmount = "";
@@ -34,9 +33,14 @@ export default function TradeModifyView({
   let currencyType = "";
   let evaluationPeriod = "";
 
+  let test = "";
+
   let suggestions = [];
 
   if (itemState.item != null) {
+    if (itemState.item.test != null) {
+      test = itemState.item.test;
+    }
     if (itemState.item.name != null) {
       name = itemState.item.name;
     }
@@ -51,12 +55,6 @@ export default function TradeModifyView({
     }
     if (itemState.item.calendar != null) {
       calendarValue = itemState.item.calendar;
-    }
-    if (itemState.item.buyCondition != null) {
-      buyCondition = itemState.item.buyCondition;
-    }
-    if (itemState.item.sellCondition != null) {
-      sellCondition = itemState.item.sellCondition;
     }
     if (itemState.item.iterations != null) {
       iterations = itemState.item.iterations;
@@ -216,8 +214,8 @@ export default function TradeModifyView({
   }
 
   let optionsEvaluationPeriod = [
-    { label: "Day", value: "Day" },
-    { label: "Minute", value: "Minute" },
+    { label: "DAY", value: "DAY" },
+    { label: "MINUTE", value: "MINUTE" },
   ];
   let selectOptionsEvaluationPeriod = [];
   for (let i = 0; i < optionsEvaluationPeriod.length; i++) {
@@ -385,13 +383,13 @@ export default function TradeModifyView({
           />
         </div>
         <div className={dynamicallyShowOrderCondition("Buy")}>
-        <label htmlFor="BuyCondition">Buy Condition</label>
-          <AutoComplete suggestions = {suggestions} field = "buyCondition"/>
+          <label htmlFor="BuyCondition">Buy Condition</label>
+          {AutoComplete(suggestions, "buyCondition")}
         </div>
 
         <div className={dynamicallyShowOrderCondition("Sell")}>
           <label htmlFor="SellCondition">Sell Condition</label>
-          <AutoComplete suggestions = {suggestions} field = "sellCondition"/>
+          {AutoComplete(suggestions, "sellCondition")}
         </div>
 
         <div>

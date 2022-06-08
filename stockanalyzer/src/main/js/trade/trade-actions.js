@@ -236,9 +236,9 @@ export function saveItem(item) {
           dispatch(list());
         } else if (
           responseJson != null &&
-          responseJson.status != null &&
-          responseJson.status == "ACTIONFAILED"
+          responseJson.status != null
         ) {
+          alert(responseJson.status);
           dispatch({ type: "SHOW_STATUS", error: responseJson.errors });
         }
       })

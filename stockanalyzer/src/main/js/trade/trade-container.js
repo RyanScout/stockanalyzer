@@ -80,12 +80,11 @@ function TradeContainer() {
     }
   }
 
-  const AutoComplete = ({ suggestions, field}) => {
+  const AutoComplete = (suggestions, field ) => {
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [input, setInput] = useState("");
-
+    const [input, setInput] = useState(tradeState.item[field]);
 
     const onChange = (e) => {
       let s = e.target.value + "";
@@ -100,6 +99,7 @@ function TradeContainer() {
       );
 
       setInput(e.target.value);
+      manuallyInputChange(field,e.target.value);
       setFilteredSuggestions(unLinked);
       setActiveSuggestionIndex(0);
       setShowSuggestions(true);
@@ -117,6 +117,7 @@ function TradeContainer() {
 
       setFilteredSuggestions([]);
       setInput(s);
+      manuallyInputChange(field,s)
       setActiveSuggestionIndex(0);
       setShowSuggestions(false);
     };
