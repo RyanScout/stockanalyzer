@@ -10,6 +10,7 @@ import TradeView from "./view/trade-view";
 import TradeDetailView from "./view/trade-detail-view";
 import TradeModifyView from "./view/trade-modify-view";
 import HistoricalAnalysisView from "./view/trade-historical-analysis-view";
+import TradeGraphView from "./view/trade-graph-view";
 
 function TradeContainer() {
   const tradeState = useSelector((state) => state.trade);
@@ -53,6 +54,10 @@ function TradeContainer() {
       }
       case "TRADE_DETAIL_VIEW": {
         dispatch(tradeActions.tradeDetailView(item));
+        return true;
+      }
+      case "TRADE_GRAPH_VIEW":{
+        dispatch(tradeActions.tradeGraphView(item));
         return true;
       }
       case "CANCEL": {
@@ -195,7 +200,8 @@ function TradeContainer() {
     tradeState.view != "MODIFY" &&
     tradeState.view != "ADD" &&
     tradeState.view != "HISTORICAL_ANALYSIS" &&
-    tradeState.view != "TRADE_DETAIL"
+    tradeState.view != "TRADE_DETAIL" &&
+    tradeState.view != "TRADE_GRAPH"
   ) {
     return (
       <TradeView
@@ -235,7 +241,13 @@ function TradeContainer() {
         onOption={onOption}
       />
     );
-  } else {
+  } else if (tradeState != null && tradeState.view == "TRADE_GRAPH"){
+    return (<TradeGraphView
+    itemState = {tradeState}
+    appPrefs = {appPrefs}
+    onOption = {onOption}/>
+    );
+  }else{
     return <div> Loading... </div>;
   }
 }

@@ -4,16 +4,14 @@ import { bindActionCreators } from "redux";
  *
  */
 export default function tradeReducer(state = {}, action) {
-
   let defaultItemState = {
-    evaluationPeriod : "DAY",
-    orderType :  "Market",
-    currencyType : "Dollars",
-    profitLimitType : "Profit Limit Price",
-    trailingStopType : "Trailing Stop Price",
-    status : "Not Running"
+    evaluationPeriod: "DAY",
+    orderType: "Market",
+    currencyType: "Dollars",
+    profitLimitType: "Profit Limit Price",
+    trailingStopType: "Trailing Stop Price",
+    status: "Not Running",
   };
-
 
   switch (action.type) {
     case "TRADE_INPUT_CHANGE": {
@@ -81,7 +79,7 @@ export default function tradeReducer(state = {}, action) {
       if (action != null) {
         let item = defaultItemState;
         if (action.action != null) {
-          item = Object.assign(defaultItemState,action.action);
+          item = Object.assign(defaultItemState, action.action);
         }
         return Object.assign({}, state, {
           item: item,
@@ -115,6 +113,21 @@ export default function tradeReducer(state = {}, action) {
         return Object.assign({}, state, {
           item: item,
           view: "TRADE_DETAIL",
+        });
+      } else {
+        return state;
+      }
+    }
+
+    case "TRADE_GRAPH_VIEW": {
+      if (action != null) {
+        let item = {};
+        if (action.action != null) {
+          item = action.action;
+        }
+        return Object.assign({}, state, {
+          item: item,
+          view: "TRADE_GRAPH",
         });
       } else {
         return state;

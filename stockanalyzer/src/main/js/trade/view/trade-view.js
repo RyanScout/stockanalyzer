@@ -55,6 +55,11 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             onClick={() => onOption("TRADE_DETAIL_VIEW", itemState.items[i])}
           ></i>{" "}
           <i
+            className="fa fas fa-chart-bar"
+            title="Graph"
+            onClick={() => onOption("TRADE_GRAPH_VIEW", itemState.items[i])}
+          ></i>{" "}
+          <i
             className="fa fa-trash fa-1"
             title="Delete"
             onClick={() => onOption("DELETE", itemState.items[i])}

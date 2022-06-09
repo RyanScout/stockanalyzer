@@ -110,6 +110,11 @@ export function tradeDetailView(item) {
   };
 }
 
+export function tradeGraphView(item){
+  return function (dispatch){
+    dispatch({type:"TRADE_GRAPH_VIEW",action :item});
+  }
+}
 
 export function deleteItem(item) {
   return function (dispatch) {
