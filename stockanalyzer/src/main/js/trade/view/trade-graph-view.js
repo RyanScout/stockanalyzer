@@ -1,8 +1,9 @@
 import "chart.js/auto";
 import React from "react";
-import { Chart } from "react-chartjs-2";
+import { Chart, Line } from "react-chartjs-2";
 export default function TradeGraphView({ itemState, onOption }) {
   let tradeHistory = [];
+  let symbolHistory =[]
   let colors = [];
   let borderColor =""
 
@@ -13,6 +14,13 @@ export default function TradeGraphView({ itemState, onOption }) {
   }
 
   if (itemState != null) {
+    if(itemState.symbols != null){
+      itemState.symbols.forEach(symbol=>{
+        if(symbol[0] != null && symbol[1] != null){
+          symbolHistory.push({x: symbol[0] , y :symbol[1]})
+        }
+      })
+    }
     if (itemState.item != null) {
         if(itemState.item.totalValue > itemState.item.budget){
             borderColor = "rgb(170, 250, 167)"
@@ -29,46 +37,53 @@ export default function TradeGraphView({ itemState, onOption }) {
             if (detail.orderSide == "SELL") {
               colors.push("rgb(237, 14, 22)");
             }
-            tradeHistory.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.filledAt,
-                  y: detail.assetPrice,
-                }
-              )
-            );
+            tradeHistory.push({ x: detail.filledAt , y: detail.assetPrice })
           }
         });
       }
     }
   }
+  
   return (
     <div>
       <button onClick={() => onOption("CANCEL")}>Back</button>
-      <Chart
-        datasetIdKey="id"
+      <Line
         data={{
           datasets: [
             {
-              type: "line",
-              id: 1,
-              label: "Trade History",
-              data: tradeHistory.sort(compare),
-              pointBackgroundColor: colors,
+              label: "Symbol History",
+              type:"line",
+              data: symbolHistory.sort(compare),
               xAxisID: "Time",
               yAxisID: "Price",
-              borderColor : borderColor
+              borderColor : borderColor,
+              spanGaps: true
             },
+            {
+              label: "Trade History",
+              type:"scatter",
+              data: tradeHistory,
+              xAxisID: "Time",
+              yAxisID: "Price",
+              pointBackgroundColor: colors
+            }
           ],
         }}
+
         options={{
+
           animation: false,
+          parsing:false,
+
           datasets: {
+            scatter:{
+              pointRadius:5,
+            },
             line: {
-              pointRadius: 5,
+              pointRadius: 0,
             },
           },
+
           scales: {
             Time: {
               axis: "x",
@@ -79,6 +94,7 @@ export default function TradeGraphView({ itemState, onOption }) {
                 text: "Time",
               },
             },
+
             Price: {
               axis: "y",
               type: "linear",
@@ -88,6 +104,7 @@ export default function TradeGraphView({ itemState, onOption }) {
                 text: "Price",
               },
             },
+
           },
         }}
       />

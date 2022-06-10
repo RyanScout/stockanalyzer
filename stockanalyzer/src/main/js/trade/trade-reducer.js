@@ -134,6 +134,18 @@ export default function tradeReducer(state = {}, action) {
       }
     }
 
+    case "TRADE_GRAPH_ITEM": {
+      if (action.responseJson != null && action.responseJson.params != null) {
+        let symbols = [];
+        if (action.responseJson.params.SYMBOLS != null) {
+          symbols = action.responseJson.params.SYMBOLS;
+        }
+        return Object.assign({}, state, {
+          symbols: symbols,
+        });
+      }
+    }
+
     case "TRADE_SAVE_ITEM": {
       if (action.responseJson != null && action.responseJson.params != null) {
         let item = {};

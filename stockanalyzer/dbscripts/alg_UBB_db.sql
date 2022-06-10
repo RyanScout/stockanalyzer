@@ -5,7 +5,7 @@ CREATE TABLE `ta_UBB`
 	`identifier` varchar(64),
 	`epoch_seconds` bigint(20),
 	`symbol` varchar(64),
-	`standard_deviations`decimal(10,4),
+	`standard_deviations`decimal(10,1),
 	`type` varchar(64),
 	`value` decimal(10,4),
 	`is_active` bit(1) DEFAULT 1,

@@ -431,7 +431,7 @@ export default function TradeModifyView({
             id="ResetButton"
             className="form-control btn-primary"
             value="Reset"
-            onClick={() => onOption("RESET")}
+            onClick={() => onOption("RESET",itemState.item)}
           />
         </div>
         <div className="col-sm">

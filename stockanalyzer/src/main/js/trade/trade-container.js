@@ -57,6 +57,7 @@ function TradeContainer() {
         return true;
       }
       case "TRADE_GRAPH_VIEW":{
+        dispatch(tradeActions.graphItem(item));
         dispatch(tradeActions.tradeGraphView(item));
         return true;
       }
@@ -169,7 +170,7 @@ function TradeContainer() {
           onKeyDown={onKeyDown}
           value={input}
         />
-        {showSuggestions && input && <SuggestionsListComponent />}
+        {showSuggestions && input && <SuggestionsListComponent /> }
       </>
     );
   };

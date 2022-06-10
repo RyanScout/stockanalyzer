@@ -18,8 +18,6 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
     for (let i = 0; i < itemState.items.length; i++) {
       let cells = [];
       cells.push(<td key="NAME">{itemState.items[i].name}</td>);
-      cells.push(<td key="ORDERSIDE">{itemState.items[i].orderSide}</td>);
-      cells.push(<td key="ITERATIONS">{itemState.items[i].iterations}</td>);
       cells.push(<td key="BUYCONDITION">{itemState.items[i].buyCondition}</td>);
       cells.push(
         <td key="SELLCONDITION">{itemState.items[i].sellCondition}</td>
@@ -30,7 +28,38 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             ((itemState.items[i].totalValue - itemState.items[i].budget) /
               itemState.items[i].budget) *
               1000
-          ) / 10}{" "}
+          ) / 10}
+          %
+        </td>
+      );
+      cells.push(
+        <td key="CONTROL">
+          {(() => {
+            if (
+              itemState.items[i].tradeDetails == null ||
+              itemState.items[i].tradeDetails.length == 0
+            ) {
+              return 0;
+            }
+            function compare(a, b) {
+              if (a.placedAt > b.placedAt) return 1;
+              if (a.placedAt < b.placedAt) return -1;
+              return 0;
+            }
+            let arr = itemState.items[i].tradeDetails.slice().sort(compare);
+            for (let i = arr.length - 1; i >= 0; i--) {
+              if (arr[i].assetPrice == null) {
+                arr.splice(i, 1);
+              }
+            }
+            return (
+              Math.round(
+                ((arr[arr.length - 1].filledAt - arr[0].filledAt) /
+                  arr[0].filledAt) *
+                  1000
+              ) / 10
+            );
+          })()}
           %
         </td>
       );
@@ -95,11 +124,10 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
           <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">OrderSide</th>
-              <th scope="col">Iterations</th>
               <th scope="col">Buy Condition</th>
               <th scope="col">Sell Condition</th>
               <th scope="col">Profit</th>
+              <th scope="col">Control</th>
               <th scope="col">Status</th>
               <th scope="col"></th>
             </tr>
