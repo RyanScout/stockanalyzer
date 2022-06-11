@@ -54,8 +54,8 @@ export default function TradeView({ itemState, appPrefs, onOption }) {
             }
             return (
               Math.round(
-                ((arr[arr.length - 1].filledAt - arr[0].filledAt) /
-                  arr[0].filledAt) *
+                ((arr[arr.length - 1].assetPrice - arr[0].assetPrice) /
+                  arr[0].assetPrice) *
                   1000
               ) / 10
             );

@@ -2,111 +2,49 @@ import "chart.js/auto";
 import React from "react";
 import { Chart } from "react-chartjs-2";
 export default function DatabaseDetailView({ itemState, onOption }) {
-  let volumeData = [];
-  let vwapData = [];
-  let priceData =[];
+  let distributionPercentData = [];
+  let cumulativeDistributionPercentData = [];
 
   function compare(a, b) {
-    if (a.x > b.x) return 1;
-    if (a.x < b.x) return -1;
+    if (a.successPercent > b.successPercent) return 1;
+    if (a.successPercent < b.successPercent) return -1;
     return 0;
-  }
-
-  function findLineByLeastSquares(values) {
-    let sum_x = 0;
-    let sum_y = 0;
-    let sum_xy = 0;
-    let sum_xx = 0;
-    let count = 0;
-
-    let x = 0;
-    let y = 0;
-    let values_length = values.length;
-
-    if (values_length === 0) {
-      return [];
-    }
-
-    /*
-     * Calculate the sum for each of the parts necessary.
-     */
-    for (let v = 0; v < values_length; v++) {
-      x = values[v].x;
-      y = values[v].y;
-      sum_x += x;
-      sum_y += y;
-      sum_xx += x * x;
-      sum_xy += x * y;
-      count++;
-    }
-
-    /*
-     * Calculate m and b for the formular:
-     * y = x * m + b
-     */
-    let m = (count * sum_xy - sum_x * sum_y) / (count * sum_xx - sum_x * sum_x);
-    let b = sum_y / count - (m * sum_x) / count;
-
-    /*
-     * We will make the x and y result line now
-     */
-    let result_values = [];
-
-    for (let v = 0; v < values_length; v++) {
-      x = values[v].x;
-      y = x * m + b;
-      result_values.push(
-        Object.assign(
-          {},
-          {
-            x: x,
-            y: y,
-          }
-        )
-      );
-    }
-    result_values.sort(compare);
-    return result_values;
   }
 
   if (itemState != null) {
     if (itemState.item != null) {
       if (itemState.item.details != null) {
-        itemState.item.details.forEach((detail) => {
-          if (detail.successPercent != null && detail.volume != null) {
-            volumeData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.volume,
-                  y: detail.successPercent,
-                }
-              )
-            );
+        let arr = itemState.item.details.slice().sort(compare);
+
+        let lowValue = Math.round(arr[0].successPercent * 10) / 10;
+
+        let range = arr[arr.length - 1].successPercent - arr[0].successPercent;
+
+        let precision = 25;
+
+        let increment = Math.round((range / precision) * 10) / 10;
+
+        let z = 0;
+        let cumulativeSize = 0;
+        for (let i = 0; i < precision; i++) {
+          let size = 0;
+          for (z; z < arr.length; z++) {
+            if (arr[z].successPercent < lowValue + i * increment) {
+              size++;
+              cumulativeSize++;
+              continue;
+            }
+            break;
           }
-          if (detail.successPercent != null && detail.vwap != null) {
-            vwapData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.vwap,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-          if (detail.successPercent != null && detail.flashPrice != null) {
-            priceData.push(
-              Object.assign(
-                {},
-                {
-                  x: detail.flashPrice,
-                  y: detail.successPercent,
-                }
-              )
-            );
-          }
-        });
+          distributionPercentData.push({
+            x: lowValue + i * increment,
+            y: size / arr.length,
+          });
+          cumulativeDistributionPercentData.push({
+            x: lowValue + i * increment,
+            y: cumulativeSize / arr.length,
+          });
+        }
       }
     }
   }
@@ -118,61 +56,22 @@ export default function DatabaseDetailView({ itemState, onOption }) {
         data={{
           datasets: [
             {
-              type: "scatter",
+              type: "line",
               id: 1,
-              label: "Volume Association",
-              data: volumeData,
-              xAxisID: "Volume",
-              yAxisID: "SuccessPercent",
+              label: "Success Percent Distribution Spread",
+              data: distributionPercentData,
+              xAxisID: "SuccessPercent",
+              yAxisID: "DistributionPercent",
               borderColor: "red",
             },
             {
               type: "line",
               id: 2,
-              label: "Volume Association Best Fit",
-              data: findLineByLeastSquares(volumeData),
-              xAxisID: "Volume",
-              yAxisID: "SuccessPercent",
-              borderColor: "red",
-              spanGaps: true,
-            },
-            {
-              type: "scatter",
-              id: 3,
-              label: "Vwap Association",
-              data: vwapData,
-              xAxisID: "Vwap",
-              yAxisID: "SuccessPercent",
+              label: "Cumulative Success Percent Distribution Spread",
+              data: cumulativeDistributionPercentData,
+              xAxisID: "SuccessPercent",
+              yAxisID: "DistributionPercent",
               borderColor: "blue",
-            },
-            {
-              type: "line",
-              id: 4,
-              label: "Vwap Association Best Fit",
-              data: findLineByLeastSquares(vwapData),
-              xAxisID: "Vwap",
-              yAxisID: "SuccessPercent",
-              borderColor: "blue",
-              spanGaps: true,
-            },
-            {
-              type: "scatter",
-              id: 5,
-              label: "Price Association",
-              data: priceData,
-              xAxisID: "Price",
-              yAxisID: "SuccessPercent",
-              borderColor: "green",
-            },
-            {
-              type: "line",
-              id: 6,
-              label: "Price Association Best Fit",
-              data: findLineByLeastSquares(priceData),
-              xAxisID: "Price",
-              yAxisID: "SuccessPercent",
-              borderColor: "green",
-              spanGaps: true,
             },
           ],
         }}
@@ -180,44 +79,26 @@ export default function DatabaseDetailView({ itemState, onOption }) {
           animation: false,
           datasets: {
             line: {
-              pointRadius: 0,
+              pointRadius: 5,
             },
           },
           scales: {
-            Volume: {
-              axis: "x",
-              type: "linear",
-              display: "auto",
-              title: {
-                display: true,
-                text: "Volume",
-              },
-            },
-            Vwap: {
-              axis: "x",
-              type: "linear",
-              display: "auto",
-              title: {
-                display: true,
-                text: "Vwap",
-              },
-            },
-            Price: {
-              axis: "x",
-              type: "linear",
-              display: "auto",
-              title: {
-                display: true,
-                text: "Price",
-              },
-            },
             SuccessPercent: {
-              axis: "y",
+              axis: "x",
               type: "linear",
               display: "auto",
               title: {
                 display: true,
                 text: "Success Percent",
+              },
+            },
+            DistributionPercent: {
+              axis: "y",
+              type: "linear",
+              display: "auto",
+              title: {
+                display: true,
+                text: "Distribution %",
               },
             },
           },
