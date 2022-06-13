@@ -16,33 +16,38 @@ export default function DatabaseDetailView({ itemState, onOption }) {
       if (itemState.item.details != null) {
         let arr = itemState.item.details.slice().sort(compare);
 
-        let lowValue = Math.round(arr[0].successPercent * 10) / 10;
+        let lowValue = Math.round(arr[0].successPercent * 100) / 100;
 
-        let range = arr[arr.length - 1].successPercent - arr[0].successPercent;
+        let highValue =
+          Math.round(arr[arr.length - 1].successPercent * 100) / 100;
+
+        let range = highValue - lowValue;
 
         let precision = 25;
 
-        let increment = Math.round((range / precision) * 10) / 10;
+        let increment = Math.round((range / precision) * 100) / 100;
 
         let z = 0;
-        let cumulativeSize = 0;
-        for (let i = 0; i < precision; i++) {
+        for (let i = 0; i <= precision; i++) {
           let size = 0;
-          for (z; z < arr.length; z++) {
-            if (arr[z].successPercent < lowValue + i * increment) {
+          while (z < arr.length) {
+            if (
+              Math.round(arr[z].successPercent * 100) / 100 <=
+              lowValue + i * increment
+            ) {
               size++;
-              cumulativeSize++;
+              z++;
               continue;
             }
             break;
           }
           distributionPercentData.push({
             x: lowValue + i * increment,
-            y: size / arr.length,
+            y: (size / arr.length) * 100,
           });
           cumulativeDistributionPercentData.push({
             x: lowValue + i * increment,
-            y: cumulativeSize / arr.length,
+            y: (z / arr.length) * 100,
           });
         }
       }
@@ -89,7 +94,7 @@ export default function DatabaseDetailView({ itemState, onOption }) {
               display: "auto",
               title: {
                 display: true,
-                text: "Success Percent",
+                text: "Success %",
               },
             },
             DistributionPercent: {

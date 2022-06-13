@@ -20,6 +20,9 @@ function DatabaseContainer() {
         onSave();
         return true;
       }
+      case "DELETE":
+        databaseActions.deleteItem(item);
+        return true;
       case "BACKLOAD":
         databaseActions.backload();
         return true;

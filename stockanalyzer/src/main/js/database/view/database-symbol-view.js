@@ -20,19 +20,31 @@ export default function DatabaseSymbolView({
       }
       let cells = [];
       cells.push(
-        <td key="SYMBOL">
-          {itemState.item.technicalIndicators[i].symbol}
+        <td key="SYMBOL">{itemState.item.technicalIndicators[i].symbol}</td>
+      );
+      cells.push(
+        <td key="FLASH_PERCENT">
+          {Math.round(
+            (itemState.item.technicalIndicators[i].flashed /
+              itemState.item.technicalIndicators[i].checked) *
+              1000
+          ) / 10}
         </td>
       );
       cells.push(
-        <td key="CHECKED">{itemState.item.technicalIndicators[i].checked}</td>
-      );
-      cells.push(
-        <td key="FLASHED">{itemState.item.technicalIndicators[i].flashed}</td>
-      );
-      cells.push(
-        <td key="SUCCESSES">
-          {itemState.item.technicalIndicators[i].successes}
+        <td key="AVG_SUCCESS_PERCENT">
+          {(() => {
+            let total = 0.0;
+            itemState.item.technicalIndicators[i].details.forEach((detail) => {
+              total += detail.successPercent;
+            });
+            return (
+              Math.round(
+                (total / itemState.item.technicalIndicators[i].details.length) *
+                  10
+              ) / 10
+            );
+          })()}
         </td>
       );
       cells.push(
@@ -76,9 +88,8 @@ export default function DatabaseSymbolView({
           <thead>
             <tr>
               <th scope="col">Symbol</th>
-              <th scope="col">Checks</th>
-              <th scope="col">Flashes</th>
-              <th scope="col">Successes</th>
+              <th scope="col">Flash %</th>
+              <th scope="col">Avg. Success %</th>
               <th scope="col"></th>
             </tr>
           </thead>

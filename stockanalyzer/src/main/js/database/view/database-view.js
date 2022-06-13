@@ -27,6 +27,11 @@ export default function DatabaseView({ onOption, itemState, inputChange }) {
             className="fa fa-solid fa-bars"
             title="SymbolView"
             onClick={() => onOption("SYMBOL_VIEW", itemState.items[i])}
+          ></i>{" "}
+          <i
+            className="fa fa-trash fa-1"
+            title="Delete"
+            onClick={() => onOption("DELETE", itemState.items[i])}
           ></i>
         </td>
       );
