@@ -5,6 +5,7 @@ CREATE TABLE `ta_asset_day`
 	`identifier` varchar(64),
 	`type` varchar(64),
 	`epoch_seconds` bigint(20),
+	`last_updated` bigint(20),
 	`symbol` varchar(64),
 	`high` decimal(10,4),
 	`low` decimal(10,4),

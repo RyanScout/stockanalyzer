@@ -4,6 +4,7 @@ CREATE TABLE `ta_SL`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`epoch_seconds` bigint(20),
+	`corresponding_day`bigint(20),
 	`symbol` varchar(64),
 	`type` varchar(64),
 	`value` decimal(10,4),
