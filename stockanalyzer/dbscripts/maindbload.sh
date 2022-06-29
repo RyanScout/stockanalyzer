@@ -105,6 +105,13 @@ load_base(){
 		echo "ERROR **** symbol_db.sql is missing ***"   
 	fi
 
+	echo "Loading configuration_db.sql to ${1}"     
+	if [ -f configuration_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < configuration_db.sql
+	else
+		echo "ERROR **** configuration_db.sql is missing ***"   
+	fi
+
 	echo "Done Loading db ${1}"
 }
 	
