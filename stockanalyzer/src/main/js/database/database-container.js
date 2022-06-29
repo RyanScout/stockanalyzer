@@ -21,10 +21,10 @@ function DatabaseContainer() {
         return true;
       }
       case "DELETE":
-        databaseActions.deleteItem(item);
+        dispatch(databaseActions.deleteItem(item));
         return true;
       case "BACKLOAD":
-        databaseActions.backload();
+        dispatch(databaseActions.backload(item));
         return true;
       case "CREATE_GLOBALS":
         dispatch(databaseActions.createGlobals());
@@ -66,11 +66,9 @@ function DatabaseContainer() {
     }
   }
 
-
-  function manuallyInputChange(field, value){
-    dispatch(databaseActions.inputChange(field,value));
+  function manuallyInputChange(field, value) {
+    dispatch(databaseActions.inputChange(field, value));
   }
-
 
   if (
     databaseState != null &&
@@ -94,7 +92,7 @@ function DatabaseContainer() {
         manuallyInputChange={manuallyInputChange}
       />
     );
-  }else if (databaseState.view == "DATABASE_SYMBOL") {
+  } else if (databaseState.view == "DATABASE_SYMBOL") {
     return (
       <DatabaseSymbolView
         onOption={onOption}
@@ -102,7 +100,6 @@ function DatabaseContainer() {
         inputChange={inputChange}
       />
     );
-    
   } else if (databaseState.view == "DATABASE_DETAIL") {
     return <DatabaseDetailView onOption={onOption} itemState={databaseState} />;
   } else {

@@ -55,6 +55,13 @@ export default function DatabaseSymbolView({
             onClick={() =>
               onOption("DETAIL_VIEW", itemState.item.technicalIndicators[i])
             }
+          ></i>{" "}
+          <i
+            className="fa fas fa-bolt"
+            title="Backload"
+            onClick={() =>
+              onOption("BACKLOAD", itemState.item.technicalIndicators[i])
+            }
           ></i>
         </td>
       );
@@ -76,14 +83,6 @@ export default function DatabaseSymbolView({
       </div>
       <button onClick={() => onOption("CANCEL")}>Back</button>
       <div className="row">
-        <div className="col-sm-9" />
-        <div className="col-sm-3">
-          <i
-            className="fa fa-plus-square fa-1 float-end"
-            title="Modify"
-            onClick={(e) => onOption("MODIFY_VIEW", e)}
-          ></i>
-        </div>
         <table className="table table-striped">
           <thead>
             <tr>

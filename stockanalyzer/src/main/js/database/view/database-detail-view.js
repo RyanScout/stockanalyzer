@@ -16,25 +16,36 @@ export default function DatabaseDetailView({ itemState, onOption }) {
       if (itemState.item.details != null) {
         let arr = itemState.item.details.slice().sort(compare);
 
-        let lowValue = Math.round(arr[0].successPercent * 100) / 100;
+        let precision = 25;
+
+        if (arr.length < 100) {
+          precision = Math.round(arr.length / 4);
+        }
+
+        let lowValue = Math.ceil(arr[0].successPercent * 100) / 100;
 
         let highValue =
-          Math.round(arr[arr.length - 1].successPercent * 100) / 100;
+          Math.ceil(arr[arr.length - 1].successPercent * 100) / 100;
 
         let range = highValue - lowValue;
-
-        let precision = 25;
 
         let increment = Math.round((range / precision) * 100) / 100;
 
         let z = 0;
+
+        distributionPercentData.push({
+          x: lowValue - increment,
+          y: 0,
+        });
+        cumulativeDistributionPercentData.push({
+          x: lowValue - increment,
+          y: 0,
+        });
+
         for (let i = 0; i <= precision; i++) {
           let size = 0;
           while (z < arr.length) {
-            if (
-              Math.round(arr[z].successPercent * 100) / 100 <=
-              lowValue + i * increment
-            ) {
+            if (arr[z].successPercent <= lowValue + i * increment) {
               size++;
               z++;
               continue;

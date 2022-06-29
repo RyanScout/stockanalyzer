@@ -99,10 +99,7 @@ export function saveItem(item) {
           responseJson.status == "SUCCESS"
         ) {
           dispatch(list());
-        } else if (
-          responseJson != null &&
-          responseJson.status != null 
-        ) {
+        } else if (responseJson != null && responseJson.status != null) {
           alert(responseJson.status);
           dispatch({ type: "SHOW_STATUS", error: responseJson.errors });
         }
@@ -146,10 +143,7 @@ export function deleteItem(item) {
           responseJson.status == "SUCCESS"
         ) {
           dispatch(list());
-        } else if (
-          responseJson != null &&
-          responseJson.status != null 
-        ) {
+        } else if (responseJson != null && responseJson.status != null) {
           alert(responseJson.status);
           dispatch({ type: "SHOW_STATUS", error: responseJson.errors });
         }
@@ -158,11 +152,14 @@ export function deleteItem(item) {
   };
 }
 
-export function backload() {
+export function backload(item) {
   let params = {};
   params.requestParams = {};
-  params.requestParams.action = "BACKLOAD";
+  params.requestParams.action = "BACKLOAD_ALG";
   params.requestParams.service = "ALGORITHM_CRUNCHER";
+  params.requestParams.SYMBOL = item.symbol;
+  params.requestParams.TECHNICAL_INDICATOR_TYPE = item.technicalIndicatorType;
+  params.requestParams.TECHNICAL_INDICATOR_KEY = item.technicalIndicatorKey;
 
   params.URI = "/api/public/callService";
 
