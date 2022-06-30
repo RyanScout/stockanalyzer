@@ -81,6 +81,10 @@ public class PublicWS {
 				break;
 			case "CUSTOM_TECHNICAL_INDICATOR":
 				customTechnicalIndicatorSvc.process(request, response);
+				break;
+			case "CURRENT_TESTING_SVC":
+				currentTestingSvc.process(request, response);
+				break;
 			default:
 				break;
 		}
