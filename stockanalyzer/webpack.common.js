@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [
         new HtmlWebpackPlugin({
-	    	title: 'Wave Runner',
+	    	title: 'Trade Analyzer',
 	    	template: './src/main/js/index.html',
 	    	filename: BUILD_DIR + '/index.html'
 	    }),

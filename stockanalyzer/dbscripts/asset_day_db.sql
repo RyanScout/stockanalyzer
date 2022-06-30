@@ -1,13 +1,15 @@
 
 	
-CREATE TABLE `sa_stock_minute`
+CREATE TABLE `ta_asset_day`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`stock_day_id` bigint(20) NOT NULL,
-	`type` varchar (64),
+	`type` varchar(64),
 	`epoch_seconds` bigint(20),
-	`stock` varchar(64),
-	`value` decimal(10,4),
+	`symbol` varchar(64),
+	`high` decimal(10,4),
+	`low` decimal(10,4),
+	`open` decimal(10,4),
+	`close` decimal(10,4),
 	`volume` bigint(20),
 	`vwap` decimal(10,4),
 	`is_active` bit(1) DEFAULT 1,
@@ -19,6 +21,5 @@ CREATE TABLE `sa_stock_minute`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_stock_minute` (`epoch_seconds`,`stock`),
-	FOREIGN KEY (`stock_day_id`) REFERENCES `sa_stock_day` (`id`) ON DELETE CASCADE
+	UNIQUE KEY `UK_epoch_asset_day` (`epoch_seconds`,`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

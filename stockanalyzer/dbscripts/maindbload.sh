@@ -56,8 +56,6 @@ load_base(){
 		echo "ERROR **** File historical_analysis_db is missing ***"   
 	fi
 	
-	echo "Done Loading db ${1}"
-
 	echo "Loading historical_detail_db.sql to ${1}"     
 	if [ -f historical_detail_db.sql ]; then
    		mysql -h ${2} -u ${3} --password=${4} ${1} < historical_detail_db.sql
@@ -65,25 +63,60 @@ load_base(){
 		echo "ERROR **** File historical_detail_db.sql is missing ***"   
 	fi
 
-	echo "Loading stock_day_db.sql to ${1}"     
-	if [ -f stock_day_db.sql ]; then
-   		mysql -h ${2} -u ${3} --password=${4} ${1} < stock_day_db.sql
+	echo "Loading asset_day_db.sql to ${1}"     
+	if [ -f asset_day_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < asset_day_db.sql
 	else
-		echo "ERROR **** File stock_day_db.sql is missing ***"   
+		echo "ERROR **** File asset_day_db.sql is missing ***"   
 	fi
 
-	echo "Loading stock_minute_db.sql to ${1}"     
-	if [ -f stock_minute_db.sql ]; then
-   		mysql -h ${2} -u ${3} --password=${4} ${1} < stock_minute_db.sql
+	echo "Loading asset_minute_db.sql to ${1}"     
+	if [ -f asset_minute_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < asset_minute_db.sql
 	else
-		echo "ERROR **** File stock_minute_db.sql is missing ***"   
+		echo "ERROR **** File asset_minute_db.sql is missing ***"   
 	fi
-	
+
+	echo "Loading alg_UBB_db.sql to ${1}"     
+	if [ -f alg_UBB_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < alg_UBB_db.sql
+	else
+		echo "ERROR **** File alg_UBB_db.sql is missing ***"   
+	fi
+
+	echo "Loading custom_technical_indicator_db.sql to ${1}"     
+	if [ -f custom_technical_indicator_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < custom_technical_indicator_db.sql
+	else
+		echo "ERROR **** custom_technical_indicator_db.sql is missing ***"   
+	fi
+
+	echo "Loading technical_indicator_db.sql to ${1}"     
+	if [ -f technical_indicator_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < technical_indicator_db.sql
+	else
+		echo "ERROR **** technical_indicator_db.sql is missing ***"   
+	fi
+
+	echo "Loading symbol_db.sql to ${1}"     
+	if [ -f symbol_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < symbol_db.sql
+	else
+		echo "ERROR **** symbol_db.sql is missing ***"   
+	fi
+
+	echo "Loading configuration_db.sql to ${1}"     
+	if [ -f configuration_db.sql ]; then
+   		mysql -h ${2} -u ${3} --password=${4} ${1} < configuration_db.sql
+	else
+		echo "ERROR **** configuration_db.sql is missing ***"   
+	fi
+
 	echo "Done Loading db ${1}"
 }
 	
 all() {
-	load_base stockanalyzer_main localhost cyborg c7b8rg#P
+	load_base tradeanalyzer_main localhost cyborg c7b8rg#P
 }
 
 all

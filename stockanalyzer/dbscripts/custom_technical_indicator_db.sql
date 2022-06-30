@@ -1,13 +1,17 @@
-DROP TABLE IF EXISTS `ta_EMA`;
-	
-CREATE TABLE `ta_EMA`
+DROP TABLE IF EXISTS `ta_custom_technical_indicator`;
+
+CREATE TABLE `ta_custom_technical_indicator`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`epoch_seconds` bigint(20),
-	`corresponding_day`bigint(20),
-	`symbol` varchar(64),
-	`type` varchar(64),
-	`value` decimal(10,4),
+	`name`varchar(64),
+	`technical_indicator_type`varchar(64),
+	`technical_indicator_key`varchar(64),
+	`short_sma_type` varchar(64),
+    `long_sma_type` varchar(64),
+    `lbb_type` varchar(64),
+    `ubb_type`varchar(64),
+    `standard_deviations` decimal (10,4),
+	`evaluation_period`varchar(64),
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,
@@ -17,5 +21,5 @@ CREATE TABLE `ta_EMA`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_symbol_type` (`epoch_seconds`,`symbol`,`type`)
+	UNIQUE KEY `UK_name` (`name`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
