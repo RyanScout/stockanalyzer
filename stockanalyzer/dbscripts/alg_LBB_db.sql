@@ -18,5 +18,6 @@ CREATE TABLE `ta_LBB`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_symbol_type` (`epoch_seconds`,`symbol`,`type`,`standard_deviations`)
+	UNIQUE KEY `UK_epoch_symbol_type` (`epoch_seconds`,`symbol`,`type`,`standard_deviations`),
+	INDEX `epoch_seconds` (`epoch_seconds`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

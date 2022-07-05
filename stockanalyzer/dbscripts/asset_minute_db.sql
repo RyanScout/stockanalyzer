@@ -6,7 +6,7 @@ CREATE TABLE `ta_asset_minute`
 	`asset_day_id` bigint(20) NOT NULL,
 	`type` varchar (64),
 	`epoch_seconds` bigint(20),
-	`symbol` varchar(64),
+	`symbol` varchar(64) NOT NULL,
 	`value` decimal(10,4),
 	`volume` bigint(20),
 	`vwap` decimal(10,4),
@@ -20,5 +20,7 @@ CREATE TABLE `ta_asset_minute`
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `UK_epoch_seconds_symbol` (`epoch_seconds`,`symbol`),
-	FOREIGN KEY (`asset_day_id`) REFERENCES `ta_asset_day` (`id`) ON DELETE CASCADE
+	FOREIGN KEY (`asset_day_id`) REFERENCES `ta_asset_day` (`id`) ON DELETE CASCADE,
+	INDEX `INDEX_epoch_seconds` (`epoch_seconds`),
+	INDEX `INDEX_symbol` (`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

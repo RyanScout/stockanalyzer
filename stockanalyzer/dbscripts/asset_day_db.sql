@@ -5,7 +5,7 @@ CREATE TABLE `ta_asset_day`
 	`identifier` varchar(64),
 	`type` varchar(64),
 	`epoch_seconds` bigint(20),
-	`symbol` varchar(64),
+	`symbol` varchar(64) NOT NULL,
 	`high` decimal(10,4),
 	`low` decimal(10,4),
 	`open` decimal(10,4),
@@ -21,5 +21,6 @@ CREATE TABLE `ta_asset_day`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_asset_day` (`epoch_seconds`,`symbol`)
+	UNIQUE KEY `UK_epoch_asset_day` (`epoch_seconds`,`symbol`),
+	INDEX `epoch_seconds` (`epoch_seconds`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

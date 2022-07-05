@@ -17,5 +17,6 @@ CREATE TABLE `ta_SMA`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epochSeconds_symbol_type` (`epoch_seconds`,`symbol`,`type`)
+	UNIQUE KEY `UK_epochSeconds_symbol_type` (`epoch_seconds`,`symbol`,`type`),
+	INDEX `epoch_seconds` (`epoch_seconds`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
