@@ -19,6 +19,6 @@ CREATE TABLE `ta_asset_minute`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_seconds_symbol` (`epoch_seconds` DESC ,`symbol`),
+	UNIQUE KEY `UK_epoch_seconds_symbol` (`epoch_seconds`,`symbol`),
 	FOREIGN KEY (`asset_day_id`) REFERENCES `ta_asset_day` (`id`) ON DELETE CASCADE
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
