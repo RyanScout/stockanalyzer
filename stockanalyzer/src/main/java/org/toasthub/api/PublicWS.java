@@ -1,7 +1,6 @@
 package org.toasthub.api;
 
 import org.toasthub.analysis.algorithm.AlgorithmCruncherSvc;
-import org.toasthub.stock.analysis.CurrentTestingSvc;
 import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.cache.CacheSvc;
 import org.toasthub.stock.custom_technical_indicator.CustomTechnicalIndicatorSvc;
@@ -43,9 +42,6 @@ public class PublicWS {
 	AlgorithmCruncherSvc algorithmCruncherSvc;
 
 	@Autowired
-	CurrentTestingSvc currentTestingSvc;
-
-	@Autowired
 	CacheSvc cacheSvc;
 
 	@Autowired
@@ -82,10 +78,8 @@ public class PublicWS {
 			case "CUSTOM_TECHNICAL_INDICATOR":
 				customTechnicalIndicatorSvc.process(request, response);
 				break;
-			case "CURRENT_TESTING_SVC":
-				currentTestingSvc.process(request, response);
-				break;
 			default:
+			System.out.println((service + "is not recognized as a service"));
 				break;
 		}
 

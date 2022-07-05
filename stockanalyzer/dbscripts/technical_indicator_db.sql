@@ -7,6 +7,7 @@ CREATE TABLE `ta_technical_indicator`
     `technical_indicator_type`varchar(64),
 	`evaluation_period`varchar(64),
     `flashing` bit(1) DEFAULT 0,
+	`updating` bit(1) DEFAULT 0,
 	`symbol`varchar(64),
 	`short_sma_type` varchar(64),
     `long_sma_type` varchar(64),

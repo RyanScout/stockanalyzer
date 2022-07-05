@@ -207,7 +207,7 @@ export function backloadTechnicalIndicator(item) {
     let params = {};
     params.requestParams = {};
     params.requestParams.action = "BACKLOAD";
-    params.requestParams.service = "CURRENT_TESTING_SVC";
+    params.requestParams.service = "CACHE";
     params.requestParams.ITEMID = item.id;
     params.requestParams.DAYS_TO_BACKLOAD = 50;
 
