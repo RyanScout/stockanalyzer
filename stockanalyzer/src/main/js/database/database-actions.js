@@ -158,9 +158,7 @@ export function backload(item) {
     params.requestParams = {};
     params.requestParams.action = "BACKLOAD_ALG";
     params.requestParams.service = "ALGORITHM_CRUNCHER";
-    params.requestParams.SYMBOL = item.symbol;
-    params.requestParams.TECHNICAL_INDICATOR_TYPE = item.technicalIndicatorType;
-    params.requestParams.TECHNICAL_INDICATOR_KEY = item.technicalIndicatorKey;
+    params.requestParams.ITEMID = item.id;
     params.requestParams.DAYS_TO_BACKLOAD = 50;
 
     params.URI = "/api/public/callService";
