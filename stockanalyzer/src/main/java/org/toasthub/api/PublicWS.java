@@ -1,6 +1,6 @@
 package org.toasthub.api;
 
-import org.toasthub.analysis.algorithm.AlgorithmCruncherSvc;
+import org.toasthub.stock.algorithm.AlgorithmCruncherSvc;
 import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.cache.CacheSvc;
 import org.toasthub.stock.custom_technical_indicator.CustomTechnicalIndicatorSvc;

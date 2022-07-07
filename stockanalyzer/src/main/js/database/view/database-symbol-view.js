@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 
 export default function DatabaseSymbolView({
@@ -14,20 +14,24 @@ export default function DatabaseSymbolView({
     itemState.item.technicalIndicators != null &&
     itemState.item.technicalIndicators.length > 0
   ) {
-    for (let i = 0; i < itemState.item.technicalIndicators.length; i++) {
-      if (itemState.item.technicalIndicators[i] === null) {
+    let technicalIndicators = itemState.item.technicalIndicators.slice();
+    technicalIndicators.sort((a, b) => a.symbol.localeCompare(b.symbol));
+
+    for (let i = 0; i < technicalIndicators.length; i++) {
+      let technicalIndicator = technicalIndicators[i];
+
+      if (technicalIndicator == null) {
         continue;
       }
+
+      const [updating, setUpdating] = useState(technicalIndicator.updating);
+
       let cells = [];
-      cells.push(
-        <td key="SYMBOL">{itemState.item.technicalIndicators[i].symbol}</td>
-      );
+      cells.push(<td key="SYMBOL">{technicalIndicator.symbol}</td>);
       cells.push(
         <td key="FLASH_PERCENT">
           {Math.round(
-            (itemState.item.technicalIndicators[i].flashed /
-              itemState.item.technicalIndicators[i].checked) *
-              1000
+            (technicalIndicator.flashed / technicalIndicator.checked) * 1000
           ) / 10}
         </td>
       );
@@ -35,14 +39,12 @@ export default function DatabaseSymbolView({
         <td key="AVG_SUCCESS_PERCENT">
           {(() => {
             let total = 0.0;
-            itemState.item.technicalIndicators[i].details.forEach((detail) => {
+            technicalIndicator.details.forEach((detail) => {
               total += detail.successPercent;
             });
             return (
-              Math.round(
-                (total / itemState.item.technicalIndicators[i].details.length) *
-                  10
-              ) / 10
+              "" +
+              Math.round((total / technicalIndicator.details.length) * 10) / 10
             );
           })()}
         </td>
@@ -52,17 +54,28 @@ export default function DatabaseSymbolView({
           <i
             className="fa fas fa-chart-bar"
             title="DetailView"
-            onClick={() =>
-              onOption("DETAIL_VIEW", itemState.item.technicalIndicators[i])
-            }
+            onClick={() => onOption("DETAIL_VIEW", technicalIndicator)}
           ></i>{" "}
           <i
-            className="fa fas fa-bolt"
-            title="Backload"
-            onClick={() =>
-              onOption("BACKLOAD", itemState.item.technicalIndicators[i])
-            }
-          ></i>
+            className={(() => {
+              if (updating) {
+                return "spinner-border spinner-border-sm";
+              }
+              return "fa fas fa-bolt";
+            })()}
+            title={(() => {
+              if (updating) {
+                return "Loading...";
+              }
+              return "Backload";
+            })()}
+            onClick={() => {
+              if (!updating) {
+                onOption("BACKLOAD", technicalIndicator);
+                setUpdating(true);
+              }
+            }}
+          ></i>{" "}
         </td>
       );
       automatedTradeTableRows1.push(<tr key={i}>{cells}</tr>);
