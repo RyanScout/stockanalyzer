@@ -1,20 +1,15 @@
 
 	
-CREATE TABLE `ta_historical_analysis`
+CREATE TABLE `ta_asset_minute`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
-	`order_type`varchar(64),
-	`historical_analysis_type` varchar(64),
-	`name` varchar(64),
-	`symbol` varchar(64),
-    `start_time` varchar(64),
-	`end_time` varchar(64),
-	`amount` decimal(10,4),
-	`profit_limit` decimal(10,4),
-	`trailing_stop_percent` decimal(10,4),
-	`algorithm` varchar(128) NOT NULL,
-    `money_spent`decimal(10,4),
-    `total_value` decimal(10,4),
+	`asset_day_id` bigint(20) NOT NULL,
+	`type` varchar (64),
+	`epoch_seconds` bigint(20),
+	`symbol` varchar(64) NOT NULL,
+	`value` decimal(10,4),
+	`volume` bigint(20),
+	`vwap` decimal(10,4),
 	`is_active` bit(1) DEFAULT 1,
 	`is_archive` bit(1) DEFAULT 0,
 	`is_locked` bit(1) DEFAULT 0,
@@ -23,5 +18,9 @@ CREATE TABLE `ta_historical_analysis`
 	`created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `UK_epoch_seconds_symbol` (`epoch_seconds`,`symbol`),
+	FOREIGN KEY (`asset_day_id`) REFERENCES `ta_asset_day` (`id`) ON DELETE CASCADE,
+	INDEX `INDEX_epoch_seconds` (`epoch_seconds`),
+	INDEX `INDEX_symbol` (`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

@@ -1,11 +1,11 @@
 
 	
-CREATE TABLE `sa_stock_day`
+CREATE TABLE `ta_asset_day`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`identifier` varchar(64),
 	`type` varchar(64),
 	`epoch_seconds` bigint(20),
-	`stock` varchar(64),
+	`symbol` varchar(64) NOT NULL,
 	`high` decimal(10,4),
 	`low` decimal(10,4),
 	`open` decimal(10,4),
@@ -21,5 +21,7 @@ CREATE TABLE `sa_stock_day`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `UK_epoch_stock_day` (`epoch_seconds`,`stock`)
+	UNIQUE KEY `UK_epoch_asset_day` (`epoch_seconds`,`symbol`),
+	INDEX `INDEX_epoch_seconds` (`epoch_seconds`),
+	INDEX `INDEX_symbol` (`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

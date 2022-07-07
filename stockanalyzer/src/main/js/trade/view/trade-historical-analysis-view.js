@@ -14,8 +14,8 @@ export default function HistoricalAnalysisView({
   const nav = useNavigate();
   const x = window.location.pathname;
 
-  let startTime = "";
-  let endTime = "";
+  let startTime = 1609507862;
+  let endTime = 1640957462;
   if (itemState.item != null) {
     if (itemState.item.startTime != null) startTime = itemState.item.startTime;
     if (itemState.item.endTime != null) endTime = itemState.item.endTime;
@@ -55,24 +55,6 @@ export default function HistoricalAnalysisView({
               }
             />
           </div>
-          <button
-            id="trade-button"
-            onClick={(e) => {
-              e.preventDefault();
-              var x = document.getElementById("trade-button");
-              if (x.innerHTML === "SWING TRADING") {
-                x.innerHTML = "DAY TRADING";
-                document.getElementById("trade-button").classList.add("active");
-                alert("VERY VOLATILE BE CAUTIOUS");
-              } else {
-                x.innerHTML = "SWING TRADING";
-                document.getElementById("End-Date").classList.remove("active");
-                document.getElementById("trade-button").classList.remove("active");
-              }
-            }}
-          >
-            SWING TRADING
-          </button>
         </div>
       </div>
       <br />
@@ -85,11 +67,12 @@ export default function HistoricalAnalysisView({
             className="form-control btn-primary"
             value="Historically Analyze"
             onClick={() => {
-              var x = document.getElementById("trade-button");
-              if(x.innerHTML == "SWING TRADING")
+              if(itemState.item.evaluationPeriod == "Day")
               onOption("HISTORICALLY_ANALYZE_SWING_TRADE")
-              else
+              else if(itemState.item.evaluationPeriod == "Minute")
               onOption("HISTORICALLY_ANALYZE_DAY_TRADE")
+              else
+              alert("EVALUATION PERIOD REQUIRED")
             }}
           />
         </div>

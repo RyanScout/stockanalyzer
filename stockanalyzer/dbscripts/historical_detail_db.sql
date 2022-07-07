@@ -1,6 +1,6 @@
 
 	
-CREATE TABLE `sa_historical_detail`
+CREATE TABLE `ta_historical_detail`
 	(`id` bigint(20) NOT NULL AUTO_INCREMENT,
     `historical_analysis_id` bigint(20) NOT NULL,
 	`identifier` varchar(64),
@@ -18,5 +18,5 @@ CREATE TABLE `sa_historical_detail`
 	`lock_time` datetime,
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
-    FOREIGN KEY (`historical_analysis_id`) REFERENCES `sa_historical_analysis` (`id`)
+    FOREIGN KEY (`historical_analysis_id`) REFERENCES `ta_historical_analysis` (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
