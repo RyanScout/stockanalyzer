@@ -19,5 +19,6 @@ CREATE TABLE `ta_UBB`
 	`version` bigint(20) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `UK_epoch_symbol_type` (`epoch_seconds`,`symbol`,`type`,`standard_deviations`),
-	INDEX `epoch_seconds` (`epoch_seconds`)
+	INDEX `INDEX_epoch_seconds` (`epoch_seconds`),
+	INDEX `INDEX_symbol` (`symbol`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
