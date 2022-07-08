@@ -5,7 +5,7 @@ import org.toasthub.stock.analysis.HistoricalAnalyzingSvc;
 import org.toasthub.stock.cache.CacheSvc;
 import org.toasthub.stock.custom_technical_indicator.CustomTechnicalIndicatorSvc;
 import org.toasthub.stock.dashboard.DashboardSvc;
-import org.toasthub.stock.historicalanalysis.HistoricalAnalysisSvc;
+import org.toasthub.stock.historical_analysis.HistoricalAnalysisSvc;
 import org.toasthub.stock.order.PlaceOrderSvc;
 import org.toasthub.stock.trade.TradeSvc;
 import org.toasthub.utils.Request;
