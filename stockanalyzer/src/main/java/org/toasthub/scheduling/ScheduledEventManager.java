@@ -5,17 +5,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+import org.toasthub.core.general.model.RestRequest;
+import org.toasthub.core.general.model.RestResponse;
 import org.toasthub.stock.algorithm.AlgorithmCruncherSvc;
 import org.toasthub.stock.cache.CacheManager;
 import org.toasthub.stock.model.Configuration;
 import org.toasthub.stock.trade.TradeManager;
-import org.toasthub.utils.Request;
-import org.toasthub.utils.Response;
 
 @Component
 public class ScheduledEventManager {
@@ -25,6 +26,7 @@ public class ScheduledEventManager {
     final AtomicBoolean databaseBackloaded = new AtomicBoolean(false);
 
     @Autowired
+    @Qualifier("TAScheduledEventManagerDao")
     private ScheduledEventManagerDao scheduledEventManagerDao;
 
     @Autowired
@@ -34,6 +36,7 @@ public class ScheduledEventManager {
     private TradeManager tradeManager;
 
     @Autowired
+    @Qualifier("TAAlgorithmCruncherSvc")
     private AlgorithmCruncherSvc algorithmCruncherSvc;
 
     @EventListener(ApplicationReadyEvent.class)
@@ -61,8 +64,8 @@ public class ScheduledEventManager {
         new Thread(() -> {
             schedulingJobRunning.set(true);
 
-            final Request request = new Request();
-            final Response response = new Response();
+            final RestRequest request = new RestRequest();
+            final RestResponse response = new RestResponse();
 
             final StopWatch timer = new StopWatch();
 
