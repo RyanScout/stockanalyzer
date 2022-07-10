@@ -4,9 +4,9 @@
 "use-strict";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import HistoricalAnalysisView from "./view/historical-analysis-view";
+import HistoricalAnalysisView from "../../memberView/historical_analysis/historical-analysis-view";
 import * as historicalAnalysisActions from "./historical-analysis-actions";
-import HistoricalDetailView from "./view/historical-detail-view";
+import HistoricalDetailView from "../../memberView/historical_analysis/historical-detail-view";
 
 function HistoricalAnalysisContainer() {
   const historicalAnalysisState = useSelector((state) => state.historicalAnalysis);

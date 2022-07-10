@@ -1,23 +1,25 @@
 /**
  *
  */
-import { getHost } from "../app";
+import { getHost } from "../../App";
 
-export function inputChange(field, value) {
+export function inputAmountChange(field, value) {
   return function (dispatch) {
     let params = {};
     params.field = field;
     params.value = value;
-    dispatch({ type: "HISTORICAL_ANALYSIS_INPUT_CHANGE", params });
+    dispatch({ type: "AMOUNT_INPUT_CHANGE", params });
   };
 }
 
-export function list() {
+export function placeOrder(value, amountValue) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "HISTORICAL_ANALYSIS";
-    params.requestParams.action = "LIST";
+    params.requestParams.service = "PLACE_ORDER";
+    params.requestParams.action = "DEFAULT_ORDER";
+    params.requestParams.stockName = value;
+    params.requestParams.orderAmount = amountValue;
     params.URI = "/api/public/callService";
 
     const uri = getHost() + params.URI;
@@ -40,36 +42,20 @@ export function list() {
         }
       })
       .then((responseJson) => {
-        dispatch({ type: "HISTORICAL_ANALYSIS_LIST", responseJson });
-        if (info != null) {
-          dispatch({ type: "SHOW_STATUS", info: info });
-        }
+        dispatch({ type: "STOCK_BUY_REQUEST", responseJson });
       })
       .catch(function (error) {});
   };
 }
 
-export function historicalDetailView(item) {
-  return function (dispatch) {
-    dispatch({ type: "HISTORICAL_ANALYSIS_HISTORICAL_DETAIL_VIEW" , action: item});
-  };
-}
-
-export function cancelItem() {
-  return function (dispatch) {
-    dispatch({ type: "HISTORICAL_ANALYSIS_CANCEL_ITEM" });
-  };
-}
-
-
-export function deleteItem(item) {
+export function trailingStopOrder(value, amountValue) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "HISTORICAL_ANALYSIS";
-    params.requestParams.action = "DELETE";
-    params.requestParams.ITEMID = item.id;
-
+    params.requestParams.service = "PLACE_ORDER";
+    params.requestParams.action = "TRAILING_STOP_ORDER";
+    params.requestParams.stockName = value;
+    params.requestParams.orderAmount = amountValue;
     params.URI = "/api/public/callService";
 
     const uri = getHost() + params.URI;
@@ -92,11 +78,10 @@ export function deleteItem(item) {
         }
       })
       .then((responseJson) => {
-        dispatch(list());
-        if (info != null) {
-          dispatch({ type: "SHOW_STATUS", info: info });
-        }
+        dispatch({ type: "TRAILING_STOP_ORDER_REQUEST", responseJson });
       })
       .catch(function (error) {});
   };
 }
+
+

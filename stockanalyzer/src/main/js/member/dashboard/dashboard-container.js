@@ -4,9 +4,8 @@
 'use-strict';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from "react-router-dom";
 import * as dashboardActions from './dashboard-actions';
-import DashboardView from "../dashboard/view/dashboard-view";
+import DashboardView from "../../memberView/dashboard/dashboard-view";
 
 function DashboardContainer() {
 	const dashboardState = useSelector((state) => state.dashboard);

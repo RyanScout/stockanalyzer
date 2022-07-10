@@ -2,10 +2,10 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as databaseActions from "../database/database-actions";
-import DatabaseDetailView from "./view/database-detail-view";
-import DatabaseModifyView from "./view/database-modify-view";
-import DatabaseSymbolView from "./view/database-symbol-view";
-import DatabaseView from "./view/database-view";
+import DatabaseDetailView from "../../memberView/database/database-detail-view";
+import DatabaseModifyView from "../../memberView/database/database-modify-view";
+import DatabaseSymbolView from "../../memberView/database/database-symbol-view";
+import DatabaseView from "../../memberView/database/database-view";
 
 function DatabaseContainer() {
   const databaseState = useSelector((state) => state.database);

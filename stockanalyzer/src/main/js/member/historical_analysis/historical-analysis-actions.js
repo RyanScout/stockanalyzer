@@ -1,26 +1,24 @@
 /**
  *
  */
-import { getHost } from "../app";
+import { getHost } from "../../App";
 
-export function inputAmountChange(field, value) {
+export function inputChange(field, value) {
   return function (dispatch) {
     let params = {};
     params.field = field;
     params.value = value;
-    dispatch({ type: "AMOUNT_INPUT_CHANGE", params });
+    dispatch({ type: "HISTORICAL_ANALYSIS_INPUT_CHANGE", params });
   };
 }
 
-export function placeOrder(value, amountValue) {
+export function list() {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "PLACE_ORDER";
-    params.requestParams.action = "DEFAULT_ORDER";
-    params.requestParams.stockName = value;
-    params.requestParams.orderAmount = amountValue;
-    params.URI = "/api/public/callService";
+    params.requestParams.service = "TA_HISTORICAL_ANALYSIS_SVC";
+    params.requestParams.action = "LIST";
+    params.URI = "/api/member/callService";
 
     const uri = getHost() + params.URI;
     let headers = new Headers();
@@ -42,21 +40,37 @@ export function placeOrder(value, amountValue) {
         }
       })
       .then((responseJson) => {
-        dispatch({ type: "STOCK_BUY_REQUEST", responseJson });
+        dispatch({ type: "HISTORICAL_ANALYSIS_LIST", responseJson });
+        if (info != null) {
+          dispatch({ type: "SHOW_STATUS", info: info });
+        }
       })
       .catch(function (error) {});
   };
 }
 
-export function trailingStopOrder(value, amountValue) {
+export function historicalDetailView(item) {
+  return function (dispatch) {
+    dispatch({ type: "HISTORICAL_ANALYSIS_HISTORICAL_DETAIL_VIEW" , action: item});
+  };
+}
+
+export function cancelItem() {
+  return function (dispatch) {
+    dispatch({ type: "HISTORICAL_ANALYSIS_CANCEL_ITEM" });
+  };
+}
+
+
+export function deleteItem(item) {
   return function (dispatch) {
     let params = {};
     params.requestParams = {};
-    params.requestParams.service = "PLACE_ORDER";
-    params.requestParams.action = "TRAILING_STOP_ORDER";
-    params.requestParams.stockName = value;
-    params.requestParams.orderAmount = amountValue;
-    params.URI = "/api/public/callService";
+    params.requestParams.service = "TA_HISTORICAL_ANALYSIS_SVC";
+    params.requestParams.action = "DELETE";
+    params.requestParams.ITEMID = item.id;
+
+    params.URI = "/api/member/callService";
 
     const uri = getHost() + params.URI;
     let headers = new Headers();
@@ -78,10 +92,11 @@ export function trailingStopOrder(value, amountValue) {
         }
       })
       .then((responseJson) => {
-        dispatch({ type: "TRAILING_STOP_ORDER_REQUEST", responseJson });
+        dispatch(list());
+        if (info != null) {
+          dispatch({ type: "SHOW_STATUS", info: info });
+        }
       })
       .catch(function (error) {});
   };
 }
-
-

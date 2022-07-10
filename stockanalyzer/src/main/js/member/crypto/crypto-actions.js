@@ -1,7 +1,7 @@
 /**
  * 
  */
-import {getHost} from '../app';
+import {getHost} from '../../App';
 
 
 export function inputChange(field,value) {
@@ -9,19 +9,19 @@ export function inputChange(field,value) {
 		 let params = {};
 		 params.field = field;
 		 params.value = value;
-		 dispatch({ type:"DASHBOARD_INPUT_CHANGE",params});
+		 dispatch({ type:"CRYPTO_INPUT_CHANGE",params});
 	 };
 }
 
 
 
-export function getDashboard(value) {
+export function getCrypto(value) {
 	 return function(dispatch) {
 		
 		 let params = {};
 		 params.requestParams = {};
-		 params.requestParams.action = "DASHBOARD";
-		 params.requestParams.service = "DASHBOARD";
+		 params.requestParams.action = "CRYPTO_LIST";
+		 params.requestParams.cryptoName = value;
 		 params.URI = '/api/public/callService';
 		
 		const uri = getHost()+params.URI;
@@ -46,7 +46,7 @@ export function getDashboard(value) {
         
       })
 		.then(responseJson => {
-			dispatch({ type: "DASHBOARD_GET", responseJson });
+			dispatch({ type: "CRYPTO_GET_LIST", responseJson });
 				if (info != null) {
 		        	  dispatch({type:'SHOW_STATUS',info:info});  
 		        }

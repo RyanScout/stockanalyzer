@@ -1,0 +1,44 @@
+[submodule "stockanalyzer/src/main/js/core"]
+	path = stockanalyzer/src/main/js/core
+	url = https://github.com/seufster71/toasthub-react-core.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/coreView"]
+	path = stockanalyzer/src/main/js/coreView
+	url = https://github.com/seufster71/toasthub-reactweb-core.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/admin"]
+	path = stockanalyzer/src/main/js/admin
+	url = https://github.com/seufster71/toasthub-react-admin.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/adminView"]
+	path = stockanalyzer/src/main/js/adminView
+	url = https://github.com/seufster71/toasthub-reactweb-admin.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/member/session"]
+	path = stockanalyzer/src/main/js/member/session
+	url = https://github.com/seufster71/toasthub-react-member-session.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/system"]
+	path = stockanalyzer/src/main/js/system
+	url = https://github.com/seufster71/toasthub-react-system.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/member/profile"]
+	path = stockanalyzer/src/main/js/member/profile
+	url = https://github.com/seufster71/toasthub-react-member-profile.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/memberView/profile"]
+	path = stockanalyzer/src/main/js/memberView/profile
+	url = https://github.com/seufster71/toasthub-reactweb-member-profile.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/systemView"]
+	path = stockanalyzer/src/main/js/systemView
+	url = https://github.com/seufster71/toasthub-reactweb-system.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/member/logout"]
+	path = stockanalyzer/src/main/js/member/logout
+	url = https://github.com/seufster71/toasthub-react-member-logout.git
+	branch = feature/Ed_1_on_develop
+[submodule "stockanalyzer/src/main/js/memberView/logout"]
+	path = stockanalyzer/src/main/js/memberView/logout
+	url = https://github.com/seufster71/toasthub-reactweb-member-logout.git
+	branch = feature/Ed_1_on_develop

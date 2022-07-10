@@ -23,19 +23,6 @@ export default function DashboardView({itemState, appPrefs, inputChange, onClick
     	<div> 
     		<div> Welcome </div>
     		<div> Market is currently: {marketOpen} </div>
-			
-			<nav
-        		style={{
-         		borderBottom: "solid 1px",
-          		paddingBottom: "1rem"
-        		}}
-      		>
-       			<Link to="/stocks">Stock</Link> |{" "}
-        		<Link to="/crypto">Crypto</Link> |{" "}
-				<Link to="/tradeblaster">Automated Trading</Link>|{" "}
-				<Link to="/orders">Orders</Link>|{" "}
-				<Link to="/database">Database</Link>
-		  	</nav>
 		</div>
     );
 }

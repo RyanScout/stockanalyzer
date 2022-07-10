@@ -1,7 +1,7 @@
 /**
  * 
  */
-import {getHost} from '../app';
+import {getHost} from '../../App';
 
 
 export function inputStockChange(field,value) {

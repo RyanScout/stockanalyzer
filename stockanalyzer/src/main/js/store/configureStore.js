@@ -8,14 +8,16 @@ export default function configureStore() {
   const initialState = {
     appPrefs: {
       lang: localStorage.getItem("lang"),
-      headerName: "j4reef",
+      headerName: "Trade Analyzer",
       codeType: "WEB",
-      debugClient: true,
+      debugClient: "TRACE",
       memberMenu: "MEMBER_MENU_TOP",
       adminMenu: "ADMIN_MENU_TOP",
+      systemMenu: "SYSTEM_MENU_TOP"
     },
-    session: { sessionActive: null },
+    session: { sessionActive: null, viewPort: 'large', callComplete:false },
     status: { error: null, info: null, warn: null },
+    member: { view: "login"},
     stocks: {},
     crypto: {},
     dashboard: {},

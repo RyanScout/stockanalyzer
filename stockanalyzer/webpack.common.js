@@ -5,7 +5,7 @@ const BUILD_DIR = path.resolve(__dirname, 'src/main/resources/static/dist');
 const APP_DIR = path.resolve(__dirname, 'src/main/js');
 
 module.exports = {
-  entry: { app: APP_DIR + '/app.js' },
+  entry: { app: APP_DIR + '/App.js' },
   devtool: 'inline-source-map',
   mode: 'development',
   devServer: {
