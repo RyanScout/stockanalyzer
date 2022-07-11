@@ -1,7 +1,7 @@
 ECHO getting submodules
 
 GIT_DIR="gitanalyzer"
-BRANCH="Ed_1_on_develop"
+BRANCH="feature/Ed_1_on_develop"
 
 cd ~/$GIT_DIR/stockanalyzer/stockanalyzer
 git submodule init
